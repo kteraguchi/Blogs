@@ -48,6 +48,16 @@ class BlogCategoryFixture extends CakeTestFixture {
 			'modified_user' => 1,
 			'modified' => '2015-02-12 10:51:28'
 		),
+		array(
+			'id' => 2,
+			'block_id' => 2,
+			'key' => 'Lorem ipsum dolor sit amet',
+			'name' => 'Lorem ipsum dolor sit amet',
+			'created_user' => 1,
+			'created' => '2015-02-12 10:51:28',
+			'modified_user' => 1,
+			'modified' => '2015-02-12 10:51:28'
+		),
 	);
 
 }

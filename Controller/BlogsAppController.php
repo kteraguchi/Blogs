@@ -11,4 +11,8 @@ class BlogsAppController extends AppController {
 		return time();
 	}
 
+	protected function getCurrentDateTime(){
+		return date('Y-m-d H:i:s', $this->getNow());
+	}
+
 }

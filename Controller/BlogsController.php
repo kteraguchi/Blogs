@@ -42,34 +42,17 @@ class BlogsController extends BlogsAppController {
  */
     public function index(){
         if($this->viewVars['contentReadable']){
-            // contentReadable falseなら何も見えない
-
-
-            // ε(　　　　 v ﾟωﾟ)　＜ Modelにうつしてテストする
-            $conditions = array(
-                'BlogCategory.block_id' => $this->viewVars['blockId'],
-                'BlogEntry.published_datetime' => $this->getNow(), // ε(　　　　 v ﾟωﾟ)　＜今はどっかにどかしたい
-            );
-            if($this->viewVars['contentEditable']){
-                // 他人の下書き以外は全部見られる
-                // where NOT (status = 下書き AND created_user != 自分)
-                $conditions['NOT'] = array(
-                        'BlogEntry.status' => NetCommonsBlockComponent::STATUS_DRAFTED,
-                        'BlogEntry.created_user !=' => $this->Auth->user('id')
-                    );
-            }elseif($this->viewVars['contentCreatable']){
-                // 自分の＋公開が見える
-                $conditions['BlogEntry.status'] = NetCommonsBlockComponent::STATUS_PUBLISHED;
-                $conditions['BlogEntry.created_user'] = $this->Auth->user('id');
-            }else{
-                // 公開だけ見える
-                $conditions['BlogEntry.status'] = NetCommonsBlockComponent::STATUS_PUBLISHED;
-            }
+			$conditions = $this->BlogEntry->getConditions(
+				$this->viewVars['blockId'],
+				$this->Auth->user('id'),
+				$this->viewVars,
+				$this->getCurrentDateTime()
+			);
 
             $this->Paginator->settings = array(
                 'conditions' => $conditions,
                 'limit' => 10,
-                'order' => 'created DESC'
+                'order' => 'published_datetime DESC'
             );
             $this->BlogEntry->recursive = 0;
             $this->set('blogEntries', $this->Paginator->paginate());
