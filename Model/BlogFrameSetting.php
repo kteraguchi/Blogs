@@ -42,4 +42,23 @@ class BlogFrameSetting extends BlogsAppModel {
 			),
 		),
 	);
+
+	public function getSettingByFrameKey($frameKey){
+		$setting = $this->findByFrameKey($frameKey);
+		if($setting){
+			return $setting['BlogFrameSetting'];
+		}else{
+			// 設定データがまだないときはつくる
+			$this->create();
+			$data = array(
+				'BlogFrameSetting' => array(
+					'frame_key' => $frameKey
+				)
+			);
+			$this->save($data);
+			$setting = $this->findByFrameKey($frameKey);
+			return $setting['BlogFrameSetting'];
+		}
+
+	}
 }

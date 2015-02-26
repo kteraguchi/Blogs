@@ -32,7 +32,8 @@ class BlogsController extends BlogsAppController {
 
 
     public $uses = array(
-        'Blogs.BlogEntry'
+        'Blogs.BlogEntry',
+        'Blogs.BlogBlockSetting'
     );
 
     /**
@@ -41,6 +42,13 @@ class BlogsController extends BlogsAppController {
  * @var mixed
  */
     public function index(){
+		$this->setupBlogTitle();
+		$this->loadBlockSetting();
+		$this->loadFrameSetting();
+
+		// TODO リストタイプ毎にタイトルは変更する
+		$this->set('listTitle', $this->blogTitle);
+
         if($this->viewVars['contentReadable']){
 			$conditions = $this->BlogEntry->getConditions(
 				$this->viewVars['blockId'],
@@ -51,7 +59,7 @@ class BlogsController extends BlogsAppController {
 
             $this->Paginator->settings = array(
                 'conditions' => $conditions,
-                'limit' => 10,
+                'limit' => $this->frameSetting['display_number'],
                 'order' => 'published_datetime DESC'
             );
             $this->BlogEntry->recursive = 0;
@@ -60,7 +68,6 @@ class BlogsController extends BlogsAppController {
         }else{
             // 何も見せない
         }
-
     }
 
 }
