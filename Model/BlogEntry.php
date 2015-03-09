@@ -180,6 +180,48 @@ class BlogEntry extends BlogsAppModel {
 		return $conditions;
 	}
 
+	/**
+	 * 年月毎の記事数を返す
+	 * @param $blockId
+	 * @param $userId
+	 * @param $permissions
+	 * @param $currentDateTime
+	 * @return array
+	 */
+	public function getYearMonthCount($blockId, $userId, $permissions, $currentDateTime) {
+		$conditions = $this->getConditions($blockId, $userId, $permissions, $currentDateTime);
+		// 年月でグループ化してカウント→取得できなかった年月をゼロセット
+		$this->virtualFields['year_month'] = 0;			// バーチャルフィールドを追加
+		$this->virtualFields['count'] = 0;			// バーチャルフィールドを追加
+		$result = $this->find('all',
+			array(
+				'fields'=> array('DATE_FORMAT(BlogEntry.published_datetime, \'%Y-%m\') AS BlogEntry__year_month', 'count(*) AS BlogEntry__count'),
+				'conditions' => $conditions,
+				'group' => array('BlogEntry__year_month'), //GROUP BY YEAR(record_date), MONTH(record_date)
+			)
+		);
+		$ret = array();
+		// $retをゼロ埋め
+		//　一番古い記事を取得
+		$oldestEntry = $this->find('first', array('conditions' => $conditions, 'order' => 'published_datetime ASC'));
+		// 一番古い記事の年月から現在までを先にゼロ埋め
+		$currentYearMonthDay = date('Y-m-01', strtotime($oldestEntry['BlogEntry']['published_datetime']));
+		while($currentYearMonthDay <= $currentDateTime){
+			$ret[substr($currentYearMonthDay, 0, 7)] = 0;
+			$currentYearMonthDay = date('Y-m-01', strtotime($currentYearMonthDay . ' +1 month'));
+		}
+
+		// 記事がある年月は記事数を上書きしておく
+		foreach($result as $yearMonth){
+			$ret[$yearMonth['BlogEntry']['year_month']] = $yearMonth['BlogEntry']['count'];
+		}
+
+		//年月降順に並び替える
+		krsort($ret);
+		return $ret;
+
+	}
+
 	protected function getPublishedConditions($currentDateTime) {
 		return array(
 			'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,

@@ -8,6 +8,9 @@ class BlogsAppController extends AppController {
 	protected $blockSetting;
 	protected $frameSetting;
 
+	public $helpers = array(
+		'Blogs.BlogsFormat',
+	);
 
 	public $uses = array(
 		'Blogs.BlogBlockSetting',

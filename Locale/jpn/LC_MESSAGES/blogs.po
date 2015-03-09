@@ -1,0 +1,14 @@
+msgid "Add entry"
+msgstr "記事を追加する"
+
+msgid "All status"
+msgstr "全て"
+
+msgid "All categories"
+msgstr "全て"
+
+msgid "%d-%d (%s)"
+msgstr "%d年%d月 (%s)"
+
+msgid "posted : %s"
+msgstr "投稿日時 : %s"

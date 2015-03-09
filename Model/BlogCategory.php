@@ -47,11 +47,11 @@ class BlogCategory extends BlogsAppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Block' => array(
 			'className' => 'Block',
@@ -59,6 +59,11 @@ class BlogCategory extends BlogsAppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'BlogCategoryOrder' => array(
+			'className' => 'Blogs.BlogCategoryOrder',
+			'foreignKey' => false,
+			'conditions' => array('BlogCategory.key = BlogCategoryOrder.blog_category_key'),
 		)
 	);
 
@@ -82,5 +87,28 @@ class BlogCategory extends BlogsAppModel {
 			'counterQuery' => ''
 		)
 	);
+
+
+	// ε(　　　　 v ﾟωﾟ)　＜ Linksに同じコード(blogとlinkの違いだけ）あり categoryビヘイビアとかにできないか？
+	public function getCategories($blockId){
+		$conditions = array(
+			'block_id' => $blockId,
+		);
+
+		$this->unbindModel(array(
+			'belongsTo' => array('Block'),
+			'hasMany' => array('BlogEntry'),
+		));
+
+		// ソート順はblog_category_ordersテーブル参照
+		$categories = $this->find('all', array(
+				'conditions' => $conditions,
+				'order' => 'BlogCategoryOrder.weight ASC',
+			)
+		);
+
+		return $categories;
+	}
+
 
 }

@@ -1,13 +1,49 @@
 <div class="blogEntries index">
 	<h1><?php echo $listTitle ?></h1>
 
-	TODO 追加ボタン　作成権限以上
+	<div class="row">
+		<div class="col-xs-2">
+			<?php if ($contentCreatable): ?>
+				<button class="btn btn-success"
+						tooltip="<?php echo __d('blogs', 'Add entry'); ?>">
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
+				<span class="hidden">
+					<?php echo __d('blogs', 'Add entry'); ?>
+				</span>
+			<?php endif; ?>
+		</div>
 
-	TODO ステータス絞り込み　作成権限以上
+		<div class="col-xs-3">
+			<?php if ($contentCreatable): ?>
+				<?php
+				//TODO
+				$currentStatus = 0;
+				$statusOptions = array(
+					0 => __d('blogs', 'All status'),
+					NetCommonsBlockComponent::STATUS_PUBLISHED   => __d('net_commons', 'Published'),
+					NetCommonsBlockComponent::STATUS_APPROVED    => __d('net_commons', 'Approving'),
+					NetCommonsBlockComponent::STATUS_DRAFTED     => __d('net_commons', 'Temporary'),
+					NetCommonsBlockComponent::STATUS_DISAPPROVED => __d('net_commons', 'Disapproving'),
 
-	TODO カテゴリドロップダウン
+				);
+				?>
+				<?php echo $this->Form->select('status', $statusOptions, array('empty' => false, 'class'=> 'form-control', 'value' => $currentStatus)); ?>
+			<?php endif; ?>
+		</div>
 
-	TODO　年月一覧
+		<div class="col-xs-4">
+			<?php $currentCategory = 0 // TODO ?>
+			<?php echo $this->Form->select('category', $categoryOptions, array('empty' => false, 'class'=> 'form-control', 'value' => $currentCategory)); ?>
+		</div>
+
+		<div class="col-xs-3">
+			<?php $currentYearMonth = 0 // TODO ?>
+			<?php echo $this->Form->select('year_month', $yearMonthOptions, array('empty' => false, 'class'=> 'form-control', 'value' => $currentYearMonth)); ?>
+		</div>
+
+	</div>
+
 
 	<div>
 		<!--記事一覧-->
@@ -19,7 +55,7 @@
 				</h2>
 				<div>
 					TODO 多言語化　日付フォーマット
-					投稿日時:<?php echo h($blogEntry['BlogEntry']['published_datetime']); ?>&nbsp;
+					<?php echo __d('blogs', 'posted : %s', $this->BlogsFormat->published_datetime($blogEntry['BlogEntry']['published_datetime'])); ?>&nbsp;
 
 					TODO 投稿者アバター
 					TODO　投稿者名
