@@ -12,25 +12,9 @@ App::uses('BlogsAppController', 'Blogs.Controller');
  */
 class BlogsController extends BlogsAppController {
 
-    /**
-     * use components
-     *
-     * @var array
-     */
-    public $components = array(
-        'NetCommons.NetCommonsBlock', //Use Announcement model
-        'NetCommons.NetCommonsFrame',
-        'NetCommons.NetCommonsRoomRole' => array(
-            //コンテンツの権限設定
-            'allowedActions' => array(
-                'contentEditable' => array('setting', 'token', 'edit')
-            ),
-            //コンテンツのワークフロー設定(公開権限チェック)
-            'workflowActions' => array('edit'),
-            'workflowModelName' => 'Announcement',
-        ),
-        'Paginator',
-    );
+	public $components = array(
+		'Paginator',
+	);
 
     public $uses = array(
         'Blogs.BlogEntry',
@@ -44,6 +28,12 @@ class BlogsController extends BlogsAppController {
  * @var mixed
  */
     public function index(){
+		$frameId = $this->viewVars['frameId'];
+		$html = $this->requestAction(array('controller' => 'blog_entries', 'action' => 'index', $frameId), array('return'));
+
+		$this->set('html', $html);
+		return;
+
 		$this->setupBlogTitle();
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();

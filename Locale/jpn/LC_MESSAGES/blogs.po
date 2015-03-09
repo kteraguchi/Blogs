@@ -12,3 +12,6 @@ msgstr "%d年%d月 (%s)"
 
 msgid "posted : %s"
 msgstr "投稿日時 : %s"
+
+msgid "Move list"
+msgstr "一覧へ"
