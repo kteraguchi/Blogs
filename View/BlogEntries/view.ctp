@@ -19,7 +19,16 @@
 
 <?php echo $this->element('entry_footer'); ?>
 
-TODO タグ
+<div>
+	<?php echo __d('blogs', 'tag'); ?>
+	<?php foreach($blogTags as $blogTag): ?>
+		<?php echo $this->Html->link($blogTag['BlogTag']['name'], array('controller' => 'blog_entries', 'action' => 'tag', $frameId, 'id' => $blogTag['BlogTag']['id'])); ?>&nbsp;
+	<?php endforeach; ?>
 
-TODO コメント
+</div>
+
+<div>
+	TODO コメント
+
+</div>
 

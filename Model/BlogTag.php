@@ -54,7 +54,7 @@ class BlogTag extends BlogsAppModel {
  */
 	public $belongsTo = array(
 		'Block' => array(
-			'className' => 'Block',
+			'className' => 'Blocks.Block',
 			'foreignKey' => 'block_id',
 			'conditions' => '',
 			'fields' => '',
@@ -69,7 +69,7 @@ class BlogTag extends BlogsAppModel {
  */
 	public $hasMany = array(
 		'BlogEntryTagLink' => array(
-			'className' => 'BlogEntryTagLink',
+			'className' => 'Blogs.BlogEntryTagLink',
 			'foreignKey' => 'blog_tag_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -82,5 +82,22 @@ class BlogTag extends BlogsAppModel {
 			'counterQuery' => ''
 		)
 	);
+
+	public function getTagsByEntryId($entryId) {
+		App::uses('BlogEntryTagLink', 'Blogs.Model');
+//		$BlogEntryTagLink = ClassRegistry::init('Blogs.BlogEntryTagLink'); // この書き方だとAppModelになってしまう。
+		$BlogEntryTagLink = new BlogEntryTagLink();
+
+		$conditions = array(
+			'BlogEntryTagLink.blog_entry_id' => $entryId,
+		);
+		$options = array(
+			'conditions' => $conditions,
+		);
+
+		$tags = $BlogEntryTagLink->find('all', $options);
+
+		return $tags;
+	}
 
 }

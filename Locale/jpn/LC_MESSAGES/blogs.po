@@ -15,3 +15,6 @@ msgstr "投稿日時 : %s"
 
 msgid "Move list"
 msgstr "一覧へ"
+
+msgid "tag"
+msgstr "タグ"

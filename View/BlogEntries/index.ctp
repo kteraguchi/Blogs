@@ -53,8 +53,7 @@
 				<h2>
 					<?php echo $this->Html->link($blogEntry['BlogEntry']['title'], array('controller' => 'blog_entries', 'action' => 'view', $frameId, 'id' => $blogEntry['BlogEntry']['id'])); ?>
 				</h2>
-
-				<?php echo $this->element('entry_meta_info'); ?>
+				<?php echo $this->element('entry_meta_info', array('blogEntry' => $blogEntry)); ?>
 
 				<div>
 
@@ -65,7 +64,7 @@
 					続きを読む
 				</div>
 
-				<?php echo $this->element('entry_footer'); ?>
+				<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry)); ?>
 			</div>
 
 

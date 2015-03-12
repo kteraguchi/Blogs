@@ -21,6 +21,7 @@ class BlogEntriesController extends BlogsAppController {
 		'Blogs.BlogEntry',
 		'Blogs.BlogBlockSetting',
 		'Blogs.BlogCategory',
+		'Blogs.BlogTag',
 	);
 
 
@@ -62,6 +63,44 @@ class BlogEntriesController extends BlogsAppController {
 			// 何も見せない
 		}
 	}
+	/**
+	 * view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function view() {
+
+		$id = $this->request->params['named']['id'];
+		if($this->viewVars['contentReadable']){
+			$conditions = $this->BlogEntry->getConditions(
+				$this->viewVars['blockId'],
+				$this->Auth->user('id'),
+				$this->viewVars,
+				$this->getCurrentDateTime()
+			);
+
+			$conditions['BlogEntry.id'] = $id;
+
+		}else{
+			// 何も見せない
+			throw new NotFoundException(__('Invalid blog entry'));
+		}
+
+		$options = array('conditions' => $conditions);
+		$blogEntry = $this->BlogEntry->find('first', $options);
+		if($blogEntry){
+			$this->set('blogEntry', $blogEntry);
+			// tag取得
+			$blogTags = $this->BlogTag->getTagsByEntryId($id);
+			$this->set('blogTags', $blogTags);
+
+		}else{
+			// 表示できない記事へのアクセスなら403
+			throw new NotFoundException(__('Invalid blog entry'));
+		}
+	}
 
 	protected function setCategoryOptions() {
 		$categories = $this->BlogCategory->getCategories($this->viewVars['blockId']);
@@ -92,42 +131,8 @@ class BlogEntriesController extends BlogsAppController {
 		$this->set('yearMonthOptions', $options);
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view() { // これでは取得できないはず
 
-		$id = $this->request->params['named']['id'];
-		//コピペだなぁ
-		if($this->viewVars['contentReadable']){
-			$conditions = $this->BlogEntry->getConditions(
-				$this->viewVars['blockId'],
-				$this->Auth->user('id'),
-				$this->viewVars,
-				$this->getCurrentDateTime()
-			);
-
-			$conditions['BlogEntry.id'] = $id;
-
-		}else{
-			// 何も見せない
-			throw new NotFoundException(__('Invalid blog entry'));
-		}
-		// TODO 表示できない記事へのアクセスなら403
-
-		$options = array('conditions' => $conditions);
-		$blogEntry = $this->BlogEntry->find('first', $options);
-		if($blogEntry){
-			$this->set('blogEntry', $blogEntry);
-		}else{
-			throw new NotFoundException(__('Invalid blog entry'));
-
-		}
-	}
+// ε(　　　　 v ﾟωﾟ)　＜　この下まだ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 
 /**
  * add method

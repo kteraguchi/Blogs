@@ -44,14 +44,14 @@ class BlogEntryTagLink extends BlogsAppModel {
  */
 	public $belongsTo = array(
 		'BlogEntry' => array(
-			'className' => 'BlogEntry',
+			'className' => 'Blogs.BlogEntry',
 			'foreignKey' => 'blog_entry_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
 		'BlogTag' => array(
-			'className' => 'BlogTag',
+			'className' => 'Blogs.BlogTag',
 			'foreignKey' => 'blog_tag_id',
 			'conditions' => '',
 			'fields' => '',
