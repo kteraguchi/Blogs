@@ -23,7 +23,7 @@
 					0 => __d('blogs', 'All status'),
 					NetCommonsBlockComponent::STATUS_PUBLISHED   => __d('net_commons', 'Published'),
 					NetCommonsBlockComponent::STATUS_APPROVED    => __d('net_commons', 'Approving'),
-					NetCommonsBlockComponent::STATUS_DRAFTED     => __d('net_commons', 'Temporary'),
+					NetCommonsBlockComponent::STATUS_IN_DRAFT     => __d('net_commons', 'Temporary'),
 					NetCommonsBlockComponent::STATUS_DISAPPROVED => __d('net_commons', 'Disapproving'),
 
 				);

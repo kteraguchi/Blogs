@@ -117,7 +117,7 @@ s
 						'BlogEntry.created_user' => $userId
 					),
 					array(
-						'BlogEntry.status !=' => NetCommonsBlockComponent::STATUS_DRAFTED
+						'BlogEntry.status !=' => NetCommonsBlockComponent::STATUS_IN_DRAFT
 					)
 				)
 			)

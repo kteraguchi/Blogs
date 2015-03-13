@@ -17,7 +17,18 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  */
 class BlogEntry extends BlogsAppModel {
 
-/**
+	/**
+	 * use behaviors
+	 *
+	 * @var array
+	 */
+	public $actsAs = array(
+		'NetCommons.Trackable',
+//		'NetCommons.Publishable'
+
+	);
+
+	/**
  * Validation rules
  *
  * @var array
@@ -141,7 +152,7 @@ class BlogEntry extends BlogsAppModel {
 								'BlogEntry.created_user' => $userId
 							),
 							array(
-								'BlogEntry.status !=' => NetCommonsBlockComponent::STATUS_DRAFTED
+								'BlogEntry.status !=' => NetCommonsBlockComponent::STATUS_IN_DRAFT
 							)
 						)
 					)
