@@ -1,3 +1,5 @@
+<?php echo $this->element('shared_header'); ?>
+
 <div class="blogEntries index">
 	<h1><?php echo $listTitle ?></h1>
 

@@ -39,17 +39,6 @@ class BlogsAppController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-//		$blogBlockSetting = $this->BlogBlockSetting->find('first',array('conditions' => array('Block.id' => $this->viewVars['blockId'])));
-//		if($blogBlockSetting){
-//			$this->blockSetting = $blogBlockSetting;
-//		}else{
-//			// TODO blog_block_settingsにまだデータがないときはデフォルトデータを書き込む
-//		}
-//		var_dump($this);
-////		var_dump($blogBlockSetting);
-
-		// TODO blog_block_settingsロード
-		// TODO blog_frame_settingsロード
 	}
 
 
@@ -75,6 +64,7 @@ class BlogsAppController extends AppController {
 
 	protected function loadBlockSetting() {
 		$this->blockSetting = $this->BlogBlockSetting->getSettingByBLockKey($this->viewVars['blockKey']);
+		$this->set('blockSetting', $this->blockSetting);
 	}
 
 	protected function loadFrameSetting() {

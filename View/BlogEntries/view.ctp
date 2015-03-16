@@ -1,3 +1,5 @@
+<?php echo $this->element('shared_header'); ?>
+
 <?php echo $this->Html->link(__d('blogs', 'Move list'), array('controller' => 'blog_entries', 'action' => 'index', $frameId)); ?>
 
 <h1><?php echo h($blogEntry['BlogEntry']['title']); ?></h1>
@@ -28,7 +30,8 @@
 </div>
 
 <div>
-	TODO コメント
+<!-- ε(　　　　 v ﾟωﾟ)　＜ Coreで開発されたらコメント機能を組み込む-->
+	<?php //echo $this->element('Comments.index'); ?>
 
 </div>
 

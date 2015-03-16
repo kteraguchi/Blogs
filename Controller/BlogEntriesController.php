@@ -71,6 +71,8 @@ class BlogEntriesController extends BlogsAppController {
 	 * @return void
 	 */
 	public function view() {
+		$this->loadBlockSetting();
+		$this->loadFrameSetting();
 
 		$id = $this->request->params['named']['id'];
 		if($this->viewVars['contentReadable']){
@@ -95,6 +97,8 @@ class BlogEntriesController extends BlogsAppController {
 			// tag取得
 			$blogTags = $this->BlogTag->getTagsByEntryId($id);
 			$this->set('blogTags', $blogTags);
+
+			// ε(　　　　 v ﾟωﾟ)　＜ コメント取得
 
 		}else{
 			// 表示できない記事へのアクセスなら403
