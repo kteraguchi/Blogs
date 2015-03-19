@@ -17,7 +17,18 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  */
 class BlogTag extends BlogsAppModel {
 
-/**
+	/**
+	 * use behaviors
+	 *
+	 * @var array
+	 */
+	public $actsAs = array(
+		'NetCommons.Trackable',
+//		'NetCommons.Publishable'
+
+	);
+
+	/**
  * Validation rules
  *
  * @var array
@@ -98,6 +109,38 @@ class BlogTag extends BlogsAppModel {
 		$tags = $BlogEntryTagLink->find('all', $options);
 
 		return $tags;
+	}
+
+	public function saveEntryTags($blockId, $entryId, $tags) {
+		foreach($tags as $tag){
+			//
+			$savedTag = $this->findByBlockIdAndName($blockId, $tag['name']);
+			if( !$savedTag){
+				// $tagがないなら保存
+				$data = $this->create();
+
+				$data['BlogTag']['name'] = $tag['name'];
+				$data['BlogTag']['block_id'] = $blockId;
+				$data['BlogTag']['key'] = $this->makeKey();
+				if($this->save($data)) {
+					$savedTag = $this->findById($this->id);
+				}else{
+					return false;
+				}
+			}
+			// save link
+			$savedLink = $this->BlogEntryTagLink->findByBlogEntryIdAndBlogTagId($entryId, $savedTag['BlogTag']['id']);
+			if(!$savedLink){
+				$link = $this->BlogEntryTagLink->create();
+				$link['BlogEntryTagLink']['blog_entry_id'] = $entryId;
+				$link['BlogEntryTagLink']['blog_tag_id'] = $savedTag['BlogTag']['id'];
+
+				if( !$this->BlogEntryTagLink->save($link)){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 }

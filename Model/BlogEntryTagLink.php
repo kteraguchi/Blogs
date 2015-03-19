@@ -16,6 +16,16 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  * Summary for BlogEntryTagLink Model
  */
 class BlogEntryTagLink extends BlogsAppModel {
+	/**
+	 * use behaviors
+	 *
+	 * @var array
+	 */
+	public $actsAs = array(
+		'NetCommons.Trackable',
+//		'NetCommons.Publishable'
+
+	);
 
 /**
  * Validation rules

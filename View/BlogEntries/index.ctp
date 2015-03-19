@@ -6,13 +6,15 @@
 	<div class="row">
 		<div class="col-xs-2">
 			<?php if ($contentCreatable): ?>
+				<a href="/blogs/blog_entries/add/<?php echo $frameId ?>">
 				<button class="btn btn-success"
 						tooltip="<?php echo __d('blogs', 'Add entry'); ?>">
 					<span class="glyphicon glyphicon-plus"></span>
 				</button>
 				<span class="hidden">
 					<?php echo __d('blogs', 'Add entry'); ?>
-				</span>
+				</span></a>
+
 			<?php endif; ?>
 		</div>
 

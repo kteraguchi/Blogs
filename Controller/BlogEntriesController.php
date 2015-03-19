@@ -9,7 +9,8 @@ App::uses('BlogsAppController', 'Blogs.Controller');
 * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
 * @link     http://www.netcommons.org NetCommons Project
 * @license  http://www.netcommons.org/license.txt NetCommons License
- * @propperty BlogEntry $BlogEntry
+ * @property BlogEntry $BlogEntry
+ * @property BlogTag $BlogTag
  */
 
 class BlogEntriesController extends BlogsAppController {
@@ -22,6 +23,7 @@ class BlogEntriesController extends BlogsAppController {
 		'Blogs.BlogBlockSetting',
 		'Blogs.BlogCategory',
 		'Blogs.BlogTag',
+		'Comments.Comment',
 	);
 
 
@@ -30,7 +32,10 @@ class BlogEntriesController extends BlogsAppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array(
+		'Paginator',
+		'NetCommons.NetCommonsWorkflow',
+		);
 
 	public function index(){
 		$this->setupBlogTitle();
@@ -135,27 +140,57 @@ class BlogEntriesController extends BlogsAppController {
 		$this->set('yearMonthOptions', $options);
 	}
 
-
-// ε(　　　　 v ﾟωﾟ)　＜　この下まだ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->BlogEntry->create();
+			// set status
+			$status = $this->NetCommonsWorkflow->parseStatus();
+			$this->request->data['BlogEntry']['status'] = $status;
+
+			// set key
+			$key = $this->BlogEntry->makeKey();
+			$this->request->data['BlogEntry']['key'] = $key;
 			if ($this->BlogEntry->save($this->request->data)) {
-				$this->Session->setFlash(__('The blog entry has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+
+				// save tags
+				if($this->BlogTag->saveEntryTags($this->viewVars['blockId'], $this->BlogEntry->id, $this->request->data['BlogTag'])){
+					// save entry_tag_links
+
+					$this->Session->setFlash(__('The blog entry has been saved.'));
+					return $this->redirect(array('action' => 'view', $this->viewVars['frameId'], 'id' => $this->BlogEntry->id));
+
+				}else{
+					$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
+				}
 			} else {
 				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
 			}
 		}
-		$blogCategories = $this->BlogEntry->BlogCategory->find('list');
+		//  このブロックのカテゴリだけに絞り込む
+		$blogCategories = $this->BlogCategory->getCategoriesList($this->viewVars['blockId']);
 		$this->set(compact('blogCategories'));
+
+		$blogEntry = $this->BlogEntry->getNew();
+		$this->set('blogEntry', $blogEntry);
+
+		$comments = $this->Comment->getComments(
+			array(
+				'plugin_key' => 'blogs',
+				'content_key' => isset($blogEntry['BlogEntry']['key']) ? $blogEntry['BlogEntry']['key'] : null,
+			)
+		);
+		$this->set('comments', $comments);
+
 	}
+
+
+// ε(　　　　 v ﾟωﾟ)　＜　この下まだ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
 
 /**
  * edit method

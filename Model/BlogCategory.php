@@ -110,5 +110,13 @@ class BlogCategory extends BlogsAppModel {
 		return $categories;
 	}
 
+	public function getCategoriesList($blockId) {
+		$categories = $this->getCategories($blockId);
+		$ret = array();
+		foreach($categories as $category){
+			$ret[$category['BlogCategory']['id']] = $category['BlogCategory']['name'];
+		}
+		return $ret;
+	}
 
 }

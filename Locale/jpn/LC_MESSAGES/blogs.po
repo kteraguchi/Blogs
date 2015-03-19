@@ -18,3 +18,9 @@ msgstr "一覧へ"
 
 msgid "tag"
 msgstr "タグ"
+
+msgid "Write body2"
+msgstr "続きを書く"
+
+msgid "Add tag"
+msgstr "タグ追加"
