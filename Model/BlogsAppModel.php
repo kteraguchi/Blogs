@@ -28,4 +28,18 @@ class BlogsAppModel extends AppModel {
 		return (Security::hash($className . mt_rand() . microtime(), 'md5'));
 	}
 
+	public function begin() {
+		$dataSource = $this->getDataSource();
+		$dataSource->begin();
+	}
+	public function commit() {
+		$dataSource = $this->getDataSource();
+		$dataSource->commit();
+
+	}
+	public function rollback() {
+		$dataSource = $this->getDataSource();
+		$dataSource->rollback();
+	}
+
 }

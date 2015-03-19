@@ -147,6 +147,7 @@ class BlogEntriesController extends BlogsAppController {
 	 */
 	public function add() {
 		if ($this->request->is('post')) {
+			$this->BlogEntry->begin();
 			$this->BlogEntry->create();
 			// set status
 			$status = $this->NetCommonsWorkflow->parseStatus();
@@ -161,13 +162,18 @@ class BlogEntriesController extends BlogsAppController {
 				if($this->BlogTag->saveEntryTags($this->viewVars['blockId'], $this->BlogEntry->id, $this->request->data['BlogTag'])){
 					// save entry_tag_links
 
+					$this->BlogEntry->commit();
+
 					$this->Session->setFlash(__('The blog entry has been saved.'));
+
 					return $this->redirect(array('action' => 'view', $this->viewVars['frameId'], 'id' => $this->BlogEntry->id));
 
 				}else{
+					$this->BlogEntry->rollback();
 					$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
 				}
 			} else {
+				$this->BlogEntry->rollback();
 				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
 			}
 		}
