@@ -42,4 +42,17 @@ class BlogsAppModel extends AppModel {
 		$dataSource->rollback();
 	}
 
+
+	public function beforeValidate($options = array()) {
+		$this->validate = Hash::merge($this->validate,
+			$this->getValidateSpecification()
+		);
+
+		return parent::beforeValidate($options);
+	}
+
+	protected function getValidateSpecification() {
+		return array();
+	}
+
 }

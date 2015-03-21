@@ -28,63 +28,7 @@ class BlogEntry extends BlogsAppModel {
 
 	);
 
-	/**
- * Validation rules
- *
- * @var array
- */
-	public $validate = array(
-		'blog_category_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'key' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'status' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'vote_number' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'is_auto_translated' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
+
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -95,7 +39,7 @@ class BlogEntry extends BlogsAppModel {
  */
 	public $belongsTo = array(
 		'BlogCategory' => array(
-			'className' => 'BlogCategory',
+			'className' => 'Blogs.BlogCategory',
 			'foreignKey' => 'blog_category_id',
 			'conditions' => '',
 			'fields' => '',
@@ -110,7 +54,7 @@ class BlogEntry extends BlogsAppModel {
  */
 	public $hasMany = array(
 		'BlogEntryTagLink' => array(
-			'className' => 'BlogEntryTagLink',
+			'className' => 'Blogs.BlogEntryTagLink',
 			'foreignKey' => 'blog_entry_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -123,6 +67,81 @@ class BlogEntry extends BlogsAppModel {
 			'counterQuery' => ''
 		)
 	);
+
+	protected function getValidateSpecification() {
+		/**
+		 * Validation rules
+		 *
+		 * @var array
+		 */
+		 $validate = array(
+			'title' => array(
+				'title' => [
+					'rule' => array('notEmpty'),
+					'message' => __d('blogs', 'require title'),
+					//'allowEmpty' => false,
+					'required' => true,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				],
+			),
+
+			'blog_category_id' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					//'message' => 'Your custom message here',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+			'key' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					//'message' => 'Your custom message here',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+			'status' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					//'message' => 'Your custom message here',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+			'vote_number' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					//'message' => 'Your custom message here',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+			'is_auto_translated' => array(
+				'boolean' => array(
+					'rule' => array('boolean'),
+					//'message' => 'Your custom message here',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+		);
+		return $validate;
+
+	}
+
+
 
 	/**
 	 * UserIdと権限から参照可能なEntryを取得するCondition配列を返す
