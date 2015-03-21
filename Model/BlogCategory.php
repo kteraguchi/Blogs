@@ -54,7 +54,7 @@ class BlogCategory extends BlogsAppModel {
 	 */
 	public $belongsTo = array(
 		'Block' => array(
-			'className' => 'Block',
+			'className' => 'Blocks.Block',
 			'foreignKey' => 'block_id',
 			'conditions' => '',
 			'fields' => '',
@@ -74,7 +74,7 @@ class BlogCategory extends BlogsAppModel {
  */
 	public $hasMany = array(
 		'BlogEntry' => array(
-			'className' => 'BlogEntry',
+			'className' => 'Blogs.BlogEntry',
 			'foreignKey' => 'blog_category_id',
 			'dependent' => false,
 			'conditions' => '',
