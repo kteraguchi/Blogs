@@ -30,3 +30,6 @@ msgstr "タイトルを入力してください"
 
 msgid "Title"
 msgstr "タイトル"
+
+msgid "Category"
+msgstr "カテゴリ"

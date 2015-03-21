@@ -1,9 +1,11 @@
 <?php echo $this->element('shared_header'); ?>
+<?php echo $this->Html->css('/blogs/css/blogs.css'); ?>
+
 
 <div class="blogEntries index">
-	<h1><?php echo $listTitle ?></h1>
+	<h1 class="blogs_blogTitle"><?php echo $listTitle ?></h1>
 
-	<div class="row">
+	<div class="row blogs_navigation_header">
 		<div class="col-xs-2">
 			<?php if ($contentCreatable): ?>
 				<a href="/blogs/blog_entries/add/<?php echo $frameId ?>">
@@ -53,19 +55,17 @@
 		<!--記事一覧-->
 		<?php foreach ($blogEntries as $blogEntry): ?>
 
-			<div>
-				<h2>
+			<div class="blogs_entry">
+				<h2 class="blogs_entry_title">
 					<?php echo $this->Html->link($blogEntry['BlogEntry']['title'], array('controller' => 'blog_entries', 'action' => 'view', $frameId, 'id' => $blogEntry['BlogEntry']['id'])); ?>
 				</h2>
 				<?php echo $this->element('entry_meta_info', array('blogEntry' => $blogEntry)); ?>
 
-				<div>
-
+				<div class="blogs_entry_body1">
 					<?php echo $blogEntry['BlogEntry']['body1']; ?>
 				</div>
 				<div>
-					TODO　続きがあるときだけ　アコーディオン表示
-					続きを読む
+					<a href="">TODO 続きを読む</a>
 				</div>
 
 				<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry)); ?>

@@ -1,4 +1,5 @@
 <?php echo $this->element('shared_header'); ?>
+<?php echo $this->Html->css('/blogs/css/blogs.css'); ?>
 
 <?php echo $this->Html->link(__d('blogs', 'Move list'), array('controller' => 'blog_entries', 'action' => 'index', $frameId)); ?>
 
@@ -7,7 +8,7 @@
 <?php echo $this->element('entry_meta_info'); ?>
 
 <div>
-	TODO 編集
+	TODO 編集（■に鉛筆マーク）
 	TODO 削除
 </div>
 

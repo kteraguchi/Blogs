@@ -156,25 +156,29 @@ class BlogEntriesController extends BlogsAppController {
 			// set key
 			$key = $this->BlogEntry->makeKey();
 			$this->request->data['BlogEntry']['key'] = $key;
-			if ($this->BlogEntry->save($this->request->data)) {
-
-				// save tags
-				if($this->BlogTag->saveEntryTags($this->viewVars['blockId'], $this->BlogEntry->id, $this->request->data['BlogTag'])){
-					// save entry_tag_links
-
-					$this->BlogEntry->commit();
-
-					$this->Session->setFlash(__('The blog entry has been saved.'));
-
-					return $this->redirect(array('action' => 'view', $this->viewVars['frameId'], 'id' => $this->BlogEntry->id));
-
-				}else{
-					$this->BlogEntry->rollback();
-					$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
+			try{
+				if (! $this->BlogEntry->save($this->request->data)) {
+					// @codeCoverageIgnoreStart
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+					// @codeCoverageIgnoreEnd
 				}
-			} else {
+				if($this->request->data['BlogTag']){
+					if(!$this->BlogTag->saveEntryTags($this->viewVars['blockId'], $this->BlogEntry->id, $this->request->data['BlogTag'])){
+						// @codeCoverageIgnoreStart
+						throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+						// @codeCoverageIgnoreEnd
+					}
+				}
+				$this->BlogEntry->commit();
+
+				$this->Session->setFlash(__('The blog entry has been saved.'));
+
+				return $this->redirect(array('action' => 'view', $this->viewVars['frameId'], 'id' => $this->BlogEntry->id));
+
+			}catch (Exception $e){
 				$this->BlogEntry->rollback();
 				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
+
 			}
 		}
 		//  このブロックのカテゴリだけに絞り込む
