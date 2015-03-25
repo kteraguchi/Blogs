@@ -106,20 +106,48 @@ class BlogTag extends BlogsAppModel {
 			'conditions' => $conditions,
 		);
 
+
 		$tags = $BlogEntryTagLink->find('all', $options);
 
 		return $tags;
 	}
 
-	public function saveEntryTags($blockId, $entryId, $tags) {
+	public function getTagsListByEntryId($entryId) {
+		$tags = $this->getTagsByEntryId($entryId);
+		$list = array();
 		foreach($tags as $tag){
+			$list[] = $tag['BlogTag'];
+		}
+		return $list;
+
+	}
+
+	public function saveEntryTags($blockId, $entryId, $tags) {
+        $tagNameList = array();
+        foreach($tags as $tag){
+            $tagNameList[] = $tag;
+        }
+        // 記事にリンクされたタグを取得
+        $linkedTags = $this->getTagsByEntryId($entryId);
+        // $tagsにないタグとのリンクを削除
+        foreach($linkedTags as $tmpTag){
+            $index = array_search($tmpTag['BlogTag']['name'], $tagNameList);
+            if($index === false){
+                // 記事から削除されたタグ　リンク削除
+                $this->BlogEntryTagLink->delete($tmpTag['BlogEntryTagLink']['id']);
+            }else{
+                // 記事とリンク済みのタグ DB処理不要
+                unset($tagNameList[$index]);
+            }
+        }
+		foreach($tagNameList as $tagName){
 			//
-			$savedTag = $this->findByBlockIdAndName($blockId, $tag['name']);
+			$savedTag = $this->findByBlockIdAndName($blockId, $tagName);
 			if( !$savedTag){
 				// $tagがないなら保存
 				$data = $this->create();
 
-				$data['BlogTag']['name'] = $tag['name'];
+				$data['BlogTag']['name'] = $tagName;
 				$data['BlogTag']['block_id'] = $blockId;
 				$data['BlogTag']['key'] = $this->makeKey();
 				if($this->save($data)) {
@@ -142,5 +170,6 @@ class BlogTag extends BlogsAppModel {
 		}
 		return true;
 	}
+
 
 }

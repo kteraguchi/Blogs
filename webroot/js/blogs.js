@@ -35,16 +35,24 @@ NetCommonsApp.controller('Blogs',
 
         $scope.writeBody2 = false;
 
-        //$scope.blog_entry = {
-        //    body1 :''
-        //}
+        $scope.init = function(data){
+            $scope.blogEntry = data.BlogEntry;
+            $scope.tags = (data.BlogTag) ? data.BlogTag : [];
+        }
+
+        $scope.blogEntry = {
+            body1 :'',
+            body2 : ''
+        }
 
         var where = $filter('filter');
 
         $scope.tags = [];
         $scope.newTag = '';
         $scope.addTag = function(){
-            $scope.tags.push( $scope.newTag);
+            $scope.tags.push({
+                name: $scope.newTag
+            });
             $scope.newTag = '';
         }
         // 任意の tag を削除

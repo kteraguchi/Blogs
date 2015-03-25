@@ -8,8 +8,21 @@
 <?php echo $this->element('entry_meta_info'); ?>
 
 <div>
-	TODO 編集（■に鉛筆マーク）
-	TODO 削除
+	<?php if ($contentCreatable): ?>
+
+	<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Edit'); ?>">
+		<a href="<?php echo $this->Html->url(array('action' => 'edit', $frameId, 'id' => $blogEntry['BlogEntry']['id'])) ?>" class="btn btn-primary">
+			<span class="glyphicon glyphicon-edit"> </span>
+		</a>
+	</span>
+
+	<?php //公開済みを削除できるのは公開権限が必用？ ?>
+	<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Delete'); ?>">
+		<a href="<?php echo $this->Html->url(array('action' => 'delete', $frameId, 'id' => $blogEntry['BlogEntry']['id'])) ?>" class="btn btn-danger">
+			<span class="glyphicon glyphicon-trash"> </span>
+		</a>
+	</span>
+	<?php endif ?>
 </div>
 
 

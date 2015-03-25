@@ -3,11 +3,12 @@
 <?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
 
 
-<div class="blogEntries form" ng-controller="Blogs">
+<?php $dataJson = json_encode($this->request->data) ?>
+<div class="blogEntries form" ng-controller="Blogs" ng-init="init(<?php echo h($dataJson)?>)">
 	<div class="modal-header">BLOG</div>
 	<div class="modal-body">
 		<ul class="nav nav-tabs" role="tablist">
-			<li ng-class="{active:tab.isSet(0)}" class="active">
+			<li  class="active">
 				<a href="" role="tab" data-toggle="tab">
 					<?php echo __('Edit') ?>
 				</a>
@@ -28,7 +29,7 @@
 						'div' => 'form-control'
 					)
 				); ?>
-
+				<?php echo $this->Form->input('id'); ?>
 				<!--		--><?php //echo $this->Form->hidden('Frame.id', array(
 				//			'value' => $frameId,
 				//		)); ?>
@@ -58,7 +59,7 @@
 									[
 										'class' => 'form-control',
 										'ui-tinymce' => 'tinymce.options',
-										'ng-model' => 'blog_entry.body1',
+										'ng-model' => 'blogEntry.body1',
 										'rows' => 5,
 										'required' => 'required',
 									]
@@ -89,7 +90,7 @@
 									[
 										'class' => 'form-control',
 										'ui-tinymce' => 'tinymce.options',
-										'ng-model' => 'blog_entry.body2',
+										'ng-model' => 'blogEntry.body2',
 										'rows' => 5,
 									]
 								) ?>
@@ -125,13 +126,13 @@
 
 							<div>
 								<div ng-repeat="tag in tags" class="badge">
-									{{tag}}
+									{{tag.name}}
 									&nbsp;
 									<button type="button" ng-click="removeTag(tag)" class="btn btn-xs">
 										<span class="glyphicon glyphicon-remove small"><span
 												class="sr-only">Remove tags</span> </span>
 									</button>
-									<input type="hidden" name="data[BlogTag][{{$index}}][name]" value="{{tag}}"/>
+									<input type="hidden" name="data[BlogTag][{{$index}}][name]" value="{{tag.name}}"/>
 								</div>
 							</div>
 						</div>
