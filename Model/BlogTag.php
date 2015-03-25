@@ -123,9 +123,12 @@ class BlogTag extends BlogsAppModel {
 	}
 
 	public function saveEntryTags($blockId, $entryId, $tags) {
+        if(!is_array($tags)){
+            $tags = array();
+        }
         $tagNameList = array();
         foreach($tags as $tag){
-            $tagNameList[] = $tag;
+            $tagNameList[] = $tag['name'];
         }
         // 記事にリンクされたタグを取得
         $linkedTags = $this->getTagsByEntryId($entryId);

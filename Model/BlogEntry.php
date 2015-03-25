@@ -252,6 +252,17 @@ class BlogEntry extends BlogsAppModel {
 
 	}
 
+    public function saveEntry($blockId, $data)
+    {
+        $this->loadModels(array('BlogTag' => 'Blogs.BlogTag'));
+        if($this->save($data)){
+            if($this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])){
+                return true;
+            }
+        }
+        return false;
+    }
+
 	protected function getPublishedConditions($currentDateTime) {
 		return array(
 			'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,

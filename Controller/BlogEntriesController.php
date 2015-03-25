@@ -167,18 +167,12 @@ class BlogEntriesController extends BlogsAppController {
 			$key = $this->BlogEntry->makeKey();
 			$this->request->data['BlogEntry']['key'] = $key;
 			try{
-				if (! $this->BlogEntry->save($this->request->data)) {
-					// @codeCoverageIgnoreStart
+                if (! $this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) {
+
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 					// @codeCoverageIgnoreEnd
 				}
-				if($this->request->data['BlogTag']){
-					if(!$this->BlogTag->saveEntryTags($this->viewVars['blockId'], $this->BlogEntry->id, $this->request->data['BlogTag'])){
-						// @codeCoverageIgnoreStart
-						throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-						// @codeCoverageIgnoreEnd
-					}
-				}
+
 				$this->BlogEntry->commit();
 
 				$this->Session->setFlash(__('The blog entry has been saved.'));
@@ -224,25 +218,17 @@ class BlogEntriesController extends BlogsAppController {
 			$this->request->data['BlogEntry']['status'] = $status;
 
 			try{
-				if (! $this->BlogEntry->save($this->request->data)) {
+				if (! $this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) {
 					// @codeCoverageIgnoreStart
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 					// @codeCoverageIgnoreEnd
 				}
-				if($this->request->data['BlogTag']){
-					if(!$this->BlogTag->saveEntryTags($this->viewVars['blockId'], $this->BlogEntry->id, $this->request->data['BlogTag'])){
-						// @codeCoverageIgnoreStart
-						throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-						// @codeCoverageIgnoreEnd
-					}
-				}else{
-					// タグがないなら関連タグをremove
-				}
+
 				$this->BlogEntry->commit();
 
 				$this->Session->setFlash(__('The blog entry has been saved.'));
 
-//				return $this->redirect(array('action' => 'view', $this->viewVars['frameId'], 'id' => $this->BlogEntry->id));
+				return $this->redirect(array('action' => 'view', $this->viewVars['frameId'], 'id' => $this->BlogEntry->id));
 
 			}catch (Exception $e){
 				$this->BlogEntry->rollback();
