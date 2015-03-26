@@ -210,7 +210,17 @@ class BlogEntriesController extends BlogsAppController {
 	 * @return void
 	 */
 	public function edit() {
-		if ($this->request->is(array('post', 'put'))) {
+        $id = $this->request->params['named']['id'];
+        $blogEntry = $this->BlogEntry->findById($id);
+        if(empty($blogEntry)){
+            // TODO 404 NotFound
+            throw new NotFoundException();
+            // 新規なら空配列作成
+            //		$blogEntry = $this->BlogEntry->getNew();
+        }
+
+
+        if ($this->request->is(array('post', 'put'))) {
 			$this->BlogEntry->begin();
 			$this->BlogEntry->create();
 			// set status
@@ -218,7 +228,8 @@ class BlogEntriesController extends BlogsAppController {
 			$this->request->data['BlogEntry']['status'] = $status;
 
 			try{
-				if (! $this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) {
+                $data = Hash::merge($blogEntry, $this->request->data);
+				if (! $this->BlogEntry->saveEntry($this->viewVars['blockId'], $data)) {
 					// @codeCoverageIgnoreStart
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 					// @codeCoverageIgnoreEnd
@@ -236,7 +247,6 @@ class BlogEntriesController extends BlogsAppController {
 
 			}
 		}else{
-			$id = $this->request->params['named']['id'];
 
 			$options = array('conditions' => array('BlogEntry.' . $this->BlogEntry->primaryKey => $id));
 			$this->request->data = $this->BlogEntry->find('first', $options);
@@ -249,12 +259,11 @@ class BlogEntriesController extends BlogsAppController {
 		$blogCategories = $this->BlogCategory->getCategoriesList($this->viewVars['blockId']);
 		$this->set(compact('blogCategories'));
 
-		$blogEntry = $this->BlogEntry->getNew();
 		$this->set('blogEntry', $blogEntry);
 
 		$comments = $this->Comment->getComments(
 			array(
-				'plugin_key' => 'blogs',
+				'plugin_key' => 'blogentries', // ε(　　　　 v ﾟωﾟ)　＜ Commentプラグインでセーブするときにモデル名をstrtolowerして複数形になおして保存してるのでこんな名前。なんとかしたい
 				'content_key' => isset($blogEntry['BlogEntry']['key']) ? $blogEntry['BlogEntry']['key'] : null,
 			)
 		);
