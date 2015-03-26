@@ -17,6 +17,8 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  */
 class BlogTag extends BlogsAppModel {
 
+
+	public $recursive = -1;
 	/**
 	 * use behaviors
 	 *
@@ -72,17 +74,15 @@ class BlogTag extends BlogsAppModel {
 			'order' => ''
 		)
 	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'BlogEntryTagLink' => array(
-			'className' => 'Blogs.BlogEntryTagLink',
+	public $hasAndBelongsToMany = array(
+		'BlogEntry' => array(
+			'className' => 'Blogs.BlogEntry',
+			'joinTable' => 'blog_entry_tag_links',
 			'foreignKey' => 'blog_tag_id',
+			'associationForeignKey' => 'blog_entry_id',
+			'unique' => false,
 			'dependent' => false,
+			'with' => 'Blogs.BlogEntryTagLink',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -93,6 +93,8 @@ class BlogTag extends BlogsAppModel {
 			'counterQuery' => ''
 		)
 	);
+
+
 
 	public function getTagsByEntryId($entryId) {
 		App::uses('BlogEntryTagLink', 'Blogs.Model');

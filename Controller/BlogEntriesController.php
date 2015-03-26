@@ -47,6 +47,11 @@ class BlogEntriesController extends BlogsAppController {
 		);
 
 
+	protected $filter = array(
+		'categoryId' => 0,
+		'status' => 0,
+	);
+
 	public function index(){
 		$this->set('listTitle', $this->blogTitle);
 
@@ -55,30 +60,47 @@ class BlogEntriesController extends BlogsAppController {
 
 	public function category() {
 		// indexとの違いはcategoryIdでの絞り込みをするだけ
-		$categoryId = $this->getNamed('id', 0);
-		$this->set('currentCategoryId', $categoryId);
+		$this->filter['categoryId'] = $this->getNamed('id', 0);
 
 		// カテゴリ名をタイトルに
-		$category = $this->BlogCategory->findById($categoryId);
+		$category = $this->BlogCategory->findById($this->filter['categoryId']);
 		$this->set('listTitle', __d('blogs', 'Category') . ':' .  $category['BlogCategory']['name']);
 
 		$conditions = array(
-			'BlogEntry.blog_category_id' => $categoryId
+			'BlogEntry.blog_category_id' => $this->filter['categoryId']
 		);
 		$this->_list($conditions);
 	}
 
 	public function tag(){
 		// indexとのちがいはtagIdでの絞り込みだけ
+		$tagId = $this->getNamed('id', 0);
+
+		// カテゴリ名をタイトルに
+		$tag = $this->BlogTag->findById($tagId);
+		$this->set('listTitle', __d('blogs', 'Tag') . ':' .  $tag['BlogTag']['name']);
+
+		// TODO join
+		$conditions = array(
+			'BlogEntryTagLink.blog_tag_id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
+		);
+//		$this->BlogEntry->hasMany['BlogEntryTagLink']['conditions'] = array(
+//			'BlogEntryTagLink.blog_tag_id' => $tagId
+//		);
+//		$conditions = array();
+		$this->_list($conditions);
 	}
 
 	public function year_month(){
 		// indexとの違いはyear_monthでの絞り込み　limitなし
 	}
 
+
 	protected function _list($extraConditions = array()){
-		$status = $this->getNamed('status', 0);
-		$this->set('currentFilterStatus', $status);
+		$this->filter['status'] = $this->getNamed('status', 0);
+		$this->set('currentFilterStatus', $this->filter['status']);
+
+		$this->set('currentCategoryId', $this->filter['categoryId']);
 
 		$this->setupBlogTitle();
 		$this->loadBlockSetting();
@@ -95,9 +117,9 @@ class BlogEntriesController extends BlogsAppController {
 				$this->viewVars,
 				$this->getCurrentDateTime()
 			);
-			if($status){
+			if($this->filter['status']){
 				//  status絞り込み
-				$conditions['BlogEntry.status'] = $status;
+				$conditions['BlogEntry.status'] = $this->filter['status'];
 			}
 			if($extraConditions){
 				$conditions = Hash::merge($conditions, $extraConditions);
@@ -106,7 +128,15 @@ class BlogEntriesController extends BlogsAppController {
 			$this->Paginator->settings = array(
 				'conditions' => $conditions,
 				'limit' => $this->frameSetting['display_number'],
-				'order' => 'published_datetime DESC'
+				'order' => 'published_datetime DESC',
+				'joins' => array(
+					array(
+						'type' => 'LEFT',
+						'table' => 'blog_entry_tag_links',
+						'alias' => 'BlogEntryTagLink',
+						'conditions' => '`BlogEntry`.`id`=`BlogEntryTagLink`.`blog_entry_id`', //ε(　　　　 v ﾟωﾟ)　＜タグ絞り込みしないときは不要
+					)
+				)
 			);
 			$this->BlogEntry->recursive = 0;
 			$this->set('blogEntries', $this->Paginator->paginate());

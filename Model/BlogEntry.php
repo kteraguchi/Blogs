@@ -5,9 +5,9 @@
  * @property BlogCategory $BlogCategory
  * @property BlogEntryTagLink $BlogEntryTagLink
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
 App::uses('BlogsAppModel', 'Blogs.Model');
@@ -29,14 +29,13 @@ class BlogEntry extends BlogsAppModel {
 	);
 
 
-
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'BlogCategory' => array(
 			'className' => 'Blogs.BlogCategory',
@@ -47,16 +46,15 @@ class BlogEntry extends BlogsAppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'BlogEntryTagLink' => array(
-			'className' => 'Blogs.BlogEntryTagLink',
+	public $hasAndBelongsToMany = array(
+		'BlogTag' => array(
+			'className' => 'Blogs.BlogTag',
+			'joinTable' => 'blog_entry_tag_links',
 			'foreignKey' => 'blog_entry_id',
+			'associationForeignKey' => 'blog_tag_id',
+			'unique' => false,
 			'dependent' => false,
+			'with' => 'Blogs.BlogEntryTagLink',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -74,7 +72,7 @@ class BlogEntry extends BlogsAppModel {
 		 *
 		 * @var array
 		 */
-		 $validate = array(
+		$validate = array(
 			'title' => array(
 				'title' => [
 					'rule' => array('notEmpty'),
@@ -85,7 +83,6 @@ class BlogEntry extends BlogsAppModel {
 					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				],
 			),
-
 			'blog_category_id' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
@@ -147,7 +144,7 @@ class BlogEntry extends BlogsAppModel {
 			'BlogCategory.block_id' => $blockId
 		);
 
-		if($permissions['contentReadable']){
+		if ($permissions['contentReadable']) {
 
 
 			if ($permissions['contentEditable']) {
@@ -167,7 +164,7 @@ class BlogEntry extends BlogsAppModel {
 					)
 				);
 
-			} elseif ($permissions['contentCreatable']){
+			} elseif ($permissions['contentCreatable']) {
 				// 作成権限
 				$conditions = array_merge(
 					$conditions,
@@ -180,7 +177,7 @@ class BlogEntry extends BlogsAppModel {
 						)
 					)
 				);
-			}else{
+			} else {
 				// 閲覧権限のみ
 				$conditions = array_merge(
 					$conditions,
@@ -189,7 +186,7 @@ class BlogEntry extends BlogsAppModel {
 
 			}
 
-		}else{
+		} else {
 			// contentReadable falseなら何も見えない
 			$conditions = array_merge(
 				$conditions,
@@ -211,11 +208,15 @@ class BlogEntry extends BlogsAppModel {
 	public function getYearMonthCount($blockId, $userId, $permissions, $currentDateTime) {
 		$conditions = $this->getConditions($blockId, $userId, $permissions, $currentDateTime);
 		// 年月でグループ化してカウント→取得できなかった年月をゼロセット
-		$this->virtualFields['year_month'] = 0;			// バーチャルフィールドを追加
-		$this->virtualFields['count'] = 0;			// バーチャルフィールドを追加
-		$result = $this->find('all',
+		$this->virtualFields['year_month'] = 0;            // バーチャルフィールドを追加
+		$this->virtualFields['count'] = 0;            // バーチャルフィールドを追加
+		$result = $this->find(
+			'all',
 			array(
-				'fields'=> array('DATE_FORMAT(BlogEntry.published_datetime, \'%Y-%m\') AS BlogEntry__year_month', 'count(*) AS BlogEntry__count'),
+				'fields' => array(
+					'DATE_FORMAT(BlogEntry.published_datetime, \'%Y-%m\') AS BlogEntry__year_month',
+					'count(*) AS BlogEntry__count'
+				),
 				'conditions' => $conditions,
 				'group' => array('BlogEntry__year_month'), //GROUP BY YEAR(record_date), MONTH(record_date)
 			)
@@ -226,13 +227,13 @@ class BlogEntry extends BlogsAppModel {
 		$oldestEntry = $this->find('first', array('conditions' => $conditions, 'order' => 'published_datetime ASC'));
 		// 一番古い記事の年月から現在までを先にゼロ埋め
 		$currentYearMonthDay = date('Y-m-01', strtotime($oldestEntry['BlogEntry']['published_datetime']));
-		while($currentYearMonthDay <= $currentDateTime){
+		while ($currentYearMonthDay <= $currentDateTime) {
 			$ret[substr($currentYearMonthDay, 0, 7)] = 0;
 			$currentYearMonthDay = date('Y-m-01', strtotime($currentYearMonthDay . ' +1 month'));
 		}
 
 		// 記事がある年月は記事数を上書きしておく
-		foreach($result as $yearMonth){
+		foreach ($result as $yearMonth) {
 			$ret[$yearMonth['BlogEntry']['year_month']] = $yearMonth['BlogEntry']['count'];
 		}
 
@@ -242,24 +243,26 @@ class BlogEntry extends BlogsAppModel {
 
 	}
 
-    public function saveEntry($blockId, $data)
-    {
-        $this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
-        if($this->save($data)){
-            if($this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])){
-                if ($this->Comment->validateByStatus($data, array('caller' => $this->name))) {
-                    if ($this->Comment->data) {
-                        if ( $this->Comment->save(null, true)) {
-                            return true;
-                        }
-                    }
-                }else{
-                    $this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
-                }
-            }
-        }
-        return false;
-    }
+    public function saveEntry($blockId, $data) {
+		$this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
+		if ($this->save($data)) {
+			if ($this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
+				if ($this->Comment->validateByStatus($data, array('caller' => $this->name))) {
+					if ($this->Comment->data) {
+						if ($this->Comment->save(null, true)) {
+							return true;
+						}
+					} else {
+						// コメント無し
+						return true;
+					}
+				} else {
+					$this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
+				}
+			}
+		}
+		return false;
+	}
 
 	protected function getPublishedConditions($currentDateTime) {
 		return array(
