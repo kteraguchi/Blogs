@@ -48,6 +48,35 @@ class BlogEntriesController extends BlogsAppController {
 
 
 	public function index(){
+		$this->set('listTitle', $this->blogTitle);
+
+		$this->_list();
+	}
+
+	public function category() {
+		// indexとの違いはcategoryIdでの絞り込みをするだけ
+		$categoryId = $this->getNamed('id', 0);
+		$this->set('currentCategoryId', $categoryId);
+
+		// カテゴリ名をタイトルに
+		$category = $this->BlogCategory->findById($categoryId);
+		$this->set('listTitle', __d('blogs', 'Category') . ':' .  $category['BlogCategory']['name']);
+
+		$conditions = array(
+			'BlogEntry.blog_category_id' => $categoryId
+		);
+		$this->_list($conditions);
+	}
+
+	public function tag(){
+		// indexとのちがいはtagIdでの絞り込みだけ
+	}
+
+	public function year_month(){
+		// indexとの違いはyear_monthでの絞り込み　limitなし
+	}
+
+	protected function _list($extraConditions = array()){
 		$status = $this->getNamed('status', 0);
 		$this->set('currentFilterStatus', $status);
 
@@ -55,8 +84,6 @@ class BlogEntriesController extends BlogsAppController {
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();
 
-		// TODO リストタイプ毎にタイトルは変更する
-		$this->set('listTitle', $this->blogTitle);
 
 		$this->setCategoryOptions();
 		$this->setYearMonthOptions();
@@ -72,6 +99,9 @@ class BlogEntriesController extends BlogsAppController {
 				//  status絞り込み
 				$conditions['BlogEntry.status'] = $status;
 			}
+			if($extraConditions){
+				$conditions = Hash::merge($conditions, $extraConditions);
+			}
 
 			$this->Paginator->settings = array(
 				'conditions' => $conditions,
@@ -84,7 +114,9 @@ class BlogEntriesController extends BlogsAppController {
 		}else{
 			// 何も見せない
 		}
+		$this->render('index');
 	}
+
 	/**
 	 * view method
 	 *

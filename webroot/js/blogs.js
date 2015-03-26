@@ -147,6 +147,7 @@ NetCommonsApp.controller('Blogs',
 NetCommonsApp.controller('Blogs.Entries',
     function($scope) {
         $scope.selectStatus = 0;
+        $scope.selectCategory = 0;
         $scope.frameId = 0;
 
         $scope.init = function(frameId){
@@ -160,8 +161,15 @@ NetCommonsApp.controller('Blogs.Entries',
             url = '/blogs/blog_entries/index/'+$scope.frameId+'/status:'+$scope.selectStatus;
             location.href = url;
         }
+
+        $scope.filterCategory = function () {
+            url = '/blogs/blog_entries/category/' + $scope.frameId + '/id:' + $scope.selectCategory;
+            location.href = url;
+
+        }
     }
 )
+
 NetCommonsApp.controller('Blogs.Entries.Entry',
     function($scope) {
         $scope.isShowBody2 = false;

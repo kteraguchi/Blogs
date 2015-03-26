@@ -18,8 +18,6 @@ class BlogsController extends BlogsAppController {
 
 		$this->set('html', $html);
 		return;
-
-
     }
 
 }

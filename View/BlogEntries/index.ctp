@@ -40,8 +40,7 @@
 		</div>
 
 		<div class="col-xs-4">
-			<?php $currentCategory = 0 // TODO ?>
-			<?php echo $this->Form->select('category', $categoryOptions, array('empty' => false, 'class'=> 'form-control', 'value' => $currentCategory)); ?>
+			<?php echo $this->Form->select('category', $categoryOptions, array('empty' => false, 'class'=> 'form-control', 'value' => $currentCategoryId, 'ng-change' => 'filterCategory()', 'ng-model' => 'selectCategory', 'ng-init' => 'selectCategory='.$currentCategoryId)); ?>
 		</div>
 
 		<div class="col-xs-3">
