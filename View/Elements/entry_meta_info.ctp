@@ -7,7 +7,7 @@
 <!--	TODO 投稿者アバター-->
 <!--	TODO　投稿者名 リンク-->
 	<?php echo $this->Html->link($blogEntry['TrackableCreator']['username'], array()); ?>&nbsp;
-	カテゴリ:<?php echo $this->Html->link($blogEntry['BlogCategory']['name'], array('controller' => 'blog_entries', 'action' => 'category', $blogEntry['BlogCategory']['id'])); ?>
+	カテゴリ:<?php echo $this->Html->link($blogEntry['BlogCategory']['name'], array('controller' => 'blog_entries', 'action' => 'category', $frameId, 'id' => $blogEntry['BlogCategory']['id'])); ?>
 	</div>
 	<div class="blogs_entry_status">
 		<?php echo $this->element('NetCommons.status_label',

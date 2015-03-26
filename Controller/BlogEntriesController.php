@@ -50,7 +50,7 @@ class BlogEntriesController extends BlogsAppController {
 	protected $filter = array(
 		'categoryId' => 0,
 		'status' => 0,
-		'year_month' => 0,
+		'yearMonth' => 0,
 	);
 
 	public function index(){
@@ -84,10 +84,16 @@ class BlogEntriesController extends BlogsAppController {
 		$conditions = array(
 			'BlogEntryTagLink.blog_tag_id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
 		);
-//		$this->BlogEntry->hasMany['BlogEntryTagLink']['conditions'] = array(
-//			'BlogEntryTagLink.blog_tag_id' => $tagId
-//		);
-//		$conditions = array();
+
+		// ε(　　　　 v ﾟωﾟ)　＜ここでPaginator条件セットするのはどうかなぁ。
+		$this->Paginator->settings['joins'][] =
+			array(
+				'type' => 'LEFT',
+				'table' => 'blog_entry_tag_links',
+				'alias' => 'BlogEntryTagLink',
+				'conditions' => '`BlogEntry`.`id`=`BlogEntryTagLink`.`blog_entry_id`',
+			);
+
 		$this->_list($conditions);
 	}
 
@@ -137,19 +143,12 @@ class BlogEntriesController extends BlogsAppController {
 				$conditions = Hash::merge($conditions, $extraConditions);
 			}
 
-			$this->Paginator->settings = array(
+			$this->Paginator->settings = array_merge($this->Paginator->settings, array(
 				'conditions' => $conditions,
 				'limit' => $this->frameSetting['display_number'],
 				'order' => 'published_datetime DESC',
-				'joins' => array(
-					array(
-						'type' => 'LEFT',
-						'table' => 'blog_entry_tag_links',
-						'alias' => 'BlogEntryTagLink',
-						'conditions' => '`BlogEntry`.`id`=`BlogEntryTagLink`.`blog_entry_id`', //ε(　　　　 v ﾟωﾟ)　＜タグ絞り込みしないときは不要
-					)
-				)
-			);
+				//
+			));
 			$this->BlogEntry->recursive = 0;
 			$this->set('blogEntries', $this->Paginator->paginate());
 
