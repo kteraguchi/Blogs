@@ -44,8 +44,14 @@
 		</div>
 
 		<div class="col-xs-3">
-			<?php $currentYearMonth = 0 // TODO ?>
-			<?php echo $this->Form->select('year_month', $yearMonthOptions, array('empty' => false, 'class'=> 'form-control', 'value' => $currentYearMonth)); ?>
+			<?php echo $this->Form->select('year_month', $yearMonthOptions, array(
+				'empty' => false,
+				'class'=> 'form-control',
+				'value' => $currentYearMonth,
+				'ng-change' => 'moveYearMonth()',
+				'ng-model' => 'selectYearMonth',
+				'ng-init' => 'selectYearMonth="'.$currentYearMonth.'"'
+			)); ?>
 		</div>
 
 	</div>

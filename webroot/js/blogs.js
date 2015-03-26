@@ -148,6 +148,7 @@ NetCommonsApp.controller('Blogs.Entries',
     function($scope) {
         $scope.selectStatus = 0;
         $scope.selectCategory = 0;
+        $scope.selectYearMonth =0;
         $scope.frameId = 0;
 
         $scope.init = function(frameId){
@@ -164,6 +165,12 @@ NetCommonsApp.controller('Blogs.Entries',
 
         $scope.filterCategory = function () {
             url = '/blogs/blog_entries/category/' + $scope.frameId + '/id:' + $scope.selectCategory;
+            location.href = url;
+
+        }
+
+        $scope.moveYearMonth = function () {
+            url = '/blogs/blog_entries/year_month/' + $scope.frameId + '/year_month:' + $scope.selectYearMonth;
             location.href = url;
 
         }

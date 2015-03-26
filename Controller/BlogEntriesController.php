@@ -50,6 +50,7 @@ class BlogEntriesController extends BlogsAppController {
 	protected $filter = array(
 		'categoryId' => 0,
 		'status' => 0,
+		'year_month' => 0,
 	);
 
 	public function index(){
@@ -80,7 +81,6 @@ class BlogEntriesController extends BlogsAppController {
 		$tag = $this->BlogTag->findById($tagId);
 		$this->set('listTitle', __d('blogs', 'Tag') . ':' .  $tag['BlogTag']['name']);
 
-		// TODO join
 		$conditions = array(
 			'BlogEntryTagLink.blog_tag_id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
 		);
@@ -92,7 +92,18 @@ class BlogEntriesController extends BlogsAppController {
 	}
 
 	public function year_month(){
-		// indexとの違いはyear_monthでの絞り込み　limitなし
+		// indexとの違いはyear_monthでの絞り込み
+		$this->filter['yearMonth'] = $this->getNamed('year_month', 0);
+
+		// TODO 年月をタイトルに
+		$this->set('listTitle',   $this->filter['yearMonth']);
+
+		$first = $this->filter['yearMonth'] . '-1';
+		$last = date('Y-m-t', strtotime($first));
+
+		$conditions = array(
+			'BlogEntry.published_datetime BETWEEN ? AND ?' => array($first, $last));
+		$this->_list($conditions);
 	}
 
 
@@ -102,10 +113,11 @@ class BlogEntriesController extends BlogsAppController {
 
 		$this->set('currentCategoryId', $this->filter['categoryId']);
 
+		$this->set('currentYearMonth', $this->filter['yearMonth']);
+
 		$this->setupBlogTitle();
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();
-
 
 		$this->setCategoryOptions();
 		$this->setYearMonthOptions();
