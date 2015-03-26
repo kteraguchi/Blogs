@@ -116,16 +116,6 @@ class BlogEntry extends BlogsAppModel {
 					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
-			'vote_number' => array(
-				'numeric' => array(
-					'rule' => array('numeric'),
-					//'message' => 'Your custom message here',
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
-				),
-			),
 			'is_auto_translated' => array(
 				'boolean' => array(
 					'rule' => array('boolean'),
@@ -254,10 +244,18 @@ class BlogEntry extends BlogsAppModel {
 
     public function saveEntry($blockId, $data)
     {
-        $this->loadModels(array('BlogTag' => 'Blogs.BlogTag'));
+        $this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
         if($this->save($data)){
             if($this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])){
-                return true;
+                if ($this->Comment->validateByStatus($data, array('caller' => $this->name))) {
+                    if ($this->Comment->data) {
+                        if ( $this->Comment->save(null, true)) {
+                            return true;
+                        }
+                    }
+                }else{
+                    $this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
+                }
             }
         }
         return false;

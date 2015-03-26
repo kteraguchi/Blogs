@@ -11,15 +11,15 @@
 		<div class="col-xs-6"></div>
 	<?php endif ?>
 	<div class="col-xs-2">
-		TODO　いいね
+<!--		TODO　いいね-->
 
 	</div>
 	<div class="col-xs-2">
-		TODO　やだね
+<!--		TODO　やだね-->
 
 	</div>
 	<div class="col-xs-2">
-		TODO　コメントリンク　コメント数
+<!--		TODO　コメントリンク　コメント数-->
 	</div>
 
 </div>

@@ -38,6 +38,9 @@ NetCommonsApp.controller('Blogs',
         $scope.init = function(data){
             $scope.blogEntry = data.BlogEntry;
             $scope.tags = (data.BlogTag) ? data.BlogTag : [];
+            if($scope.blogEntry.body2){
+                $scope.writeBody2 = true;
+            }
         }
 
         $scope.blogEntry = {

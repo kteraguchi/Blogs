@@ -65,7 +65,7 @@
 					<?php echo $blogEntry['BlogEntry']['body1']; ?>
 				</div>
 				<div>
-					<a href="">TODO 続きを読む</a>
+					<a href=""><!-- TODO --> 続きを読む</a>
 				</div>
 
 				<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry)); ?>
