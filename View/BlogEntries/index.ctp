@@ -1,5 +1,6 @@
 <?php echo $this->element('shared_header'); ?>
 <?php echo $this->Html->css('/blogs/css/blogs.css'); ?>
+<?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
 
 
 <div class="blogEntries index">
@@ -55,7 +56,7 @@
 		<!--記事一覧-->
 		<?php foreach ($blogEntries as $blogEntry): ?>
 
-			<div class="blogs_entry">
+			<div class="blogs_entry" ng-controller="Blogs.Index.Entry">
 				<h2 class="blogs_entry_title">
 					<?php echo $this->Html->link($blogEntry['BlogEntry']['title'], array('controller' => 'blog_entries', 'action' => 'view', $frameId, 'id' => $blogEntry['BlogEntry']['id'])); ?>
 				</h2>
@@ -64,10 +65,17 @@
 				<div class="blogs_entry_body1">
 					<?php echo $blogEntry['BlogEntry']['body1']; ?>
 				</div>
-				<div>
-					<a href=""><!-- TODO --> 続きを読む</a>
-				</div>
-
+                <?php if ($blogEntry['BlogEntry']['body2']) : ?>
+                    <div ng-hide="isShowBody2">
+                        <a ng-click="showBody2()">続きを読む</a>
+                    </div>
+                    <div  ng-show="isShowBody2">
+						<?php echo $blogEntry['BlogEntry']['body2'] ?>
+                    </div>
+					<div ng-show="isShowBody2">
+						<a ng-click="hideBody2()">閉じる</a>
+					</div>
+                <?php endif ?>
 				<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry)); ?>
 			</div>
 

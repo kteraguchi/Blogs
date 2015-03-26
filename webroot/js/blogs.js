@@ -143,3 +143,16 @@ NetCommonsApp.controller('Blogs',
         //
         //// $scope.reset();
     });
+NetCommonsApp.controller('Blogs.Index.Entry',
+    function($scope) {
+        $scope.isShowBody2 = false;
+
+        $scope.showBody2 = function(){
+            $scope.isShowBody2 = true;
+        }
+        $scope.hideBody2 = function (){
+            $scope.isShowBody2 = false;
+
+        }
+    }
+)
