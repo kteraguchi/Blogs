@@ -46,7 +46,11 @@ class BlogEntriesController extends BlogsAppController {
 		'NetCommons.NetCommonsWorkflow',
 		);
 
+
 	public function index(){
+		$status = $this->getNamed('status', 0);
+		$this->set('currentFilterStatus', $status);
+
 		$this->setupBlogTitle();
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();
@@ -64,6 +68,10 @@ class BlogEntriesController extends BlogsAppController {
 				$this->viewVars,
 				$this->getCurrentDateTime()
 			);
+			if($status){
+				//  status絞り込み
+				$conditions['BlogEntry.status'] = $status;
+			}
 
 			$this->Paginator->settings = array(
 				'conditions' => $conditions,

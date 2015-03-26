@@ -143,7 +143,26 @@ NetCommonsApp.controller('Blogs',
         //
         //// $scope.reset();
     });
-NetCommonsApp.controller('Blogs.Index.Entry',
+
+NetCommonsApp.controller('Blogs.Entries',
+    function($scope) {
+        $scope.selectStatus = 0;
+        $scope.frameId = 0;
+
+        $scope.init = function(frameId){
+            $scope.frameId = frameId;
+        }
+
+
+        $scope.filterStatus = function(){
+            // requestUrlにstatus:1 って感じにselectStatus付けてフィルタリングする
+            // リダイレクト
+            url = '/blogs/blog_entries/index/'+$scope.frameId+'/status:'+$scope.selectStatus;
+            location.href = url;
+        }
+    }
+)
+NetCommonsApp.controller('Blogs.Entries.Entry',
     function($scope) {
         $scope.isShowBody2 = false;
 

@@ -3,7 +3,7 @@
 <?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
 
 
-<div class="blogEntries index">
+<div class="blogEntries index" ng-controller="Blogs.Entries" ng-init="init(<?php echo $frameId ?>)">
 	<h1 class="blogs_blogTitle"><?php echo $listTitle ?></h1>
 
 	<div class="row blogs_navigation_header">
@@ -25,7 +25,7 @@
 			<?php if ($contentCreatable): ?>
 				<?php
 				//TODO
-				$currentStatus = 0;
+				$currentStatus = $currentFilterStatus;
 				$statusOptions = array(
 					0 => __d('blogs', 'All status'),
 					NetCommonsBlockComponent::STATUS_PUBLISHED   => __d('net_commons', 'Published'),
@@ -35,7 +35,7 @@
 
 				);
 				?>
-				<?php echo $this->Form->select('status', $statusOptions, array('empty' => false, 'class'=> 'form-control', 'value' => $currentStatus)); ?>
+				<?php echo $this->Form->select('status', $statusOptions, array('empty' => false, 'class'=> 'form-control', 'value' => $currentStatus, 'ng-change' => 'filterStatus()', 'ng-model' => 'selectStatus', 'ng-init' => 'selectStatus='.$currentStatus)); ?>
 			<?php endif; ?>
 		</div>
 
@@ -56,7 +56,7 @@
 		<!--記事一覧-->
 		<?php foreach ($blogEntries as $blogEntry): ?>
 
-			<div class="blogs_entry" ng-controller="Blogs.Index.Entry">
+			<div class="blogs_entry" ng-controller="Blogs.Entries.Entry">
 				<h2 class="blogs_entry_title">
 					<?php echo $this->Html->link($blogEntry['BlogEntry']['title'], array('controller' => 'blog_entries', 'action' => 'view', $frameId, 'id' => $blogEntry['BlogEntry']['id'])); ?>
 				</h2>
