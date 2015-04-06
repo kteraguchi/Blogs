@@ -2,10 +2,22 @@
 
 class AppSchema extends CakeSchema {
 
+/**
+ * before
+ *
+ * @param array $event savent
+ * @return bool
+ */
 	public function before($event = array()) {
 		return true;
 	}
 
+/**
+ * after
+ *
+ * @param array $event event
+ * @return void
+ */
 	public function after($event = array()) {
 	}
 
