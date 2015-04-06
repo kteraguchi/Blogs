@@ -4,17 +4,17 @@
 
 
 <?php $dataJson = json_encode($this->request->data) ?>
-<div class="blogEntries form" ng-controller="Blogs" ng-init="init(<?php echo h($dataJson)?>)">
+<div class="blogEntries form" ng-controller="Blogs" ng-init="init(<?php echo h($dataJson) ?>)">
 	<div class="modal-header">BLOG</div>
 	<div class="modal-body">
 		<ul class="nav nav-tabs" role="tablist">
-			<li  class="active">
+			<li class="active">
 				<a href="" role="tab" data-toggle="tab">
 					<?php echo __('Edit') ?>
 				</a>
 			</li>
 		</ul>
-		<br />
+		<br/>
 
 		<div class="tab-content">
 
@@ -143,7 +143,7 @@
 
 				</div>
 
-				<hr />
+				<hr/>
 
 				<?php echo $this->element(
 					'Comments.form',
@@ -159,14 +159,16 @@
 
 					<div style="text-align: right;">
 					<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Delete'); ?>">
-							<a href="<?php echo $this->Html->url(array('action' => 'delete', $frameId, 'id' => $blogEntry['BlogEntry']['id'])) ?>" class="btn btn-danger">
+							<a href="<?php echo $this->Html->url(
+								array('action' => 'delete', $frameId, 'id' => $blogEntry['BlogEntry']['id'])
+							) ?>" class="btn btn-danger">
 								<span class="glyphicon glyphicon-trash"> </span>
 							</a>
 
 					</span>
 
 					</div>
-<!--	編集時のみ表示	-->
+					<!--	編集時のみ表示	-->
 				</div>
 
 				<?php echo $this->Form->end() ?>

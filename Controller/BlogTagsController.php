@@ -1,14 +1,15 @@
 <?php
 App::uses('BlogsAppController', 'Blogs.Controller');
+
 /**
  * BlogTags Controller
  *
  * @property BlogTag $BlogTag
  * @property PaginatorComponent $Paginator
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Ryuji AMANO <ryuji@ryus.co.jp>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 class BlogTagsController extends BlogsAppController {
 
@@ -108,4 +109,5 @@ class BlogTagsController extends BlogsAppController {
 			$this->Session->setFlash(__('The blog tag could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+}

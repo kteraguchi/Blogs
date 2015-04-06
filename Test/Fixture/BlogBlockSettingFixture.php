@@ -2,9 +2,9 @@
 /**
  * BlogBlockSettingFixture
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
 /**
@@ -18,18 +18,71 @@ class BlogBlockSettingFixture extends CakeTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary', 'comment' => 'ID |  |  | '),
-		'block_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'frame key | フレームKey | frames.key | ', 'charset' => 'utf8'),
-		'mail_new_entry' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => 'mail new entry | メール通知を使う |   | '),
-		'use_comment' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => 'use comment | コメントを使う |  | '),
+		'id' => array(
+			'type' => 'integer',
+			'null' => false,
+			'default' => null,
+			'key' => 'primary',
+			'comment' => 'ID |  |  | '
+		),
+		'block_key' => array(
+			'type' => 'string',
+			'null' => false,
+			'default' => null,
+			'collate' => 'utf8_general_ci',
+			'comment' => 'frame key | フレームKey | frames.key | ',
+			'charset' => 'utf8'
+		),
+		'mail_new_entry' => array(
+			'type' => 'boolean',
+			'null' => false,
+			'default' => '0',
+			'comment' => 'mail new entry | メール通知を使う |   | '
+		),
+		'use_comment' => array(
+			'type' => 'boolean',
+			'null' => false,
+			'default' => '0',
+			'comment' => 'use comment | コメントを使う |  | '
+		),
 		'auto_approve_comment' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'use_sns' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => 'use sns | SNSボタンをつかう |   | '),
-		'use_vote' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'comment' => 'use vote | 投票を使う |  | '),
+		'use_sns' => array(
+			'type' => 'boolean',
+			'null' => false,
+			'default' => '0',
+			'comment' => 'use sns | SNSボタンをつかう |   | '
+		),
+		'use_vote' => array(
+			'type' => 'boolean',
+			'null' => false,
+			'default' => '0',
+			'comment' => 'use vote | 投票を使う |  | '
+		),
 		'use_minus_vote' => array('type' => 'boolean', 'null' => false, 'default' => null),
-		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => 'created user | 作成者 | users.id | '),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'created datetime | 作成日時 |  | '),
-		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => 'modified user | 更新者 | users.id | '),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'modified datetime | 更新日時 |  | '),
+		'created_user' => array(
+			'type' => 'integer',
+			'null' => true,
+			'default' => null,
+			'comment' => 'created user | 作成者 | users.id | '
+		),
+		'created' => array(
+			'type' => 'datetime',
+			'null' => true,
+			'default' => null,
+			'comment' => 'created datetime | 作成日時 |  | '
+		),
+		'modified_user' => array(
+			'type' => 'integer',
+			'null' => true,
+			'default' => null,
+			'comment' => 'modified user | 更新者 | users.id | '
+		),
+		'modified' => array(
+			'type' => 'datetime',
+			'null' => true,
+			'default' => null,
+			'comment' => 'modified datetime | 更新日時 |  | '
+		),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),

@@ -1,14 +1,15 @@
 <?php
 App::uses('BlogsAppController', 'Blogs.Controller');
+
 /**
  * BlogFrameSettings Controller
  *
  * @property BlogFrameSetting $BlogFrameSetting
  * @property PaginatorComponent $Paginator
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Ryuji AMANO <ryuji@ryus.co.jp>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 class BlogFrameSettingsController extends BlogsAppController {
 
@@ -104,4 +105,5 @@ class BlogFrameSettingsController extends BlogsAppController {
 			$this->Session->setFlash(__('The blog frame setting could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+}

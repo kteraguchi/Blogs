@@ -5,9 +5,9 @@
  * @property Block $Block
  * @property BlogEntryTagLink $BlogEntryTagLink
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
 App::uses('BlogsAppModel', 'Blogs.Model');
@@ -19,18 +19,18 @@ class BlogTag extends BlogsAppModel {
 
 
 	public $recursive = -1;
-	/**
-	 * use behaviors
-	 *
-	 * @var array
-	 */
+/**
+ * use behaviors
+ *
+ * @var array
+ */
 	public $actsAs = array(
 		'NetCommons.Trackable',
 //		'NetCommons.Publishable'
 
 	);
 
-	/**
+/**
  * Validation rules
  *
  * @var array
@@ -95,7 +95,6 @@ class BlogTag extends BlogsAppModel {
 	);
 
 
-
 	public function getTagsByEntryId($entryId) {
 		App::uses('BlogEntryTagLink', 'Blogs.Model');
 //		$BlogEntryTagLink = ClassRegistry::init('Blogs.BlogEntryTagLink'); // この書き方だとAppModelになってしまう。
@@ -117,7 +116,7 @@ class BlogTag extends BlogsAppModel {
 	public function getTagsListByEntryId($entryId) {
 		$tags = $this->getTagsByEntryId($entryId);
 		$list = array();
-		foreach($tags as $tag){
+		foreach ($tags as $tag) {
 			$list[] = $tag['BlogTag'];
 		}
 		return $list;
@@ -125,50 +124,50 @@ class BlogTag extends BlogsAppModel {
 	}
 
 	public function saveEntryTags($blockId, $entryId, $tags) {
-        if(!is_array($tags)){
-            $tags = array();
-        }
-        $tagNameList = array();
-        foreach($tags as $tag){
-            $tagNameList[] = $tag['name'];
-        }
-        // 記事にリンクされたタグを取得
-        $linkedTags = $this->getTagsByEntryId($entryId);
-        // $tagsにないタグとのリンクを削除
-        foreach($linkedTags as $tmpTag){
-            $index = array_search($tmpTag['BlogTag']['name'], $tagNameList);
-            if($index === false){
-                // 記事から削除されたタグ　リンク削除
-                $this->BlogEntryTagLink->delete($tmpTag['BlogEntryTagLink']['id']);
-            }else{
-                // 記事とリンク済みのタグ DB処理不要
-                unset($tagNameList[$index]);
-            }
-        }
-		foreach($tagNameList as $tagName){
+		if (!is_array($tags)) {
+			$tags = array();
+		}
+		$tagNameList = array();
+		foreach ($tags as $tag) {
+			$tagNameList[] = $tag['name'];
+		}
+		// 記事にリンクされたタグを取得
+		$linkedTags = $this->getTagsByEntryId($entryId);
+		// $tagsにないタグとのリンクを削除
+		foreach ($linkedTags as $tmpTag) {
+			$index = array_search($tmpTag['BlogTag']['name'], $tagNameList);
+			if ($index === false) {
+				// 記事から削除されたタグ　リンク削除
+				$this->BlogEntryTagLink->delete($tmpTag['BlogEntryTagLink']['id']);
+			} else {
+				// 記事とリンク済みのタグ DB処理不要
+				unset($tagNameList[$index]);
+			}
+		}
+		foreach ($tagNameList as $tagName) {
 			//
 			$savedTag = $this->findByBlockIdAndName($blockId, $tagName);
-			if( !$savedTag){
+			if (!$savedTag) {
 				// $tagがないなら保存
 				$data = $this->create();
 
 				$data['BlogTag']['name'] = $tagName;
 				$data['BlogTag']['block_id'] = $blockId;
 				$data['BlogTag']['key'] = $this->makeKey();
-				if($this->save($data)) {
+				if ($this->save($data)) {
 					$savedTag = $this->findById($this->id);
-				}else{
+				} else {
 					return false;
 				}
 			}
 			// save link
 			$savedLink = $this->BlogEntryTagLink->findByBlogEntryIdAndBlogTagId($entryId, $savedTag['BlogTag']['id']);
-			if(!$savedLink){
+			if (!$savedLink) {
 				$link = $this->BlogEntryTagLink->create();
 				$link['BlogEntryTagLink']['blog_entry_id'] = $entryId;
 				$link['BlogEntryTagLink']['blog_tag_id'] = $savedTag['BlogTag']['id'];
 
-				if( !$this->BlogEntryTagLink->save($link)){
+				if (!$this->BlogEntryTagLink->save($link)) {
 					return false;
 				}
 			}

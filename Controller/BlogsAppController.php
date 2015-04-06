@@ -50,7 +50,7 @@ class BlogsAppController extends AppController {
 		return time();
 	}
 
-	protected function getCurrentDateTime(){
+	protected function getCurrentDateTime() {
 		return date('Y-m-d H:i:s', $this->getNow());
 	}
 
@@ -59,7 +59,6 @@ class BlogsAppController extends AppController {
 		$block = $this->NetCommonsBlock->Block->findById($this->viewVars['blockId']);
 		$this->blogTitle = $block['Block']['name'];
 	}
-
 
 
 	protected function loadBlockSetting() {
@@ -71,7 +70,7 @@ class BlogsAppController extends AppController {
 		$this->frameSetting = $this->BlogFrameSetting->getSettingByFrameKey($this->viewVars['frameKey']);
 	}
 
-	protected function getNamed($name, $default = null){
+	protected function getNamed($name, $default = null) {
 		$value = isset($this->request->params['named'][$name]) ? $this->request->params['named'][$name] : $default;
 		return $value;
 	}

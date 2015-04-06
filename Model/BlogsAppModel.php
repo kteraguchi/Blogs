@@ -6,16 +6,16 @@ class BlogsAppModel extends AppModel {
 
 	protected $newRecord = null;
 
-	/**
-	 * プラリマリキーを除いた新規レコード配列を返す
-	 * ex) array('ModelName' => array('filedName' => default, ...));
-	 * @return array
-	 */
+/**
+ * プラリマリキーを除いた新規レコード配列を返す
+ * ex) array('ModelName' => array('filedName' => default, ...));
+ * @return array
+ */
 	public function getNew() {
-		if(is_null($this->newRecord)){
+		if (is_null($this->newRecord)) {
 			$newRecord = array();
-			foreach($this->_schema as $fieldName => $fieldDetail){
-				if($fieldName != $this->primaryKey){
+			foreach ($this->_schema as $fieldName => $fieldDetail) {
+				if ($fieldName != $this->primaryKey) {
 					$newRecord[$this->name][$fieldName] = $fieldDetail['default'];
 				}
 			}
@@ -32,11 +32,13 @@ class BlogsAppModel extends AppModel {
 		$dataSource = $this->getDataSource();
 		$dataSource->begin();
 	}
+
 	public function commit() {
 		$dataSource = $this->getDataSource();
 		$dataSource->commit();
 
 	}
+
 	public function rollback() {
 		$dataSource = $this->getDataSource();
 		$dataSource->rollback();
@@ -44,7 +46,8 @@ class BlogsAppModel extends AppModel {
 
 
 	public function beforeValidate($options = array()) {
-		$this->validate = Hash::merge($this->validate,
+		$this->validate = Hash::merge(
+			$this->validate,
 			$this->getValidateSpecification()
 		);
 

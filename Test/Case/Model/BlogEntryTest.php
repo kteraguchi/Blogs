@@ -2,15 +2,16 @@
 /**
  * BlogEntry Test Case
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
 App::uses('BlogEntry', 'Blogs.Model');
 
 CakePlugin::load('NetCommons');
 App::uses('NetCommonsBlockComponent', 'NetCommons.Controller/Component');
+
 /**
  * Summary for BlogEntry Test Case
  */
@@ -55,38 +56,49 @@ class BlogEntryTest extends CakeTestCase {
 		$currentDateTime = '2015-01-01 00:00:00';
 		// contentReadable false
 		$permissions = array(
-			'contentReadable'  => false,
+			'contentReadable' => false,
 			'contentCreatable' => false,
-			'contentEditable'  => false,
+			'contentEditable' => false,
 		);
-		$conditions = $this->BlogEntry->getConditions($blockId,
-			$userId, $permissions, $currentDateTime);
-		$this->assertSame($conditions, array(
-			'BlogCategory.block_id' => $blockId,
-			'BlogEntry.id' => 0
-		));
+		$conditions = $this->BlogEntry->getConditions(
+			$blockId,
+			$userId,
+			$permissions,
+			$currentDateTime
+		);
+		$this->assertSame(
+			$conditions,
+			array(
+				'BlogCategory.block_id' => $blockId,
+				'BlogEntry.id' => 0
+			)
+		);
 
 		// contentReadable のみ
 		$permissions = array(
 			'contentReadable' => true,
 			'contentCreatable' => false,
-			'contentEditable'  => false,
+			'contentEditable' => false,
 		);
-		$conditions = $this->BlogEntry->getConditions($blockId,$userId, $permissions, $currentDateTime);
-		$this->assertSame($conditions, array(
-			'BlogCategory.block_id' => $blockId,
-			'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
-			'BlogEntry.published_datetime <=' => $currentDateTime
-		));
+		$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
+		$this->assertSame(
+			$conditions,
+			array(
+				'BlogCategory.block_id' => $blockId,
+				'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
+				'BlogEntry.published_datetime <=' => $currentDateTime
+			)
+		);
 
 		// 作成権限あり
 		$permissions = array(
 			'contentReadable' => true,
 			'contentCreatable' => true,
-			'contentEditable'  => false,
+			'contentEditable' => false,
 		);
-		$conditions = $this->BlogEntry->getConditions($blockId,$userId, $permissions, $currentDateTime);
-		$this->assertSame($conditions,
+		$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
+		$this->assertSame(
+			$conditions,
 			array(
 				'BlogCategory.block_id' => $blockId,
 				'OR' => array(
@@ -106,10 +118,11 @@ class BlogEntryTest extends CakeTestCase {
 		$permissions = array(
 			'contentReadable' => true,
 			'contentCreatable' => true,
-			'contentEditable'  => true,
+			'contentEditable' => true,
 		);
 		$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
-		$this->assertSame($conditions,
+		$this->assertSame(
+			$conditions,
 			array(
 				'BlogCategory.block_id' => $blockId,
 				'OR' => array(
@@ -132,24 +145,32 @@ class BlogEntryTest extends CakeTestCase {
 
 		// contentReadable false
 		$permissions = array(
-			'contentReadable'  => false,
+			'contentReadable' => false,
 			'contentCreatable' => false,
-			'contentEditable'  => false,
+			'contentEditable' => false,
 		);
-		$conditions = $this->BlogEntry->getConditions($blockId,
-			$userId, $permissions, $currentDateTime);
+		$conditions = $this->BlogEntry->getConditions(
+			$blockId,
+			$userId,
+			$permissions,
+			$currentDateTime
+		);
 
 		$result = $this->BlogEntry->find('all', array('conditions' => $conditions));
 		$this->assertSame($result, array());
 
 		// contentReadable true
 		$permissions = array(
-			'contentReadable'  => true,
+			'contentReadable' => true,
 			'contentCreatable' => false,
-			'contentEditable'  => false,
+			'contentEditable' => false,
 		);
-		$conditions = $this->BlogEntry->getConditions($blockId,
-			$userId, $permissions, $currentDateTime);
+		$conditions = $this->BlogEntry->getConditions(
+			$blockId,
+			$userId,
+			$permissions,
+			$currentDateTime
+		);
 
 		$blogEntries = $this->BlogEntry->find('all', array('conditions' => $conditions));
 		$this->assertEqual($blogEntries[0]['BlogEntry']['id'], 1);
@@ -167,12 +188,16 @@ class BlogEntryTest extends CakeTestCase {
 
 		// contentCreatable true
 		$permissions = array(
-			'contentReadable'  => true,
+			'contentReadable' => true,
 			'contentCreatable' => true,
-			'contentEditable'  => false,
+			'contentEditable' => false,
 		);
-		$conditions = $this->BlogEntry->getConditions($blockId,
-			$userId, $permissions, $currentDateTime);
+		$conditions = $this->BlogEntry->getConditions(
+			$blockId,
+			$userId,
+			$permissions,
+			$currentDateTime
+		);
 
 		$blogEntries = $this->BlogEntry->find('all', array('conditions' => $conditions));
 
@@ -181,6 +206,7 @@ class BlogEntryTest extends CakeTestCase {
 		$this->assertEqual($publishedAndMyEntriesAre3, 3);
 
 	}
+
 	public function testFind4EditableUser() {
 		$userId = 1;
 		$blockId = 2;
@@ -188,12 +214,16 @@ class BlogEntryTest extends CakeTestCase {
 
 		// contentCreatable true
 		$permissions = array(
-			'contentReadable'  => true,
+			'contentReadable' => true,
 			'contentCreatable' => true,
-			'contentEditable'  => true,
+			'contentEditable' => true,
 		);
-		$conditions = $this->BlogEntry->getConditions($blockId,
-			$userId, $permissions, $currentDateTime);
+		$conditions = $this->BlogEntry->getConditions(
+			$blockId,
+			$userId,
+			$permissions,
+			$currentDateTime
+		);
 
 		$blogEntries = $this->BlogEntry->find('all', array('conditions' => $conditions));
 

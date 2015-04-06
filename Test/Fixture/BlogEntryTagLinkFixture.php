@@ -2,9 +2,9 @@
 /**
  * BlogEntryTagLinkFixture
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
 /**
@@ -19,12 +19,45 @@ class BlogEntryTagLinkFixture extends CakeTestFixture {
  */
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'blog_entry_id' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 45, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'blog_tag_id' => array('type' => 'string', 'null' => false, 'length' => 45, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => 'created user | 作成者 | users.id | '),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'created datetime | 作成日時 |  | '),
-		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => 'modified user | 更新者 | users.id | '),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'modified datetime | 更新日時 |  | '),
+		'blog_entry_id' => array(
+			'type' => 'string',
+			'null' => true,
+			'default' => null,
+			'length' => 45,
+			'collate' => 'utf8_general_ci',
+			'charset' => 'utf8'
+		),
+		'blog_tag_id' => array(
+			'type' => 'string',
+			'null' => false,
+			'length' => 45,
+			'collate' => 'utf8_general_ci',
+			'charset' => 'utf8'
+		),
+		'created_user' => array(
+			'type' => 'integer',
+			'null' => true,
+			'default' => null,
+			'comment' => 'created user | 作成者 | users.id | '
+		),
+		'created' => array(
+			'type' => 'datetime',
+			'null' => true,
+			'default' => null,
+			'comment' => 'created datetime | 作成日時 |  | '
+		),
+		'modified_user' => array(
+			'type' => 'integer',
+			'null' => true,
+			'default' => null,
+			'comment' => 'modified user | 更新者 | users.id | '
+		),
+		'modified' => array(
+			'type' => 'datetime',
+			'null' => true,
+			'default' => null,
+			'comment' => 'modified datetime | 更新日時 |  | '
+		),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),

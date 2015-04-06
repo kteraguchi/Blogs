@@ -5,9 +5,9 @@
  * @property Block $Block
  * @property BlogEntry $BlogEntry
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
 App::uses('BlogsAppModel', 'Blogs.Model');
@@ -47,11 +47,11 @@ class BlogCategory extends BlogsAppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	/**
-	 * belongsTo associations
-	 *
-	 * @var array
-	 */
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
 	public $belongsTo = array(
 		'Block' => array(
 			'className' => 'Blocks.Block',
@@ -90,18 +90,22 @@ class BlogCategory extends BlogsAppModel {
 
 
 	// ε(　　　　 v ﾟωﾟ)　＜ Linksに同じコード(blogとlinkの違いだけ）あり categoryビヘイビアとかにできないか？
-	public function getCategories($blockId){
+	public function getCategories($blockId) {
 		$conditions = array(
 			'block_id' => $blockId,
 		);
 
-		$this->unbindModel(array(
-			'belongsTo' => array('Block'),
-			'hasMany' => array('BlogEntry'),
-		));
+		$this->unbindModel(
+			array(
+				'belongsTo' => array('Block'),
+				'hasMany' => array('BlogEntry'),
+			)
+		);
 
 		// ソート順はblog_category_ordersテーブル参照
-		$categories = $this->find('all', array(
+		$categories = $this->find(
+			'all',
+			array(
 				'conditions' => $conditions,
 				'order' => 'BlogCategoryOrder.weight ASC',
 			)
@@ -113,7 +117,7 @@ class BlogCategory extends BlogsAppModel {
 	public function getCategoriesList($blockId) {
 		$categories = $this->getCategories($blockId);
 		$ret = array();
-		foreach($categories as $category){
+		foreach ($categories as $category) {
 			$ret[$category['BlogCategory']['id']] = $category['BlogCategory']['name'];
 		}
 		return $ret;

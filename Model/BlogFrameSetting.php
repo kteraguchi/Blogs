@@ -3,9 +3,9 @@
  * BlogFrameSetting Model
  *
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
 App::uses('BlogsAppModel', 'Blogs.Model');
@@ -43,11 +43,11 @@ class BlogFrameSetting extends BlogsAppModel {
 		),
 	);
 
-	public function getSettingByFrameKey($frameKey){
+	public function getSettingByFrameKey($frameKey) {
 		$setting = $this->findByFrameKey($frameKey);
-		if($setting){
+		if ($setting) {
 			return $setting['BlogFrameSetting'];
-		}else{
+		} else {
 			// 設定データがまだないときはつくる
 			$this->create();
 			$data = array(
