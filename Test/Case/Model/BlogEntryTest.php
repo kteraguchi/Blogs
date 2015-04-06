@@ -26,7 +26,7 @@ class BlogEntryTest extends CakeTestCase {
 		'plugin.blogs.blog_category',
 		'plugin.blogs.blog_entry_tag_link'
 	);
-s
+
 /**
  * setUp method
  *
