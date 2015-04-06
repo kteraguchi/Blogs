@@ -16,12 +16,6 @@
 		</a>
 	</span>
 
-	<?php //公開済みを削除できるのは公開権限が必用？ ?>
-	<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Delete'); ?>">
-		<a href="<?php echo $this->Html->url(array('action' => 'delete', $frameId, 'id' => $blogEntry['BlogEntry']['id'])) ?>" class="btn btn-danger">
-			<span class="glyphicon glyphicon-trash"> </span>
-		</a>
-	</span>
 	<?php endif ?>
 </div>
 

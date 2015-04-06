@@ -20,6 +20,7 @@
 
 			<div class="panel panel-default">
 
+
 				<?php echo $this->Form->create(
 					'BlogEntry',
 					array(
@@ -35,7 +36,9 @@
 				//		)); ?>
 
 				<div class="panel-body">
+
 					<fieldset>
+
 						<?php
 						echo $this->Form->input(
 							'title',
@@ -147,15 +150,27 @@
 					array('contentStatus' => $blogEntry['BlogEntry']['status'])
 				); ?>
 
-				<div class="panel-footer">
+				<div class="panel-footer" style="text-align: center">
 
 					<?php echo $this->element(
 						'NetCommons.workflow_buttons',
 						array('contentStatus' => $blogEntry['BlogEntry']['status'])
 					); ?>
+
+					<div style="text-align: right;">
+					<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Delete'); ?>">
+							<a href="<?php echo $this->Html->url(array('action' => 'delete', $frameId, 'id' => $blogEntry['BlogEntry']['id'])) ?>" class="btn btn-danger">
+								<span class="glyphicon glyphicon-trash"> </span>
+							</a>
+
+					</span>
+
+					</div>
+<!--	編集時のみ表示	-->
 				</div>
 
 				<?php echo $this->Form->end() ?>
+
 
 			</div>
 

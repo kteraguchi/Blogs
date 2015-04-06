@@ -7,9 +7,10 @@
 	<h1 class="blogs_blogTitle"><?php echo $listTitle ?></h1>
 
 	<div class="row blogs_navigation_header">
-		<div class="col-xs-2">
-			<?php if ($contentCreatable): ?>
-				<a href="/blogs/blog_entries/add/<?php echo $frameId ?>">
+		<?php if ($contentCreatable): ?>
+			<div style="text-align: right">
+
+			<a href="/blogs/blog_entries/add/<?php echo $frameId ?>">
 				<button class="btn btn-success"
 						tooltip="<?php echo __d('blogs', 'Add entry'); ?>">
 					<span class="glyphicon glyphicon-plus"></span>
@@ -17,8 +18,11 @@
 				<span class="hidden">
 					<?php echo __d('blogs', 'Add entry'); ?>
 				</span></a>
+			</div>
 
-			<?php endif; ?>
+		<?php endif; ?>
+
+		<div class="col-xs-2">
 		</div>
 
 		<div class="col-xs-3">
