@@ -15,9 +15,9 @@ App::uses('BlogsAppController', 'Blogs.Controller');
 
 class BlogEntriesController extends BlogsAppController {
 
-	/**
-	 *
-	 */
+/**
+ *
+ */
 	public $uses = array(
 		'Blogs.BlogEntry',
 		'Blogs.BlogBlockSetting',
@@ -26,16 +26,13 @@ class BlogEntriesController extends BlogsAppController {
 		'Comments.Comment',
 	);
 
-// TODO allowedAction
-//'NetCommons.NetCommonsRoomRole' => array(
-//	//コンテンツの権限設定
-//'allowedActions' => array(
-//'contentEditable' => array('edit'),
-//),
-//),
 
 //TODO ゲストOKアクションの指定
 //NetCommonsAppControllerのbeforeFilterで$this->Auth->allow('index', 'view');しています。
+
+	public function beforeFilter() {
+		$this->Auth->allow('index', 'view', 'category', 'tag', 'year_month');
+	}
 /**
  * Components
  *
@@ -44,7 +41,14 @@ class BlogEntriesController extends BlogsAppController {
 	public $components = array(
 		'Paginator',
 		'NetCommons.NetCommonsWorkflow',
-		);
+		'NetCommons.NetCommonsRoomRole' => array(
+			//コンテンツの権限設定
+			'allowedActions' => array(
+				'contentEditable' => array('edit', 'add'),
+				'contentCreatable' => array('edit', 'add'),
+			),
+		)
+	);
 
 
 	protected $filter = array(
@@ -158,13 +162,13 @@ class BlogEntriesController extends BlogsAppController {
 		$this->render('index');
 	}
 
-	/**
-	 * view method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function view() {
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();
@@ -230,11 +234,11 @@ class BlogEntriesController extends BlogsAppController {
 		$this->set('yearMonthOptions', $options);
 	}
 
-	/**
-	 * add method
-	 *
-	 * @return void
-	 */
+/**
+ * add method
+ *
+ * @return void
+ */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->BlogEntry->begin();
@@ -283,13 +287,13 @@ class BlogEntriesController extends BlogsAppController {
 
 		$this->render('form');	}
 
-	/**
-	 * edit method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function edit() {
         $id = $this->request->params['named']['id'];
         $blogEntry = $this->BlogEntry->findById($id);
