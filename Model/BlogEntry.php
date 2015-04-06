@@ -17,11 +17,11 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  */
 class BlogEntry extends BlogsAppModel {
 
-	/**
-	 * use behaviors
-	 *
-	 * @var array
-	 */
+/**
+ * use behaviors
+ *
+ * @var array
+ */
 	public $actsAs = array(
 		'NetCommons.Trackable',
 //		'NetCommons.Publishable'
@@ -31,11 +31,11 @@ class BlogEntry extends BlogsAppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	/**
-	 * belongsTo associations
-	 *
-	 * @var array
-	 */
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
 	public $belongsTo = array(
 		'BlogCategory' => array(
 			'className' => 'Blogs.BlogCategory',
@@ -67,11 +67,6 @@ class BlogEntry extends BlogsAppModel {
 	);
 
 	protected function getValidateSpecification() {
-		/**
-		 * Validation rules
-		 *
-		 * @var array
-		 */
 		$validate = array(
 			'title' => array(
 				'title' => [
@@ -129,14 +124,15 @@ class BlogEntry extends BlogsAppModel {
 	}
 
 
-
-	/**
-	 * UserIdと権限から参照可能なEntryを取得するCondition配列を返す
-	 * @param $userId
-	 * @param $permissions
-	 * @param $currentDateTime
-	 * @return array condition
-	 */
+/**
+ * TODO 考え方が違った。editable以上なら下書きも見られる
+ * TODO 同一key 複数idへの対応
+ * UserIdと権限から参照可能なEntryを取得するCondition配列を返す
+ * @param $userId
+ * @param $permissions
+ * @param $currentDateTime
+ * @return array condition
+ */
 	public function getConditions($blockId, $userId, $permissions, $currentDateTime) {
 
 		// デフォルト絞り込み条件
@@ -197,14 +193,14 @@ class BlogEntry extends BlogsAppModel {
 		return $conditions;
 	}
 
-	/**
-	 * 年月毎の記事数を返す
-	 * @param $blockId
-	 * @param $userId
-	 * @param $permissions
-	 * @param $currentDateTime
-	 * @return array
-	 */
+/**
+ * 年月毎の記事数を返す
+ * @param $blockId
+ * @param $userId
+ * @param $permissions
+ * @param $currentDateTime
+ * @return array
+ */
 	public function getYearMonthCount($blockId, $userId, $permissions, $currentDateTime) {
 		$conditions = $this->getConditions($blockId, $userId, $permissions, $currentDateTime);
 		// 年月でグループ化してカウント→取得できなかった年月をゼロセット
@@ -243,9 +239,9 @@ class BlogEntry extends BlogsAppModel {
 
 	}
 
-    public function saveEntry($blockId, $data) {
+	public function saveEntry($blockId, $data) {
 		$this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
-		if ($this->save($data)) {
+		if ($this->save($data)) { // TODO 常に新規保存にする
 			if ($this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
 				if ($this->Comment->validateByStatus($data, array('caller' => $this->name))) {
 					if ($this->Comment->data) {
@@ -267,7 +263,7 @@ class BlogEntry extends BlogsAppModel {
 	protected function getPublishedConditions($currentDateTime) {
 		return array(
 			'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
-			'BlogEntry.published_datetime <=' => $currentDateTime,
+			'BlogEntry.published_datetime <=' => $currentDateTime,// TODO これだと未来日付で公開にしてある記事がどの編集権限でもヒットしなくなる
 		);
 	}
 
