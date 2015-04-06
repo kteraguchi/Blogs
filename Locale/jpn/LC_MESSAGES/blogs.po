@@ -2,10 +2,10 @@ msgid "Add entry"
 msgstr "記事を追加する"
 
 msgid "All status"
-msgstr "全て"
+msgstr "全てのステータス"
 
 msgid "All categories"
-msgstr "全て"
+msgstr "全てのカテゴリ"
 
 msgid "%d-%d (%s)"
 msgstr "%d年%d月 (%s)"
