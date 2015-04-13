@@ -30,7 +30,7 @@
 						'div' => 'form-control'
 					)
 				); ?>
-				<?php echo $this->Form->input('id'); ?>
+				<?php echo $this->Form->input('key', array('type' => 'hidden')); ?>
 				<!--		--><?php //echo $this->Form->hidden('Frame.id', array(
 				//			'value' => $frameId,
 				//		)); ?>

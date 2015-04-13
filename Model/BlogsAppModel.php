@@ -4,11 +4,15 @@ App::uses('AppModel', 'Model');
 
 class BlogsAppModel extends AppModel {
 
+/**
+ * @var null
+ */
 	protected $newRecord = null;
 
 /**
  * プラリマリキーを除いた新規レコード配列を返す
  * ex) array('ModelName' => array('filedName' => default, ...));
+ * 
  * @return array
  */
 	public function getNew() {
@@ -48,13 +52,13 @@ class BlogsAppModel extends AppModel {
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge(
 			$this->validate,
-			$this->getValidateSpecification()
+			$this->_getValidateSpecification()
 		);
 
 		return parent::beforeValidate($options);
 	}
 
-	protected function getValidateSpecification() {
+	protected function _getValidateSpecification() {
 		return array();
 	}
 

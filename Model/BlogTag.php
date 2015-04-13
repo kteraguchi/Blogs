@@ -17,8 +17,13 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  */
 class BlogTag extends BlogsAppModel {
 
-
+/**
+ * recursive
+ *
+ * @var int
+ */
 	public $recursive = -1;
+
 /**
  * use behaviors
  *

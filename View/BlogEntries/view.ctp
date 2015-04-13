@@ -6,6 +6,14 @@
 	array('controller' => 'blog_entries', 'action' => 'index', $frameId)
 ); ?>
 
+<div class="blogs_entry_status">
+	<?php echo $this->element(
+		'NetCommons.status_label',
+		array('status' => $blogEntry['BlogEntry']['status'])
+	); ?>
+
+</div>
+
 <h1><?php echo h($blogEntry['BlogEntry']['title']); ?></h1>
 
 <?php echo $this->element('entry_meta_info'); ?>

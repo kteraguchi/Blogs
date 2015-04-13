@@ -92,6 +92,14 @@
 		<?php foreach ($blogEntries as $blogEntry): ?>
 
 			<div class="blogs_entry" ng-controller="Blogs.Entries.Entry">
+				<div class="blogs_entry_status">
+					<?php echo $this->element(
+						'NetCommons.status_label',
+						array('status' => $blogEntry['BlogEntry']['status'])
+					); ?>
+
+				</div>
+
 				<h2 class="blogs_entry_title">
 					<?php echo $this->Html->link(
 						$blogEntry['BlogEntry']['title'],

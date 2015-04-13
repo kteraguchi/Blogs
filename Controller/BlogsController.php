@@ -13,6 +13,11 @@ App::uses('BlogsAppController', 'Blogs.Controller');
  */
 class BlogsController extends BlogsAppController {
 
+/**
+ * index
+ *
+ * @return void
+ */
 	public function index() {
 		$frameId = $this->viewVars['frameId'];
 		$html = $this->requestAction(

@@ -8,4 +8,5 @@
 			js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.0";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));</script>
-<?php endif ?>
+<?php endif;
+

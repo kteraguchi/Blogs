@@ -5,7 +5,7 @@
 		<?php echo __d(
 			'blogs',
 			'posted : %s',
-			$this->BlogsFormat->published_datetime($blogEntry['BlogEntry']['published_datetime'])
+			$this->BlogsFormat->publishedDatetime($blogEntry['BlogEntry']['published_datetime'])
 		); ?>&nbsp;
 
 		<!--	TODO 投稿者アバター-->
@@ -20,12 +20,5 @@
 				'id' => $blogEntry['BlogCategory']['id']
 			)
 		); ?>
-	</div>
-	<div class="blogs_entry_status">
-		<?php echo $this->element(
-			'NetCommons.status_label',
-			array('status' => $blogEntry['BlogEntry']['status'])
-		); ?>
-
 	</div>
 </div>

@@ -66,7 +66,12 @@ class BlogEntry extends BlogsAppModel {
 		)
 	);
 
-	protected function getValidateSpecification() {
+/**
+ * バリデーションルールを返す
+ *
+ * @return array
+ */
+	protected function _getValidateSpecification() {
 		$validate = array(
 			'title' => array(
 				'title' => [
@@ -120,21 +125,19 @@ class BlogEntry extends BlogsAppModel {
 			),
 		);
 		return $validate;
-
 	}
-
 
 /**
  * TODO 考え方が違った。editable以上なら下書きも見られる
  * TODO 同一key 複数idへの対応
  * UserIdと権限から参照可能なEntryを取得するCondition配列を返す
+ *
  * @param $userId
  * @param $permissions
  * @param $currentDateTime
  * @return array condition
  */
 	public function getConditions($blockId, $userId, $permissions, $currentDateTime) {
-
 		// デフォルト絞り込み条件
 		$conditions = array(
 			'BlogCategory.block_id' => $blockId
@@ -195,10 +198,11 @@ class BlogEntry extends BlogsAppModel {
 
 /**
  * 年月毎の記事数を返す
- * @param $blockId
- * @param $userId
- * @param $permissions
- * @param $currentDateTime
+ *
+ * @param int $blockId ブロックID
+ * @param int $userId ユーザID
+ * @param array $permissions 権限
+ * @param datetime $currentDateTime 現在日時
  * @return array
  */
 	public function getYearMonthCount($blockId, $userId, $permissions, $currentDateTime) {
@@ -241,6 +245,7 @@ class BlogEntry extends BlogsAppModel {
 
 	public function saveEntry($blockId, $data) {
 		$this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
+		$this->create();
 		if ($this->save($data)) { // TODO 常に新規保存にする
 			if ($this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
 				if ($this->Comment->validateByStatus($data, array('caller' => $this->name))) {
@@ -258,6 +263,32 @@ class BlogEntry extends BlogsAppModel {
 			}
 		}
 		return false;
+	}
+
+/**
+ * beforeSave ステータスが公開になったらis_activeをつけなおす
+ *
+ * @param array $options beforeSave options
+ * @return bool
+ */
+	public function beforeSave($options = array()) {
+		// TODO statusが公開か
+		// TODO 今のis_activeを外す
+		// TODO is_activeをセットする
+		return true;
+	}
+
+/**
+ * keyがセットされてなかったらkeyを生成して更新する
+ *
+ * @param bool $created
+ * @return void
+ */
+	public function afterSave($created, $options = array()) {
+		if( empty($this->data['BlogEntry']['key']) ){
+			// key がセットされてなかったらkey=idでupdate
+			$this->saveField('key', $this->data['BlogEntry']['id']);
+		}
 	}
 
 	protected function getPublishedConditions($currentDateTime) {

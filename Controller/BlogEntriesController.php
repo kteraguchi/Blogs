@@ -25,11 +25,13 @@ class BlogEntriesController extends BlogsAppController {
 		'Comments.Comment',
 	);
 
-
-//TODO ゲストOKアクションの指定
-//NetCommonsAppControllerのbeforeFilterで$this->Auth->allow('index', 'view');しています。
-
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
 	public function beforeFilter() {
+		// ゲストアクセスOKのアクションを設定
 		$this->Auth->allow('index', 'view', 'category', 'tag', 'year_month');
 	}
 
@@ -50,7 +52,6 @@ class BlogEntriesController extends BlogsAppController {
 		)
 	);
 
-
 	protected $filter = array(
 		'categoryId' => 0,
 		'status' => 0,
@@ -58,7 +59,7 @@ class BlogEntriesController extends BlogsAppController {
 	);
 
 	public function index() {
-		$this->set('listTitle', $this->blogTitle);
+		$this->set('listTitle', $this->_blogTitle);
 
 		$this->_list();
 	}
@@ -126,7 +127,7 @@ class BlogEntriesController extends BlogsAppController {
 
 		$this->set('currentYearMonth', $this->filter['yearMonth']);
 
-		$this->setupBlogTitle();
+		$this->_setupBlogTitle();
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();
 
@@ -138,7 +139,7 @@ class BlogEntriesController extends BlogsAppController {
 				$this->viewVars['blockId'],
 				$this->Auth->user('id'),
 				$this->viewVars,
-				$this->getCurrentDateTime()
+				$this->_getCurrentDateTime()
 			);
 			if ($this->filter['status']) {
 				//  status絞り込み
@@ -152,7 +153,7 @@ class BlogEntriesController extends BlogsAppController {
 				$this->Paginator->settings,
 				array(
 					'conditions' => $conditions,
-					'limit' => $this->frameSetting['display_number'],
+					'limit' => $this->_frameSetting['display_number'],
 					'order' => 'published_datetime DESC',
 					//
 				)
@@ -174,6 +175,7 @@ class BlogEntriesController extends BlogsAppController {
  * @return void
  */
 	public function view() {
+
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();
 
@@ -183,7 +185,7 @@ class BlogEntriesController extends BlogsAppController {
 				$this->viewVars['blockId'],
 				$this->Auth->user('id'),
 				$this->viewVars,
-				$this->getCurrentDateTime()
+				$this->_getCurrentDateTime()
 			);
 
 			$conditions['BlogEntry.id'] = $id;
@@ -226,7 +228,7 @@ class BlogEntriesController extends BlogsAppController {
 			$this->viewVars['blockId'],
 			$this->Auth->user('id'),
 			$this->viewVars,
-			$this->getCurrentDateTime()
+			$this->_getCurrentDateTime()
 		);
 		$options = array(
 			0 => '----'
@@ -253,8 +255,8 @@ class BlogEntriesController extends BlogsAppController {
 
 			// set key
 			// 新規の時
-			$key = $this->BlogEntry->makeKey();
-			$this->request->data['BlogEntry']['key'] = $key;
+			//$key = $this->BlogEntry->makeKey();
+			//$this->request->data['BlogEntry']['key'] = $key;
 			try {
 				if (!$this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) {
 
@@ -321,6 +323,7 @@ class BlogEntriesController extends BlogsAppController {
 
 			try {
 				$data = Hash::merge($blogEntry, $this->request->data);
+				unset($data['BlogEntry']['id']); // 常に新規保存
 				if (!$this->BlogEntry->saveEntry($this->viewVars['blockId'], $data)) {
 					// @codeCoverageIgnoreStart
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
@@ -393,94 +396,5 @@ class BlogEntriesController extends BlogsAppController {
 	}
 
 
-/**
- * admin_index method
- *
- * @return void
- */
-	public function admin_index() {
-		$this->BlogEntry->recursive = 0;
-		$this->set('blogEntries', $this->Paginator->paginate());
-	}
 
-/**
- * admin_view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
-		if (!$this->BlogEntry->exists($id)) {
-			throw new NotFoundException(__('Invalid blog entry'));
-		}
-		$options = array('conditions' => array('BlogEntry.' . $this->BlogEntry->primaryKey => $id));
-		$this->set('blogEntry', $this->BlogEntry->find('first', $options));
-	}
-
-/**
- * admin_add method
- *
- * @return void
- */
-	public function admin_add() {
-		if ($this->request->is('post')) {
-			$this->BlogEntry->create();
-			if ($this->BlogEntry->save($this->request->data)) {
-				$this->Session->setFlash(__('The blog entry has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
-			}
-		}
-		$blogCategories = $this->BlogEntry->BlogCategory->find('list');
-		$this->set(compact('blogCategories'));
-	}
-
-/**
- * admin_edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
-		if (!$this->BlogEntry->exists($id)) {
-			throw new NotFoundException(__('Invalid blog entry'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->BlogEntry->save($this->request->data)) {
-				$this->Session->setFlash(__('The blog entry has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('BlogEntry.' . $this->BlogEntry->primaryKey => $id));
-			$this->request->data = $this->BlogEntry->find('first', $options);
-		}
-		$blogCategories = $this->BlogEntry->BlogCategory->find('list');
-		$this->set(compact('blogCategories'));
-	}
-
-/**
- * admin_delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		$this->BlogEntry->id = $id;
-		if (!$this->BlogEntry->exists()) {
-			throw new NotFoundException(__('Invalid blog entry'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->BlogEntry->delete()) {
-			$this->Session->setFlash(__('The blog entry has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The blog entry could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}
 }
