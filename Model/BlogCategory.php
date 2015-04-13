@@ -60,11 +60,6 @@ class BlogCategory extends BlogsAppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'BlogCategoryOrder' => array(
-			'className' => 'Blogs.BlogCategoryOrder',
-			'foreignKey' => false,
-			'conditions' => array('BlogCategory.key = BlogCategoryOrder.blog_category_key'),
-		)
 	);
 
 /**
@@ -88,8 +83,12 @@ class BlogCategory extends BlogsAppModel {
 		)
 	);
 
-
-	// ε(　　　　 v ﾟωﾟ)　＜ Linksに同じコード(blogとlinkの違いだけ）あり categoryビヘイビアとかにできないか？
+/**
+ * 指定されたブロックIDのカテゴリデータを返す
+ *
+ * @param int $blockId ブロックID
+ * @return array
+ */
 	public function getCategories($blockId) {
 		$conditions = array(
 			'block_id' => $blockId,
@@ -107,13 +106,19 @@ class BlogCategory extends BlogsAppModel {
 			'all',
 			array(
 				'conditions' => $conditions,
-				'order' => 'BlogCategoryOrder.weight ASC',
+				'order' => 'weight ASC',
 			)
 		);
 
 		return $categories;
 	}
 
+/**
+ * カテゴリIDをキーとしたカテゴリ一覧の連想配列を返す
+ *
+ * @param int $blockId ブロックID
+ * @return array
+ */
 	public function getCategoriesList($blockId) {
 		$categories = $this->getCategories($blockId);
 		$ret = array();
