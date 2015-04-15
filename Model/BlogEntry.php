@@ -17,6 +17,8 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  */
 class BlogEntry extends BlogsAppModel {
 
+	public $recursive = -1;
+
 /**
  * use behaviors
  *
@@ -24,12 +26,8 @@ class BlogEntry extends BlogsAppModel {
  */
 	public $actsAs = array(
 		'NetCommons.Trackable',
-//		'NetCommons.Publishable'
 
 	);
-
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
  * belongsTo associations
@@ -132,9 +130,10 @@ class BlogEntry extends BlogsAppModel {
  * TODO 同一key 複数idへの対応
  * UserIdと権限から参照可能なEntryを取得するCondition配列を返す
  *
- * @param $userId
- * @param $permissions
- * @param $currentDateTime
+ * @param int $blockId ブロックID
+ * @param int $userId アクセスユーザID
+ * @param array $permissions 権限
+ * @param datetime $currentDateTime 現在日時
  * @return array condition
  */
 	public function getConditions($blockId, $userId, $permissions, $currentDateTime) {
@@ -144,7 +143,6 @@ class BlogEntry extends BlogsAppModel {
 		);
 
 		if ($permissions['contentReadable']) {
-
 
 			if ($permissions['contentEditable']) {
 				// 編集権限
@@ -169,7 +167,7 @@ class BlogEntry extends BlogsAppModel {
 					$conditions,
 					array(
 						'OR' => array(
-							$this->getPublishedConditions($currentDateTime),
+							$this->_getPublishedConditions($currentDateTime),
 							array(
 								'BlogEntry.created_user' => $userId
 							)
@@ -180,7 +178,7 @@ class BlogEntry extends BlogsAppModel {
 				// 閲覧権限のみ
 				$conditions = array_merge(
 					$conditions,
-					$this->getPublishedConditions($currentDateTime)
+					$this->_getPublishedConditions($currentDateTime)
 				);
 
 			}
@@ -208,8 +206,9 @@ class BlogEntry extends BlogsAppModel {
 	public function getYearMonthCount($blockId, $userId, $permissions, $currentDateTime) {
 		$conditions = $this->getConditions($blockId, $userId, $permissions, $currentDateTime);
 		// 年月でグループ化してカウント→取得できなかった年月をゼロセット
-		$this->virtualFields['year_month'] = 0;            // バーチャルフィールドを追加
-		$this->virtualFields['count'] = 0;            // バーチャルフィールドを追加
+		$this->virtualFields['year_month'] = 0; // バーチャルフィールドを追加
+		$this->virtualFields['count'] = 0; // バーチャルフィールドを追加
+		//$this->recursive = 0;
 		$result = $this->find(
 			'all',
 			array(
@@ -219,12 +218,19 @@ class BlogEntry extends BlogsAppModel {
 				),
 				'conditions' => $conditions,
 				'group' => array('BlogEntry__year_month'), //GROUP BY YEAR(record_date), MONTH(record_date)
+				'recursive' => 0,
 			)
 		);
 		$ret = array();
 		// $retをゼロ埋め
 		//　一番古い記事を取得
-		$oldestEntry = $this->find('first', array('conditions' => $conditions, 'order' => 'published_datetime ASC'));
+		$oldestEntry = $this->find('first',
+			array(
+				'conditions' => $conditions,
+				'order' => 'published_datetime ASC',
+				'recursive' => 0,
+			)
+		);
 		// 一番古い記事の年月から現在までを先にゼロ埋め
 		$currentYearMonthDay = date('Y-m-01', strtotime($oldestEntry['BlogEntry']['published_datetime']));
 		while ($currentYearMonthDay <= $currentDateTime) {
@@ -240,12 +246,20 @@ class BlogEntry extends BlogsAppModel {
 		//年月降順に並び替える
 		krsort($ret);
 		return $ret;
-
 	}
 
+/**
+ * 記事の保存。タグも保存する
+ *
+ * @param int $blockId ブロックID
+ * @param array $data 登録データ
+ * @return bool
+ */
 	public function saveEntry($blockId, $data) {
+		$this->recursive = -1;
+
 		$this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
-		$this->create();
+		$this->create(); // 常に新規登録
 		if ($this->save($data)) { // TODO 常に新規保存にする
 			if ($this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
 				if ($this->Comment->validateByStatus($data, array('caller' => $this->name))) {
@@ -272,29 +286,77 @@ class BlogEntry extends BlogsAppModel {
  * @return bool
  */
 	public function beforeSave($options = array()) {
-		// TODO statusが公開か
-		// TODO 今のis_activeを外す
-		// TODO is_activeをセットする
+		//  beforeSave はupdateAllでも呼び出される。
+		if (isset($this->data[$this->name]['id']) && ($this->data[$this->name]['id'] > 0)) {
+			// updateのときは何もしない
+			return true;
+		}
+		if ($this->data[$this->name]['status'] === NetCommonsBlockComponent::STATUS_PUBLISHED) {
+			// statusが公開ならis_activeを付け替える
+			//  is_activeをセットする
+			$this->data[$this->name]['is_active'] = 1;
+			if ($this->data[$this->name]['origin_id'] > 0) {
+				// 今のis_activeを外す（同じorigin_id, 同じlanguage_id）
+				$currentIsActiveConditions = array(
+					$this->name . '.origin_id' => $this->data[$this->name]['origin_id'],
+					$this->name . '.language_id' => $this->data[$this->name]['language_id'],
+					$this->name . '.is_active' => 1,
+				);
+				$this->updateAll(
+					array(
+						$this->name . '.is_active' => 0
+					),
+					$currentIsActiveConditions
+				);
+			}
+		}
+		if ($this->data[$this->name]['origin_id'] > 0) {
+			//  今のis_latestを外す
+			$currentIsLatestConditions = array(
+				$this->name . '.origin_id' => $this->data[$this->name]['origin_id'],
+				$this->name . '.language_id' => $this->data[$this->name]['language_id'],
+				$this->name . '.is_latest' => 1,
+			);
+			$this->updateAll(
+				array(
+					$this->name . '.is_latest' => 0
+				),
+				$currentIsLatestConditions
+			);
+		}
+		// 新規レコードを登録するときは必ずis_latest =1
+		if (empty($this->data[$this->name]['id'])) {
+			$this->data[$this->name]['is_latest'] = 1;
+		}
 		return true;
 	}
 
 /**
- * keyがセットされてなかったらkeyを生成して更新する
+ * origin_idがセットされてなかったらorigin_id=idとしてアップデート
  *
- * @param bool $created
+ * @param bool $created created
+ * @param array $options options
  * @return void
  */
 	public function afterSave($created, $options = array()) {
-		if( empty($this->data['BlogEntry']['key']) ){
-			// key がセットされてなかったらkey=idでupdate
-			$this->saveField('key', $this->data['BlogEntry']['id']);
+		if ($created) {
+			if (empty($this->data[$this->name]['origin_id'])) {
+				// origin_id がセットされてなかったらkey=idでupdate
+				$this->saveField('origin_id', $this->data[$this->name]['id']);
+			}
 		}
 	}
 
-	protected function getPublishedConditions($currentDateTime) {
+/**
+ * 公開データ取得のconditionsを返す
+ *
+ * @param datetime $currentDateTime 現在の日時
+ * @return array
+ */
+	protected function _getPublishedConditions($currentDateTime) {
 		return array(
 			'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
-			'BlogEntry.published_datetime <=' => $currentDateTime,// TODO これだと未来日付で公開にしてある記事がどの編集権限でもヒットしなくなる
+			'BlogEntry.published_datetime <=' => $currentDateTime, // TODO これだと未来日付で公開にしてある記事がどの編集権限でもヒットしなくなる
 		);
 	}
 

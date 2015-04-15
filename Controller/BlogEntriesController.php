@@ -8,9 +8,11 @@ App::uses('BlogsAppController', 'Blogs.Controller');
  * @author   Ryuji AMANO <ryuji@ryus.co.jp>
  * @link     http://www.netcommons.org NetCommons Project
  * @license  http://www.netcommons.org/license.txt NetCommons License
- * @property BlogEntry $BlogEntry
+ * @property NetCommonsWorkflow $NetCommonsWorkflow
  * @property PaginatorComponent $Paginator
+ * @property BlogEntry $BlogEntry
  * @property BlogTag $BlogTag
+ * @property BlogCategory $BlogCategory
  */
 class BlogEntriesController extends BlogsAppController {
 
@@ -175,7 +177,6 @@ class BlogEntriesController extends BlogsAppController {
  * @return void
  */
 	public function view() {
-
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();
 
@@ -195,7 +196,7 @@ class BlogEntriesController extends BlogsAppController {
 			throw new NotFoundException(__('Invalid blog entry'));
 		}
 
-		$options = array('conditions' => $conditions);
+		$options = array('conditions' => $conditions, 'recursive' => 0);
 		$blogEntry = $this->BlogEntry->find('first', $options);
 		if ($blogEntry) {
 			$this->set('blogEntry', $blogEntry);
@@ -243,6 +244,7 @@ class BlogEntriesController extends BlogsAppController {
 /**
  * add method
  *
+ * @throws InternalErrorException
  * @return void
  */
 	public function add() {
@@ -253,15 +255,14 @@ class BlogEntriesController extends BlogsAppController {
 			$status = $this->NetCommonsWorkflow->parseStatus();
 			$this->request->data['BlogEntry']['status'] = $status;
 
-			// set key
-			// 新規の時
-			//$key = $this->BlogEntry->makeKey();
-			//$this->request->data['BlogEntry']['key'] = $key;
+			// set block_id
+			$this->request->data['BlogEntry']['block_id'] = $this->viewVars['blockId'];
+			// set language_id
+			$this->request->data['BlogEntry']['language_id'] = $this->viewVars['languageId'];
 			try {
 				if (!$this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) {
 
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-					// @codeCoverageIgnoreEnd
 				}
 
 				$this->BlogEntry->commit();
@@ -300,17 +301,16 @@ class BlogEntriesController extends BlogsAppController {
  * edit method
  *
  * @throws NotFoundException
- * @param string $id
  * @return void
  */
 	public function edit() {
-		$id = $this->request->params['named']['id'];
-		$blogEntry = $this->BlogEntry->findById($id);
+		$originId = $this->request->params['named']['origin_id'];
+
+		//  origin_idのis_latstを元に編集を開始
+		$blogEntry = $this->BlogEntry->findByOriginIdAndIsLatest($originId, 1);
 		if (empty($blogEntry)) {
-			// TODO 404 NotFound
+			//  404 NotFound
 			throw new NotFoundException();
-			// 新規なら空配列作成
-			//		$blogEntry = $this->BlogEntry->getNew();
 		}
 
 
@@ -321,13 +321,16 @@ class BlogEntriesController extends BlogsAppController {
 			$status = $this->NetCommonsWorkflow->parseStatus();
 			$this->request->data['BlogEntry']['status'] = $status;
 
+			// set block_id
+			$this->request->data['BlogEntry']['block_id'] = $this->viewVars['blockId'];
+			// set language_id
+			$this->request->data['BlogEntry']['language_id'] = $this->viewVars['languageId'];
+
 			try {
 				$data = Hash::merge($blogEntry, $this->request->data);
 				unset($data['BlogEntry']['id']); // 常に新規保存
 				if (!$this->BlogEntry->saveEntry($this->viewVars['blockId'], $data)) {
-					// @codeCoverageIgnoreStart
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-					// @codeCoverageIgnoreEnd
 				}
 
 				$this->BlogEntry->commit();
@@ -339,14 +342,14 @@ class BlogEntriesController extends BlogsAppController {
 				);
 
 			} catch (Exception $e) {
+var_dump($e);
 				$this->BlogEntry->rollback();
 				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
 
 			}
 		} else {
 
-			$options = array('conditions' => array('BlogEntry.' . $this->BlogEntry->primaryKey => $id));
-			$this->request->data = $this->BlogEntry->find('first', $options);
+			$this->request->data = $blogEntry;
 			$tags = $this->BlogTag->getTagsListByEntryId($this->request->data['BlogEntry']['id']);
 			$this->request->data['BlogTag'] = $tags;
 			// TODO 編集できる記事か？
