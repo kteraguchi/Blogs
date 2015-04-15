@@ -28,7 +28,6 @@
 		<div class="col-xs-3">
 			<?php if ($contentCreatable): ?>
 				<?php
-				//TODO
 				$currentStatus = $currentFilterStatus;
 				$statusOptions = array(
 					0 => __d('blogs', 'All status'),
@@ -107,7 +106,7 @@
 							'controller' => 'blog_entries',
 							'action' => 'view',
 							$frameId,
-							'id' => $blogEntry['BlogEntry']['id']
+							'origin_id' => $blogEntry['BlogEntry']['origin_id']
 						)
 					); ?>
 				</h2>

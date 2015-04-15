@@ -54,12 +54,17 @@ class BlogEntriesController extends BlogsAppController {
 		)
 	);
 
-	protected $filter = array(
+	protected $_filter = array(
 		'categoryId' => 0,
 		'status' => 0,
 		'yearMonth' => 0,
 	);
 
+/**
+ * index
+ *
+ * @return void
+ */
 	public function index() {
 		$this->set('listTitle', $this->_blogTitle);
 
@@ -68,14 +73,14 @@ class BlogEntriesController extends BlogsAppController {
 
 	public function category() {
 		// indexとの違いはcategoryIdでの絞り込みをするだけ
-		$this->filter['categoryId'] = $this->getNamed('id', 0);
+		$this->_filter['categoryId'] = $this->getNamed('id', 0);
 
 		// カテゴリ名をタイトルに
-		$category = $this->BlogCategory->findById($this->filter['categoryId']);
+		$category = $this->BlogCategory->findById($this->_filter['categoryId']);
 		$this->set('listTitle', __d('blogs', 'Category') . ':' . $category['BlogCategory']['name']);
 
 		$conditions = array(
-			'BlogEntry.blog_category_id' => $this->filter['categoryId']
+			'BlogEntry.blog_category_id' => $this->_filter['categoryId']
 		);
 		$this->_list($conditions);
 	}
@@ -106,12 +111,12 @@ class BlogEntriesController extends BlogsAppController {
 
 	public function year_month() {
 		// indexとの違いはyear_monthでの絞り込み
-		$this->filter['yearMonth'] = $this->getNamed('year_month', 0);
+		$this->_filter['yearMonth'] = $this->getNamed('year_month', 0);
 
 		// TODO 年月をタイトルに
-		$this->set('listTitle', $this->filter['yearMonth']);
+		$this->set('listTitle', $this->_filter['yearMonth']);
 
-		$first = $this->filter['yearMonth'] . '-1';
+		$first = $this->_filter['yearMonth'] . '-1';
 		$last = date('Y-m-t', strtotime($first));
 
 		$conditions = array(
@@ -120,14 +125,19 @@ class BlogEntriesController extends BlogsAppController {
 		$this->_list($conditions);
 	}
 
-
+/**
+ * 一覧
+ *
+ * @param array $extraConditions 追加conditions
+ * @return void
+ */
 	protected function _list($extraConditions = array()) {
-		$this->filter['status'] = $this->getNamed('status', 0);
-		$this->set('currentFilterStatus', $this->filter['status']);
+		$this->_filter['status'] = $this->getNamed('status', 0);
+		$this->set('currentFilterStatus', $this->_filter['status']);
 
-		$this->set('currentCategoryId', $this->filter['categoryId']);
+		$this->set('currentCategoryId', $this->_filter['categoryId']);
 
-		$this->set('currentYearMonth', $this->filter['yearMonth']);
+		$this->set('currentYearMonth', $this->_filter['yearMonth']);
 
 		$this->_setupBlogTitle();
 		$this->loadBlockSetting();
@@ -143,9 +153,9 @@ class BlogEntriesController extends BlogsAppController {
 				$this->viewVars,
 				$this->_getCurrentDateTime()
 			);
-			if ($this->filter['status']) {
+			if ($this->_filter['status']) {
 				//  status絞り込み
-				$conditions['BlogEntry.status'] = $this->filter['status'];
+				$conditions['BlogEntry.status'] = $this->_filter['status'];
 			}
 			if ($extraConditions) {
 				$conditions = Hash::merge($conditions, $extraConditions);
@@ -173,14 +183,13 @@ class BlogEntriesController extends BlogsAppController {
  * view method
  *
  * @throws NotFoundException
- * @param string $id
  * @return void
  */
 	public function view() {
 		$this->loadBlockSetting();
 		$this->loadFrameSetting();
 
-		$id = $this->request->params['named']['id'];
+		$originId = $this->request->params['named']['origin_id'];
 		if ($this->viewVars['contentReadable']) {
 			$conditions = $this->BlogEntry->getConditions(
 				$this->viewVars['blockId'],
@@ -189,7 +198,7 @@ class BlogEntriesController extends BlogsAppController {
 				$this->_getCurrentDateTime()
 			);
 
-			$conditions['BlogEntry.id'] = $id;
+			$conditions['BlogEntry.origin_id'] = $originId;
 
 		} else {
 			// 何も見せない
@@ -201,7 +210,7 @@ class BlogEntriesController extends BlogsAppController {
 		if ($blogEntry) {
 			$this->set('blogEntry', $blogEntry);
 			// tag取得
-			$blogTags = $this->BlogTag->getTagsByEntryId($id);
+			$blogTags = $this->BlogTag->getTagsByEntryId($originId);
 			$this->set('blogTags', $blogTags);
 
 			// ε(　　　　 v ﾟωﾟ)　＜ コメント取得
@@ -270,7 +279,7 @@ class BlogEntriesController extends BlogsAppController {
 				$this->Session->setFlash(__('The blog entry has been saved.'));
 
 				return $this->redirect(
-					array('action' => 'view', $this->viewVars['frameId'], 'id' => $this->BlogEntry->id)
+					array('action' => 'view', $this->viewVars['frameId'], 'origin_id' => $this->request->data['BlogEntry']['origin_id'])
 				);
 
 			} catch (Exception $e) {
@@ -336,13 +345,11 @@ class BlogEntriesController extends BlogsAppController {
 				$this->BlogEntry->commit();
 
 				$this->Session->setFlash(__('The blog entry has been saved.'));
-
 				return $this->redirect(
-					array('action' => 'view', $this->viewVars['frameId'], 'id' => $this->BlogEntry->id)
+					array('action' => 'view', $this->viewVars['frameId'], 'origin_id' => $data['BlogEntry']['origin_id'])
 				);
 
 			} catch (Exception $e) {
-var_dump($e);
 				$this->BlogEntry->rollback();
 				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
 

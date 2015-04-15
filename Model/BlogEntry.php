@@ -142,54 +142,35 @@ class BlogEntry extends BlogsAppModel {
 			'BlogCategory.block_id' => $blockId
 		);
 
+		if ($permissions['contentEditable']) {
+			// 編集権限
+			$conditions['is_latest'] = 1;
+			return $conditions;
+		}
+
+		if ($permissions['contentCreatable']) {
+			// 作成権限
+			$conditions['OR'] = array(
+				$this->_getPublishedConditions($currentDateTime),
+				'created_user' => $userId, // 自分のコンテンツはステータス関係なく閲覧可能
+			);
+			return $conditions;
+		}
+
 		if ($permissions['contentReadable']) {
-
-			if ($permissions['contentEditable']) {
-				// 編集権限
-				// 他人の下書き以外は全部見られる
-				$conditions = array_merge(
-					$conditions,
-					array(
-						'OR' => array(
-							array(
-								'BlogEntry.created_user' => $userId
-							),
-							array(
-								'BlogEntry.status !=' => NetCommonsBlockComponent::STATUS_IN_DRAFT
-							)
-						)
-					)
-				);
-
-			} elseif ($permissions['contentCreatable']) {
-				// 作成権限
-				$conditions = array_merge(
-					$conditions,
-					array(
-						'OR' => array(
-							$this->_getPublishedConditions($currentDateTime),
-							array(
-								'BlogEntry.created_user' => $userId
-							)
-						)
-					)
-				);
-			} else {
-				// 閲覧権限のみ
-				$conditions = array_merge(
-					$conditions,
-					$this->_getPublishedConditions($currentDateTime)
-				);
-
-			}
-
-		} else {
-			// contentReadable falseなら何も見えない
+			// 公開中コンテンツだけ
 			$conditions = array_merge(
 				$conditions,
-				array('BlogEntry.id' => 0) // ありえない条件でヒット0にしてる
-			);
+				$this->_getPublishedConditions($currentDateTime));
+			return $conditions;
+
 		}
+
+		// contentReadable falseなら何も見えない
+		$conditions = array_merge(
+			$conditions,
+			array('BlogEntry.id' => 0) // ありえない条件でヒット0にしてる
+		);
 
 		return $conditions;
 	}
@@ -260,23 +241,25 @@ class BlogEntry extends BlogsAppModel {
 
 		$this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
 		$this->create(); // 常に新規登録
-		if ($this->save($data)) { // TODO 常に新規保存にする
-			if ($this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
-				if ($this->Comment->validateByStatus($data, array('caller' => $this->name))) {
-					if ($this->Comment->data) {
-						if ($this->Comment->save(null, true)) {
-							return true;
-						}
-					} else {
-						// コメント無し
-						return true;
-					}
-				} else {
-					$this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
+		if (!$this->save($data)) {
+			return false;
+		}
+		if (isset($data['BlogTag'])) {
+			if (!$this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
+				return false;
+			}
+		}
+		if (!$this->Comment->validateByStatus($data, array('caller' => $this->name))) {
+			$this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
+			return false;
+		} else {
+			if ($this->Comment->data) {
+				if (!$this->Comment->save(null, true)) {
+					return false;
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 /**
@@ -355,8 +338,8 @@ class BlogEntry extends BlogsAppModel {
  */
 	protected function _getPublishedConditions($currentDateTime) {
 		return array(
-			'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
-			'BlogEntry.published_datetime <=' => $currentDateTime, // TODO これだと未来日付で公開にしてある記事がどの編集権限でもヒットしなくなる
+			$this->name . '.is_active' => 1,
+			'BlogEntry.published_datetime <=' => $currentDateTime,
 		);
 	}
 
