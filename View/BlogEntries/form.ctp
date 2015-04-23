@@ -25,7 +25,8 @@
 					'BlogEntry',
 					array(
 						'inputDefaults' => array(
-							'div' => 'form-group'
+							'div' => 'form-group',
+							'class' => 'form-control'
 						),
 						'div' => 'form-control'
 					)
@@ -110,13 +111,17 @@
 						</div>
 
 						<?php
-						echo $this->Form->input(
-							'published_datetime',
-							array('label' => __d('blogs', 'Published datetime'))
-						);
+
+						echo $this->Form->input('published_datetime',
+							array('type' => 'text',
+								'datetimepicker',
+								'label' => __d('blogs', 'Published datetime')));
+
 
 						echo $this->Form->input('blog_category_id', array('label' => __d('blogs', 'Category')));
+
 						?>
+
 
 						<div class="form-group">
 							<label class="control-label">

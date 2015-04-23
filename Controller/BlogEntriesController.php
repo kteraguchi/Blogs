@@ -66,12 +66,14 @@ class BlogEntriesController extends BlogsAppController {
  * @return void
  */
 	public function index() {
+		$this->_prepare();
 		$this->set('listTitle', $this->_blogTitle);
 
 		$this->_list();
 	}
 
 	public function category() {
+		$this->_prepare();
 		// indexとの違いはcategoryIdでの絞り込みをするだけ
 		$this->_filter['categoryId'] = $this->getNamed('id', 0);
 
@@ -86,6 +88,7 @@ class BlogEntriesController extends BlogsAppController {
 	}
 
 	public function tag() {
+		$this->_prepare();
 		// indexとのちがいはtagIdでの絞り込みだけ
 		$tagId = $this->getNamed('id', 0);
 
@@ -110,6 +113,7 @@ class BlogEntriesController extends BlogsAppController {
 	}
 
 	public function year_month() {
+		$this->_prepare();
 		// indexとの違いはyear_monthでの絞り込み
 		$this->_filter['yearMonth'] = $this->getNamed('year_month', 0);
 
@@ -123,6 +127,12 @@ class BlogEntriesController extends BlogsAppController {
 			'BlogEntry.published_datetime BETWEEN ? AND ?' => array($first, $last)
 		);
 		$this->_list($conditions);
+	}
+
+	protected function _prepare() {
+		$this->_setupBlogTitle();
+		$this->loadBlockSetting();
+		$this->loadFrameSetting();
 	}
 
 /**
@@ -139,9 +149,6 @@ class BlogEntriesController extends BlogsAppController {
 
 		$this->set('currentYearMonth', $this->_filter['yearMonth']);
 
-		$this->_setupBlogTitle();
-		$this->loadBlockSetting();
-		$this->loadFrameSetting();
 
 		$this->setCategoryOptions();
 		$this->setYearMonthOptions();
