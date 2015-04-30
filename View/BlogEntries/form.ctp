@@ -30,7 +30,9 @@
 						),
 						'div' => 'form-control'
 					)
-				); ?>
+				);
+				$this->Form->unlockField('BlogTag');
+				?>
 				<?php echo $this->Form->input('origin_id', array('type' => 'hidden')); ?>
 				<!--		--><?php //echo $this->Form->hidden('Frame.id', array(
 				//			'value' => $frameId,
