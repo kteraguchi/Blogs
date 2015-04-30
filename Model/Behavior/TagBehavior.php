@@ -51,6 +51,46 @@ class TagBehavior extends ModelBehavior {
 		}
 	}
 
+	public function beforeFind(Model $Model, $query) {
+		// ε(　　　　 v ﾟωﾟ)　＜ 汎用化
+		$joinLinkTable = false;
+		$joinsTagTable = false;
+
+		$conditions = $query['conditions'];
+		$columns = array_keys($conditions);
+		// タグ条件あったらタグテーブルとリンクテーブルをJOIN
+		if (preg_grep('/^BlogTag\./', $columns)) {
+			$joinLinkTable = true;
+			$joinsTagTable = true;
+		}
+		// リンク条件だけならリンクテーブルだけをJOIN
+		if (preg_grep('/^BlogEntryTagLink\./', $columns)) {
+			$joinLinkTable = true;
+		}
+
+		if ($joinLinkTable) {
+			$query['joins'][] =
+				array(
+					'type' => 'LEFT',
+					'table' => 'blog_entry_tag_links',
+					'alias' => 'BlogEntryTagLink',
+					'conditions' => '`' . $Model->name . '`.`id`=`BlogEntryTagLink`.`blog_entry_id`',
+				);
+		}
+
+		if ($joinsTagTable) {
+			$query['joins'][] =
+				array(
+					'type' => 'LEFT',
+					'table' => 'blog_tags',
+					'alias' => 'BlogTag',
+					'conditions' => '`BlogEntryTagLink`.`blog_tag_id`=`BlogTag`.`id`',
+				);
+		}
+
+		return $query;
+	}
+
 /**
  * タグ情報をFind結果にまぜる
  *

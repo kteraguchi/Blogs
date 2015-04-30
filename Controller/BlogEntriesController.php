@@ -96,18 +96,21 @@ class BlogEntriesController extends BlogsAppController {
 		$tag = $this->BlogTag->findById($tagId);
 		$this->set('listTitle', __d('blogs', 'Tag') . ':' . $tag['BlogTag']['name']);
 
+		//$conditions = array(
+		//	'BlogEntryTagLink.blog_tag_id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
+		//);
 		$conditions = array(
-			'BlogEntryTagLink.blog_tag_id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
+			'BlogTag.id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
 		);
 
 		// ε(　　　　 v ﾟωﾟ)　＜ここでPaginator条件セットするのはどうかなぁ。
-		$this->Paginator->settings['joins'][] =
-			array(
-				'type' => 'LEFT',
-				'table' => 'blog_entry_tag_links',
-				'alias' => 'BlogEntryTagLink',
-				'conditions' => '`BlogEntry`.`id`=`BlogEntryTagLink`.`blog_entry_id`',
-			);
+		//$this->Paginator->settings['joins'][] =
+		//	array(
+		//		'type' => 'LEFT',
+		//		'table' => 'blog_entry_tag_links',
+		//		'alias' => 'BlogEntryTagLink',
+		//		'conditions' => '`BlogEntry`.`id`=`BlogEntryTagLink`.`blog_entry_id`',
+		//	);
 
 		$this->_list($conditions);
 	}

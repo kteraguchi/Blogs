@@ -18,15 +18,16 @@ class BlogsAppController extends AppController {
 	public $components = array(
 		'NetCommons.NetCommonsBlock',
 		'NetCommons.NetCommonsFrame',
-		'NetCommons.NetCommonsRoomRole' => array(
-			//コンテンツの権限設定
-			'allowedActions' => array(
-				'contentEditable' => array('setting', 'token', 'edit') // TODO これは何？
-			),
-			//コンテンツのワークフロー設定(公開権限チェック)
-			'workflowActions' => array('edit'),
-			'workflowModelName' => 'Blogs',
-		),
+		'Security',
+		//'NetCommons.NetCommonsRoomRole' => array(
+		//	//コンテンツの権限設定
+		//	'allowedActions' => array(
+		//		'contentEditable' => array('setting', 'token', 'edit') // TODO これは何？
+		//	),
+		//	//コンテンツのワークフロー設定(公開権限チェック)
+		//	'workflowActions' => array('edit'),
+		//	'workflowModelName' => 'Blogs',
+		//),
 	);
 
 	public $helpers = array(
