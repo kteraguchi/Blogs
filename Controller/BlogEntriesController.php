@@ -211,14 +211,13 @@ class BlogEntriesController extends BlogsAppController {
 			// 何も見せない
 			throw new NotFoundException(__('Invalid blog entry'));
 		}
-
 		$options = array('conditions' => $conditions, 'recursive' => 0);
 		$blogEntry = $this->BlogEntry->find('first', $options);
 		if ($blogEntry) {
 			$this->set('blogEntry', $blogEntry);
 			// tag取得
-			$blogTags = $this->BlogTag->getTagsByEntryId($originId);
-			$this->set('blogTags', $blogTags);
+			//$blogTags = $this->BlogTag->getTagsByEntryId($blogEntry['BlogEntry']['id']);
+			//$this->set('blogTags', $blogTags);
 
 			// ε(　　　　 v ﾟωﾟ)　＜ コメント取得
 
@@ -275,18 +274,17 @@ class BlogEntriesController extends BlogsAppController {
 			$this->request->data['BlogEntry']['block_id'] = $this->viewVars['blockId'];
 			// set language_id
 			$this->request->data['BlogEntry']['language_id'] = $this->viewVars['languageId'];
-			try {
-				if (!$this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) {
 
+			try {
+				if (($this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) === false) {
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
 
 				$this->BlogEntry->commit();
 
 				$this->Session->setFlash(__('The blog entry has been saved.'));
-
 				return $this->redirect(
-					array('action' => 'view', $this->viewVars['frameId'], 'origin_id' => $this->request->data['BlogEntry']['origin_id'])
+					array('action' => 'view', $this->viewVars['frameId'], 'origin_id' => $this->BlogEntry->originId)
 				);
 
 			} catch (Exception $e) {
@@ -324,6 +322,7 @@ class BlogEntriesController extends BlogsAppController {
 
 		//  origin_idのis_latstを元に編集を開始
 		$blogEntry = $this->BlogEntry->findByOriginIdAndIsLatest($originId, 1);
+
 		if (empty($blogEntry)) {
 			//  404 NotFound
 			throw new NotFoundException();

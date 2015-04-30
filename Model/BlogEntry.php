@@ -26,7 +26,7 @@ class BlogEntry extends BlogsAppModel {
  */
 	public $actsAs = array(
 		'NetCommons.Trackable',
-
+		'Blogs.Tag',
 	);
 
 /**
@@ -241,14 +241,15 @@ class BlogEntry extends BlogsAppModel {
 
 		$this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
 		$this->create(); // 常に新規登録
-		if (!$this->save($data)) {
+		if (($returnData = $this->save($data)) === false) {
 			return false;
 		}
-		if (isset($data['BlogTag'])) {
-			if (!$this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
-				return false;
-			}
-		}
+
+		//if (isset($data['BlogTag'])) {
+		//	if (!$this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
+		//		return false;
+		//	}
+		//}
 		if (!$this->Comment->validateByStatus($data, array('caller' => $this->name))) {
 			$this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
 			return false;
@@ -259,7 +260,7 @@ class BlogEntry extends BlogsAppModel {
 				}
 			}
 		}
-		return true;
+		return $returnData;
 	}
 
 /**
@@ -269,6 +270,7 @@ class BlogEntry extends BlogsAppModel {
  * @return bool
  */
 	public function beforeSave($options = array()) {
+
 		//  beforeSave はupdateAllでも呼び出される。
 		if (isset($this->data[$this->name]['id']) && ($this->data[$this->name]['id'] > 0)) {
 			// updateのときは何もしない
@@ -325,7 +327,11 @@ class BlogEntry extends BlogsAppModel {
 		if ($created) {
 			if (empty($this->data[$this->name]['origin_id'])) {
 				// origin_id がセットされてなかったらkey=idでupdate
-				$this->saveField('origin_id', $this->data[$this->name]['id']);
+				$this->originId = $this->data[$this->name]['id'];
+				$this->saveField('origin_id', $this->data[$this->name]['id'], array('callbacks' => false)); // ここで$this->dataがリセットされる
+				//$this->data[$this->name]['origin_id'] = $this->data[$this->name]['id'];
+				//$this->save($this->data, array('callbacks' => false));
+				//$this->updateAll(array('origin_id' => $this->data[$this->name]['id']), array('id' => $this->data[$this->name]['id']));
 			}
 		}
 	}

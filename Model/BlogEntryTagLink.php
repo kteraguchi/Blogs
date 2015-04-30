@@ -16,6 +16,14 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  * Summary for BlogEntryTagLink Model
  */
 class BlogEntryTagLink extends BlogsAppModel {
+
+/**
+ * recursive
+ *
+ * @var int
+ */
+	public $recursive = -1;
+
 /**
  * use behaviors
  *

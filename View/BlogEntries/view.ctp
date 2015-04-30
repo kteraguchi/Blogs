@@ -44,7 +44,7 @@
 
 <div>
 	<?php echo __d('blogs', 'tag'); ?>
-	<?php foreach ($blogTags as $blogTag): ?>
+	<?php foreach ($blogEntry['BlogTag'] as $blogTag): ?>
 		<?php echo $this->Html->link(
 			$blogTag['BlogTag']['name'],
 			array('controller' => 'blog_entries', 'action' => 'tag', $frameId, 'id' => $blogTag['BlogTag']['id'])
