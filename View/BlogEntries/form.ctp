@@ -1,6 +1,7 @@
 <?php //echo $this->Html->script('/net_commons/base/js/workflow.js', false); ?>
 <?php echo $this->Html->script('/net_commons/base/js/wysiwyg.js', false); ?>
 <?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
+<?php echo $this->Html->script('/blogs/js/blog_tag.js', false); ?>
 
 
 <?php $dataJson = json_encode($this->request->data) ?>
@@ -125,27 +126,12 @@
 						?>
 
 
-						<div class="form-group">
-							<label class="control-label">
-								<?php echo __d('blogs', 'tag'); ?>
-							</label>
-							<input type="text" ng-model="newTag"/>
-							<button type="button" class="btn btn-success btn-xs" ng-click="addTag()">
-								<span class=""><?php echo __d('blogs', 'Add tag') ?></span>
-							</button>
+						<?php echo $this->element(
+								'Blogs.tag_form',
+								array('tagData' => $this->request->data['BlogTag'])
+							); ?>
 
-							<div>
-								<div ng-repeat="tag in tags" class="badge">
-									{{tag.name}}
-									&nbsp;
-									<button type="button" ng-click="removeTag(tag)" class="btn btn-xs">
-										<span class="glyphicon glyphicon-remove small"><span
-												class="sr-only">Remove tags</span> </span>
-									</button>
-									<input type="hidden" name="data[BlogTag][{{$index}}][name]" value="{{tag.name}}"/>
-								</div>
-							</div>
-						</div>
+
 					</fieldset>
 
 				</div>

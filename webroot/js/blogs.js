@@ -19,7 +19,6 @@ NetCommonsApp.controller('Blogs',
 
     $scope.init = function (data) {
       $scope.blogEntry = data.BlogEntry;
-      $scope.tags = (data.BlogTag) ? data.BlogTag : [];
       if ($scope.blogEntry.body2) {
         $scope.writeBody2 = true;
       }
@@ -29,25 +28,7 @@ NetCommonsApp.controller('Blogs',
       body1: '',
       body2: ''
     }
-
-    var where = $filter('filter');
-
-
-    $scope.tags = [];
-    $scope.newTag = '';
-    $scope.addTag = function () {
-      $scope.tags.push({
-        name: $scope.newTag
-      });
-      $scope.newTag = '';
-    }
-    // 任意の tag を削除
-    $scope.removeTag = function (currentTag) {
-      $scope.tags = where($scope.tags, function (tag) {
-        return currentTag !== tag;
-      });
-    };
-  });
+});
 
 NetCommonsApp.controller('Blogs.Entries',
   function ($scope) {
