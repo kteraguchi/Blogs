@@ -295,6 +295,8 @@ class BlogEntriesController extends BlogsAppController {
 				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
 
 			}
+		}else{
+			$this->request->data['BlogTag'] = array();
 		}
 		//  このブロックのカテゴリだけに絞り込む
 		$blogCategories = $this->BlogCategory->getCategoriesList($this->viewVars['blockId']);
