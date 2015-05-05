@@ -93,14 +93,14 @@ class BlogEntriesController extends BlogsAppController {
 		$tagId = $this->getNamed('id', 0);
 
 		// カテゴリ名をタイトルに
-		$tag = $this->BlogTag->findById($tagId);
-		$this->set('listTitle', __d('blogs', 'Tag') . ':' . $tag['BlogTag']['name']);
+		$tag = $this->BlogEntry->getTagByTagId($tagId);
+		$this->set('listTitle', __d('blogs', 'Tag') . ':' . $tag['Tag']['name']);
 
 		//$conditions = array(
 		//	'BlogEntryTagLink.blog_tag_id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
 		//);
 		$conditions = array(
-			'BlogTag.id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
+			'Tag.id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
 		);
 
 		// ε(　　　　 v ﾟωﾟ)　＜ここでPaginator条件セットするのはどうかなぁ。
