@@ -2,7 +2,7 @@
  * Created by ryuji on 15/04/30.
  */
 NetCommonsApp.controller('Blogs.BlogTagEdit',
-  function ($scope, $filter, $http) {
+  function ($scope, $filter, $http, $document) {
     var where = $filter('filter');
 
     $scope.frameId = 0;
@@ -13,7 +13,10 @@ NetCommonsApp.controller('Blogs.BlogTagEdit',
     $scope.init = function(frameId, tags){
       $scope.tags = (tags) ? tags : [];
       $scope.frameId = frameId;
+
+
     }
+
 
     $scope.addTag = function () {
       if($scope.newTag.length > 0){
@@ -21,9 +24,12 @@ NetCommonsApp.controller('Blogs.BlogTagEdit',
           name: $scope.newTag
         });
         $scope.newTag = '';
+        $scope.showResult = false;
+
       }
     }
 
+    $scope.showResult = false;
     $scope.showResultStyle = {};
     $scope.tagSearchResult = [];
     $scope.searchUrl = '/blogs/blog_tags/search/';
@@ -37,7 +43,11 @@ NetCommonsApp.controller('Blogs.BlogTagEdit',
         $http.get(url).
           success(function(data, status, headers, config) {
             $scope.tagSearchResult = data;
-            $scope.showResultStyle = {display:"block"}
+            if($scope.tagSearchResult.length > 0){
+              $scope.showResult = true;
+            }else{
+              $scope.showResult = false;
+            }
 
           }).
           error(function(data, status, headers, config) {
@@ -49,9 +59,14 @@ NetCommonsApp.controller('Blogs.BlogTagEdit',
 
       }
     }
+
+
+
     $scope.selectTag = function (selectedTag) {
       $scope.newTag = selectedTag;
-      $scope.showResultStyle = {display:"none"}
+      //$scope.showResultStyle = {display:"none"}
+      //$scope.showResult = false;
+      $scope.showResult = false;
     }
 
     // 任意の tag を削除
