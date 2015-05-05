@@ -296,7 +296,7 @@ class BlogEntriesController extends BlogsAppController {
 
 			}
 		}else{
-			$this->request->data['BlogTag'] = array();
+			$this->request->data['Tag'] = array();
 		}
 		//  このブロックのカテゴリだけに絞り込む
 		$blogCategories = $this->BlogCategory->getCategoriesList($this->viewVars['blockId']);
@@ -368,8 +368,6 @@ class BlogEntriesController extends BlogsAppController {
 		} else {
 
 			$this->request->data = $blogEntry;
-			$tags = $this->BlogTag->getTagsListByEntryId($this->request->data['BlogEntry']['id']);
-			$this->request->data['BlogTag'] = $tags;
 			// TODO 編集できる記事か？
 
 		}

@@ -18,9 +18,13 @@ NetCommonsApp.controller('Blogs',
     $scope.writeBody2 = false;
 
     $scope.init = function (data) {
-      $scope.blogEntry = data.BlogEntry;
-      if ($scope.blogEntry.body2) {
-        $scope.writeBody2 = true;
+      if(data.BlogEntry){
+        $scope.blogEntry = data.BlogEntry;
+        if ($scope.blogEntry.body2 !== null) {
+          if($scope.blogEntry.body2.length > 0){
+            $scope.writeBody2 = true;
+          }
+        }
       }
     }
 

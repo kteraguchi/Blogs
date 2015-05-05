@@ -26,7 +26,7 @@ class BlogEntry extends BlogsAppModel {
  */
 	public $actsAs = array(
 		'NetCommons.Trackable',
-		'Blogs.Tag',
+		'Tags.Tag',
 	);
 
 /**
@@ -44,25 +44,26 @@ class BlogEntry extends BlogsAppModel {
 		)
 	);
 
-	public $hasAndBelongsToMany = array(
-		'BlogTag' => array(
-			'className' => 'Blogs.BlogTag',
-			'joinTable' => 'blog_entry_tag_links',
-			'foreignKey' => 'blog_entry_id',
-			'associationForeignKey' => 'blog_tag_id',
-			'unique' => false,
-			'dependent' => false,
-			'with' => 'Blogs.BlogEntryTagLink',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	// TODO
+	//public $hasAndBelongsToMany = array(
+	//	'Tag' => array(
+	//		'className' => 'Tags.Tag',
+	//		'joinTable' => 'blog_entry_tag_links',
+	//		'foreignKey' => 'blog_entry_id',
+	//		'associationForeignKey' => 'blog_tag_id',
+	//		'unique' => false,
+	//		'dependent' => false,
+	//		'with' => 'Blogs.BlogEntryTagLink',
+	//		'conditions' => '',
+	//		'fields' => '',
+	//		'order' => '',
+	//		'limit' => '',
+	//		'offset' => '',
+	//		'exclusive' => '',
+	//		'finderQuery' => '',
+	//		'counterQuery' => ''
+	//	)
+	//);
 
 /**
  * バリデーションルールを返す
@@ -239,7 +240,7 @@ class BlogEntry extends BlogsAppModel {
 	public function saveEntry($blockId, $data) {
 		$this->recursive = -1;
 
-		$this->loadModels(array('BlogTag' => 'Blogs.BlogTag', 'Comment' => 'Comments.Comment'));
+		$this->loadModels(array('Comment' => 'Comments.Comment'));
 		$this->create(); // 常に新規登録
 		if (($returnData = $this->save($data)) === false) {
 			return false;

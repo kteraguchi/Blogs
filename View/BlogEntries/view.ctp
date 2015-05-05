@@ -42,12 +42,13 @@
 
 <?php echo $this->element('entry_footer'); ?>
 
+<!-- Tags -->
 <div>
 	<?php echo __d('blogs', 'tag'); ?>
-	<?php foreach ($blogEntry['BlogTag'] as $blogTag): ?>
+	<?php foreach ($blogEntry['Tag'] as $blogTag): ?>
 		<?php echo $this->Html->link(
-			$blogTag['BlogTag']['name'],
-			array('controller' => 'blog_entries', 'action' => 'tag', $frameId, 'id' => $blogTag['BlogTag']['id'])
+			$blogTag['name'],
+			array('controller' => 'blog_entries', 'action' => 'tag', $frameId, 'id' => $blogTag['id'])
 		); ?>&nbsp;
 	<?php endforeach; ?>
 

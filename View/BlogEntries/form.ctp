@@ -1,7 +1,7 @@
 <?php //echo $this->Html->script('/net_commons/base/js/workflow.js', false); ?>
 <?php echo $this->Html->script('/net_commons/base/js/wysiwyg.js', false); ?>
 <?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
-<?php echo $this->Html->script('/blogs/js/blog_tag.js', false); ?>
+<?php echo $this->Html->script('/tags/js/tags.js', false); ?>
 
 
 <?php $dataJson = json_encode($this->request->data) ?>
@@ -32,7 +32,7 @@
 						'div' => 'form-control'
 					)
 				);
-				$this->Form->unlockField('BlogTag');
+				$this->Form->unlockField('Tag');
 				?>
 				<?php echo $this->Form->input('origin_id', array('type' => 'hidden')); ?>
 				<!--		--><?php //echo $this->Form->hidden('Frame.id', array(
@@ -127,8 +127,11 @@
 
 
 						<?php echo $this->element(
-								'Blogs.tag_form',
-								array('tagData' => $this->request->data['BlogTag'])
+								'Tags.tag_form',
+								array(
+									'tagData' => $this->request->data['Tag'],
+									'modelName' => 'BlogEntry',
+									)
 							); ?>
 
 
