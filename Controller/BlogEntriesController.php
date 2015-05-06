@@ -347,7 +347,10 @@ class BlogEntriesController extends BlogsAppController {
 			$this->request->data['BlogEntry']['language_id'] = $this->viewVars['languageId'];
 
 			try {
-				$data = Hash::merge($blogEntry, $this->request->data);
+				//  ここでマージしちゃうとTag配列を減らせなくなるので取りやめ
+				//$data = Hash::merge($blogEntry, $this->request->data);
+				$data = $this->request->data;
+
 				unset($data['BlogEntry']['id']); // 常に新規保存
 				if (!$this->BlogEntry->saveEntry($this->viewVars['blockId'], $data)) {
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
