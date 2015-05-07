@@ -35,6 +35,7 @@ class BlogEntriesController extends BlogsAppController {
 	public function beforeFilter() {
 		// ゲストアクセスOKのアクションを設定
 		$this->Auth->allow('index', 'view', 'category', 'tag', 'year_month');
+		parent::beforeFilter();
 	}
 
 /**

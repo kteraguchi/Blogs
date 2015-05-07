@@ -1,5 +1,5 @@
 <?php //echo $this->Html->script('/net_commons/base/js/workflow.js', false); ?>
-<?php echo $this->Html->script('/net_commons/base/js/wysiwyg.js', false); ?>
+<?php echo $this->Html->script('/net_commons/js/wysiwyg.js', false); ?>
 <?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
 <?php echo $this->Html->script('/tags/js/tags.js', false); ?>
 
