@@ -13,15 +13,15 @@
 	); ?>
 
 </div>
+<article>
+	<h1><?php echo h($blogEntry['BlogEntry']['title']); ?></h1>
 
-<h1><?php echo h($blogEntry['BlogEntry']['title']); ?></h1>
+	<?php echo $this->element('entry_meta_info'); ?>
 
-<?php echo $this->element('entry_meta_info'); ?>
+	<div>
+		<?php if ($contentCreatable): ?>
 
-<div>
-	<?php if ($contentCreatable): ?>
-
-		<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Edit'); ?>">
+			<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Edit'); ?>">
 		<a href="<?php echo $this->Html->url(
 			array('action' => 'edit', $frameId, 'origin_id' => $blogEntry['BlogEntry']['origin_id'])
 		) ?>" class="btn btn-primary">
@@ -29,34 +29,36 @@
 		</a>
 	</span>
 
-	<?php endif ?>
-</div>
+		<?php endif ?>
+	</div>
 
 
-<div>
-	<?php echo $blogEntry['BlogEntry']['body1']; ?>
-</div>
-<div>
-	<?php echo $blogEntry['BlogEntry']['body2']; ?>
-</div>
+	<div>
+		<?php echo $blogEntry['BlogEntry']['body1']; ?>
+	</div>
+	<div>
+		<?php echo $blogEntry['BlogEntry']['body2']; ?>
+	</div>
 
-<?php echo $this->element('entry_footer'); ?>
+	<?php echo $this->element('entry_footer'); ?>
 
-<!-- Tags -->
-<div>
-	<?php echo __d('blogs', 'tag'); ?>
-	<?php foreach ($blogEntry['Tag'] as $blogTag): ?>
-		<?php echo $this->Html->link(
-			$blogTag['name'],
-			array('controller' => 'blog_entries', 'action' => 'tag', $frameId, 'id' => $blogTag['id'])
-		); ?>&nbsp;
-	<?php endforeach; ?>
+	<!-- Tags -->
+	<div>
+		<?php echo __d('blogs', 'tag'); ?>
+		<?php foreach ($blogEntry['Tag'] as $blogTag): ?>
+			<?php echo $this->Html->link(
+				$blogTag['name'],
+				array('controller' => 'blog_entries', 'action' => 'tag', $frameId, 'id' => $blogTag['id'])
+			); ?>&nbsp;
+		<?php endforeach; ?>
 
-</div>
+	</div>
 
-<div>
-	<!-- ε(　　　　 v ﾟωﾟ)　＜ Coreで開発されたらコメント機能を組み込む-->
-	<?php //echo $this->element('Comments.index'); ?>
+	<div>
+		<!-- ε(　　　　 v ﾟωﾟ)　＜ Coreで開発されたらコメント機能を組み込む-->
+		<?php //echo $this->element('Comments.index'); ?>
 
-</div>
+	</div>
+</article>
+
 

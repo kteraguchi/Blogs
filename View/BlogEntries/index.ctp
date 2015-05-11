@@ -99,34 +99,37 @@
 
 				</div>
 
-				<h2 class="blogs_entry_title">
-					<?php echo $this->Html->link(
-						$blogEntry['BlogEntry']['title'],
-						array(
-							'controller' => 'blog_entries',
-							'action' => 'view',
-							$frameId,
-							'origin_id' => $blogEntry['BlogEntry']['origin_id']
-						)
-					); ?>
-				</h2>
-				<?php echo $this->element('entry_meta_info', array('blogEntry' => $blogEntry)); ?>
+				<article>
+					<h2 class="blogs_entry_title">
+						<?php echo $this->Html->link(
+							$blogEntry['BlogEntry']['title'],
+							array(
+								'controller' => 'blog_entries',
+								'action' => 'view',
+								$frameId,
+								'origin_id' => $blogEntry['BlogEntry']['origin_id']
+							)
+						); ?>
+					</h2>
+					<?php echo $this->element('entry_meta_info', array('blogEntry' => $blogEntry)); ?>
 
-				<div class="blogs_entry_body1">
-					<?php echo $blogEntry['BlogEntry']['body1']; ?>
-				</div>
-				<?php if ($blogEntry['BlogEntry']['body2']) : ?>
-					<div ng-hide="isShowBody2">
-						<a ng-click="showBody2()">続きを読む</a>
+					<div class="blogs_entry_body1">
+						<?php echo $blogEntry['BlogEntry']['body1']; ?>
 					</div>
-					<div ng-show="isShowBody2">
-						<?php echo $blogEntry['BlogEntry']['body2'] ?>
-					</div>
-					<div ng-show="isShowBody2">
-						<a ng-click="hideBody2()">閉じる</a>
-					</div>
-				<?php endif ?>
-				<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry)); ?>
+					<?php if ($blogEntry['BlogEntry']['body2']) : ?>
+						<div ng-hide="isShowBody2">
+							<a ng-click="showBody2()">続きを読む</a>
+						</div>
+						<div ng-show="isShowBody2">
+							<?php echo $blogEntry['BlogEntry']['body2'] ?>
+						</div>
+						<div ng-show="isShowBody2">
+							<a ng-click="hideBody2()">閉じる</a>
+						</div>
+					<?php endif ?>
+					<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry)); ?>
+				</article>
+
 			</div>
 
 
@@ -147,6 +150,5 @@
 				)
 			); ?>
 		</ul>
-		<!--TODO ページャ-->
 	</div>
 </div>
