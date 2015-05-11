@@ -26,31 +26,6 @@
 		</div>
 
 		<div class="col-xs-3">
-			<?php if ($contentCreatable): ?>
-				<?php
-				$currentStatus = $currentFilterStatus;
-				$statusOptions = array(
-					0 => __d('blogs', 'All status'),
-					NetCommonsBlockComponent::STATUS_PUBLISHED => __d('net_commons', 'Published'),
-					NetCommonsBlockComponent::STATUS_APPROVED => __d('net_commons', 'Approving'),
-					NetCommonsBlockComponent::STATUS_IN_DRAFT => __d('net_commons', 'Temporary'),
-					NetCommonsBlockComponent::STATUS_DISAPPROVED => __d('net_commons', 'Disapproving'),
-
-				);
-				?>
-				<?php echo $this->Form->select(
-					'status',
-					$statusOptions,
-					array(
-						'empty' => false,
-						'class' => 'form-control',
-						'value' => $currentStatus,
-						'ng-change' => 'filterStatus()',
-						'ng-model' => 'selectStatus',
-						'ng-init' => 'selectStatus=' . $currentStatus
-					)
-				); ?>
-			<?php endif; ?>
 		</div>
 
 		<div class="col-xs-4">

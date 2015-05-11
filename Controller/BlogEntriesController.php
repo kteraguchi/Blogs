@@ -133,6 +133,11 @@ class BlogEntriesController extends BlogsAppController {
 		$this->_list($conditions);
 	}
 
+/**
+ * 設定等の呼び出し
+ *
+ * @return void
+ */
 	protected function _prepare() {
 		$this->_setupBlogTitle();
 		$this->loadBlockSetting();
@@ -146,9 +151,6 @@ class BlogEntriesController extends BlogsAppController {
  * @return void
  */
 	protected function _list($extraConditions = array()) {
-		$this->_filter['status'] = $this->getNamed('status', 0);
-		$this->set('currentFilterStatus', $this->_filter['status']);
-
 		$this->set('currentCategoryId', $this->_filter['categoryId']);
 
 		$this->set('currentYearMonth', $this->_filter['yearMonth']);
@@ -164,10 +166,6 @@ class BlogEntriesController extends BlogsAppController {
 				$this->viewVars,
 				$this->_getCurrentDateTime()
 			);
-			if ($this->_filter['status']) {
-				//  status絞り込み
-				$conditions['BlogEntry.status'] = $this->_filter['status'];
-			}
 			if ($extraConditions) {
 				$conditions = Hash::merge($conditions, $extraConditions);
 			}
