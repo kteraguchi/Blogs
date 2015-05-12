@@ -11,7 +11,6 @@ App::uses('BlogsAppController', 'Blogs.Controller');
  * @property NetCommonsWorkflow $NetCommonsWorkflow
  * @property PaginatorComponent $Paginator
  * @property BlogEntry $BlogEntry
- * @property BlogTag $BlogTag
  * @property BlogCategory $BlogCategory
  */
 class BlogEntriesController extends BlogsAppController {
@@ -23,7 +22,6 @@ class BlogEntriesController extends BlogsAppController {
 		'Blogs.BlogEntry',
 		'Blogs.BlogBlockSetting',
 		'Blogs.BlogCategory',
-		'Blogs.BlogTag',
 		'Comments.Comment',
 	);
 
@@ -73,6 +71,11 @@ class BlogEntriesController extends BlogsAppController {
 		$this->_list();
 	}
 
+/**
+ * カテゴリ別一覧
+ *
+ * @return void
+ */
 	public function category() {
 		$this->_prepare();
 		// indexとの違いはcategoryIdでの絞り込みをするだけ
@@ -88,6 +91,11 @@ class BlogEntriesController extends BlogsAppController {
 		$this->_list($conditions);
 	}
 
+/**
+ * tag別一覧
+ *
+ * @return void
+ */
 	public function tag() {
 		$this->_prepare();
 		// indexとのちがいはtagIdでの絞り込みだけ
@@ -116,12 +124,17 @@ class BlogEntriesController extends BlogsAppController {
 		$this->_list($conditions);
 	}
 
+/**
+ * 年月別一覧
+ *
+ * @return void
+ */
 	public function year_month() {
 		$this->_prepare();
 		// indexとの違いはyear_monthでの絞り込み
 		$this->_filter['yearMonth'] = $this->getNamed('year_month', 0);
 
-		// TODO 年月をタイトルに
+		// ε(　　　　 v ﾟωﾟ)　＜ 年月をタイトルに
 		$this->set('listTitle', $this->_filter['yearMonth']);
 
 		$first = $this->_filter['yearMonth'] . '-1';
@@ -155,9 +168,8 @@ class BlogEntriesController extends BlogsAppController {
 
 		$this->set('currentYearMonth', $this->_filter['yearMonth']);
 
-
-		$this->setCategoryOptions();
-		$this->setYearMonthOptions();
+		$this->_setCategoryOptions();
+		$this->_setYearMonthOptions();
 
 		if ($this->viewVars['contentReadable']) {
 			$conditions = $this->BlogEntry->getConditions(
@@ -229,7 +241,12 @@ class BlogEntriesController extends BlogsAppController {
 		}
 	}
 
-	protected function setCategoryOptions() {
+/**
+ * カテゴリ選択肢をViewへセット
+ *
+ * @return void
+ */
+	protected function _setCategoryOptions() {
 		$categories = $this->BlogCategory->getCategories($this->viewVars['blockId']);
 		$options = array(
 			0 => __d('blogs', 'All categories'),
@@ -240,7 +257,12 @@ class BlogEntriesController extends BlogsAppController {
 		$this->set('categoryOptions', $options);
 	}
 
-	protected function setYearMonthOptions() {
+/**
+ * 年月選択肢をViewへセット
+ *
+ * @return void
+ */
+	protected function _setYearMonthOptions() {
 		// 年月と記事数
 		$yearMonthCount = $this->BlogEntry->getYearMonthCount(
 			$this->viewVars['blockId'],
@@ -294,7 +316,7 @@ class BlogEntriesController extends BlogsAppController {
 				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
 
 			}
-		}else{
+		} else {
 			$this->request->data['Tag'] = array();
 		}
 		//  このブロックのカテゴリだけに絞り込む
@@ -319,6 +341,7 @@ class BlogEntriesController extends BlogsAppController {
  * edit method
  *
  * @throws NotFoundException
+ * @throws InternalErrorException
  * @return void
  */
 	public function edit() {
@@ -331,7 +354,6 @@ class BlogEntriesController extends BlogsAppController {
 			//  404 NotFound
 			throw new NotFoundException();
 		}
-
 
 		if ($this->request->is(array('post', 'put'))) {
 			$this->BlogEntry->begin();
@@ -370,7 +392,7 @@ class BlogEntriesController extends BlogsAppController {
 		} else {
 
 			$this->request->data = $blogEntry;
-			// TODO 編集できる記事か？
+			// ε(　　　　 v ﾟωﾟ)　＜ 編集できる記事か？
 
 		}
 		//  このブロックのカテゴリだけに絞り込む
@@ -391,31 +413,23 @@ class BlogEntriesController extends BlogsAppController {
 		$this->render('form');
 	}
 
-
-// ε(　　　　 v ﾟωﾟ)　＜　この下まだ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-
-
 /**
  * delete method
  *
  * @throws NotFoundException
- * @param string $id
  * @return void
  */
-	public function delete($id = null) {
-		$this->BlogEntry->id = $id;
-		if (!$this->BlogEntry->exists()) {
-			throw new NotFoundException(__('Invalid blog entry'));
-		}
+	public function delete() {
+		$originId = $this->getNamed('origin_id', 0);
+
 		$this->request->onlyAllow('post', 'delete');
-		if ($this->BlogEntry->delete()) {
+
+		if ($this->BlogEntry->deleteEntryByOriginId($originId)) {
 			$this->Session->setFlash(__('The blog entry has been deleted.'));
 		} else {
 			$this->Session->setFlash(__('The blog entry could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
-
-
 
 }

@@ -271,7 +271,6 @@ class BlogEntry extends BlogsAppModel {
  * @return bool
  */
 	public function beforeSave($options = array()) {
-
 		//  beforeSave はupdateAllでも呼び出される。
 		if (isset($this->data[$this->name]['id']) && ($this->data[$this->name]['id'] > 0)) {
 			// updateのときは何もしない
@@ -335,6 +334,19 @@ class BlogEntry extends BlogsAppModel {
 				//$this->updateAll(array('origin_id' => $this->data[$this->name]['id']), array('id' => $this->data[$this->name]['id']));
 			}
 		}
+	}
+
+/**
+ * 記事削除
+ *
+ * @param int $originId オリジンID
+ * @return bool
+ */
+	public function deleteEntryByOriginId($originId) {
+		// ε(　　　　 v ﾟωﾟ)　＜タグリンク削除
+		// 記事削除
+		$conditions = array('origin_id' => $originId);
+		return $this->deleteAll($conditions, true, true);
 	}
 
 /**

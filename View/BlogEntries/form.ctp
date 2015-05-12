@@ -117,6 +117,7 @@
 
 						echo $this->Form->input('published_datetime',
 							array('type' => 'text',
+								'ng-model' => 'publiched_datetime',
 								'datetimepicker',
 								'label' => __d('blogs', 'Published datetime')));
 
@@ -156,8 +157,8 @@
 					<div style="text-align: right;">
 					<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Delete'); ?>">
 							<a href="<?php echo $this->Html->url(
-								array('action' => 'delete', $frameId, 'id' => $blogEntry['BlogEntry']['id'])
-							) ?>" class="btn btn-danger">
+								array('action' => 'delete', $frameId, 'origin_id' => $blogEntry['BlogEntry']['origin_id'])
+							) ?>" class="btn btn-danger" onClick="return confirm('<?php echo __d('net_commons', 'Deleting the %s. Are you sure to proceed?', __d('blogs', 'BlogEntry')) ?>')">
 								<span class="glyphicon glyphicon-trash"> </span>
 							</a>
 

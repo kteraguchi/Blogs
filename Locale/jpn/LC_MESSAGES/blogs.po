@@ -33,3 +33,6 @@ msgstr "タイトル"
 
 msgid "Category"
 msgstr "カテゴリ"
+
+msgId "BlogEntry"
+msgstr "記事"
