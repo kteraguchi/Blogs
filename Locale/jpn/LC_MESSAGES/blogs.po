@@ -34,5 +34,8 @@ msgstr "タイトル"
 msgid "Category"
 msgstr "カテゴリ"
 
-msgId "BlogEntry"
+msgid "BlogEntry"
 msgstr "記事"
+
+msgid "Blog Name"
+msgstr "ブログ名"

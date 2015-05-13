@@ -1,4 +1,7 @@
 <?php
+/**
+ * BlogBlockSettingsController
+ */
 App::uses('BlogsAppController', 'Blogs.Controller');
 
 /**

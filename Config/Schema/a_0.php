@@ -9,7 +9,7 @@
 class AppSchema extends CakeSchema {
 
 /**
- * @var string
+ * @var string filename
  */
 	public $file = 'a_0.php';
 

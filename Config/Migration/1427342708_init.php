@@ -1,5 +1,11 @@
 <?php
+/**
+ * Migration
+ */
 
+/**
+ * Class Init
+ */
 class Init extends CakeMigration {
 
 /**

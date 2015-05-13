@@ -1,5 +1,11 @@
 <?php
+/**
+ * AppSchema
+ */
 
+/**
+ * Class AppSchema
+ */
 class AppSchema extends CakeSchema {
 
 /**
@@ -21,6 +27,9 @@ class AppSchema extends CakeSchema {
 	public function after($event = array()) {
 	}
 
+/**
+ * @var array blog_block_settings
+ */
 	public $blog_block_settings = array(
 		'id' => array(
 			'type' => 'integer',
@@ -93,6 +102,9 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+/**
+ * @var array blog_categories
+ */
 	public $blog_categories = array(
 		'id' => array(
 			'type' => 'integer',
@@ -153,6 +165,9 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+/**
+ * @var array blog_category_orders
+ */
 	public $blog_category_orders = array(
 		'id' => array(
 			'type' => 'integer',
@@ -213,6 +228,9 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+/**
+ * @var array blog_entries
+ */
 	public $blog_entries = array(
 		'id' => array(
 			'type' => 'integer',
@@ -323,6 +341,9 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+/**
+ * @var array blog_entry_tag_links
+ */
 	public $blog_entry_tag_links = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'blog_entry_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 45),
@@ -357,6 +378,9 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+/**
+ * @var array blog_frame_settings
+ */
 	public $blog_frame_settings = array(
 		'id' => array(
 			'type' => 'integer',
@@ -409,6 +433,9 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+/**
+ * @var array blog_tags
+ */
 	public $blog_tags = array(
 		'id' => array(
 			'type' => 'integer',

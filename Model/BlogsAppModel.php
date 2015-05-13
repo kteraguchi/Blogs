@@ -10,7 +10,7 @@ App::uses('AppModel', 'Model');
 class BlogsAppModel extends AppModel {
 
 /**
- * @var null
+ * @var null 新規空データ
  */
 	protected $_newRecord = null;
 

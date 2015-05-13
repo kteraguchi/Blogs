@@ -1,7 +1,9 @@
 <?php
-
 /**
- * Announcements All Test Suite
+ * All Test
+ */
+/**
+ * Blogs All Test Suite
  *
  * @author Ryuji AMANO <ryuji@ryus.co.jp>
  * @package NetCommons\Blogs\Test\Case

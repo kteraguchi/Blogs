@@ -1,4 +1,7 @@
 <?php
+/**
+ * Frame Settings
+ */
 App::uses('BlogsAppController', 'Blogs.Controller');
 
 /**

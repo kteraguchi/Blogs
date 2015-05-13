@@ -1,6 +1,6 @@
 <?php
 /**
- * BlogBlockSetting Model
+ * BlogSetting Model
  *
  *
  * @author   Ryuji AMANO <ryuji@ryus.co.jp>
@@ -11,7 +11,7 @@
 App::uses('BlogsAppModel', 'Blogs.Model');
 
 /**
- * Summary for BlogBlockSetting Model
+ * Summary for BlogSetting Model
  */
 class BlogBlockSetting extends BlogsAppModel {
 
@@ -92,21 +92,6 @@ class BlogBlockSetting extends BlogsAppModel {
 			),
 		),
 	);
-
-	//	/**
-	//	 * belongsTo associations
-	//	 *
-	//	 * @var array
-	//	 */
-	//	public $belongsTo = array(
-	//		'Block' => array(
-	//			'className' => 'Blocks.Block',
-	//			'foreignKey' => false,
-	//			'conditions' => array('BlogBlockSetting.block_key = Block.key'),
-	//			'fields' => '',
-	//			'order' => ''
-	//		)
-	//	);
 
 /**
  * blockKeyを元にブロック設定を返す

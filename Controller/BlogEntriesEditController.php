@@ -1,4 +1,7 @@
 <?php
+/**
+ * BlogEntriesEdit
+ */
 App::uses('BlogsAppController', 'Blogs.Controller');
 
 /**
@@ -16,7 +19,7 @@ App::uses('BlogsAppController', 'Blogs.Controller');
 class BlogEntriesController extends BlogsAppController {
 
 /**
- *
+ * @var array use models
  */
 	public $uses = array(
 		'Blogs.BlogEntry',

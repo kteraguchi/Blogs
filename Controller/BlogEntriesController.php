@@ -1,4 +1,7 @@
 <?php
+/**
+ * BlogEtnriesController
+ */
 App::uses('BlogsAppController', 'Blogs.Controller');
 
 /**
@@ -16,7 +19,7 @@ App::uses('BlogsAppController', 'Blogs.Controller');
 class BlogEntriesController extends BlogsAppController {
 
 /**
- *
+ * @var array use models
  */
 	public $uses = array(
 		'Blogs.BlogEntry',
@@ -53,6 +56,9 @@ class BlogEntriesController extends BlogsAppController {
 		)
 	);
 
+/**
+ * @var array 絞り込みフィルタ保持値
+ */
 	protected $_filter = array(
 		'categoryId' => 0,
 		'status' => 0,

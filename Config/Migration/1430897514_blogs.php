@@ -1,4 +1,10 @@
 <?php
+/**
+ * migration
+ */
+/**
+ * Class Blogs
+ */
 class Blogs extends CakeMigration {
 
 /**

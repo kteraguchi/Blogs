@@ -1,4 +1,7 @@
 <?php
+/**
+ * BlogsController
+ */
 App::uses('BlogsAppController', 'Blogs.Controller');
 
 /**

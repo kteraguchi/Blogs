@@ -1,13 +1,27 @@
 <?php
-
+/**
+ * BlogsApp
+ */
 App::uses('AppController', 'Controller');
 
+/**
+ * Class BlogsAppController
+ */
 class BlogsAppController extends AppController {
 
+/**
+ * @var array ブログ名
+ */
 	protected $_blogTitle;
 
+/**
+ * @var array ブログ設定
+ */
 	protected $_blockSetting;
 
+/**
+ * @var array フレーム設定
+ */
 	protected $_frameSetting;
 
 /**
@@ -21,10 +35,16 @@ class BlogsAppController extends AppController {
 		'Security',
 	);
 
+/**
+ * @var array helpers
+ */
 	public $helpers = array(
 		'Blogs.BlogsFormat',
 	);
 
+/**
+ * @var array use model
+ */
 	public $uses = array(
 		'Blogs.BlogBlockSetting',
 		'Blogs.BlogFrameSetting'
@@ -110,4 +130,53 @@ class BlogsAppController extends AppController {
 		return $value;
 	}
 
+/**
+ * initTabs
+ *
+ * @param string $mainActiveTab Main active tab
+ * @param string $blockActiveTab Block active tab
+ * @return void
+ */
+	public function initTabs($mainActiveTab, $blockActiveTab) {
+		//タブの設定
+		$settingTabs = array(
+			'tabs' => array(
+				'block_index' => array(
+					'url' => array(
+						'plugin' => $this->params['plugin'],
+						'controller' => 'blocks',
+						'action' => 'index',
+						$this->viewVars['frameId'],
+					)
+				),
+			),
+			'active' => $mainActiveTab
+		);
+		$this->set('settingTabs', $settingTabs);
+
+		$blockSettingTabs = array(
+			'tabs' => array(
+				'block_settings' => array(
+					'url' => array(
+						'plugin' => $this->params['plugin'],
+						'controller' => 'blocks',
+						'action' => $this->params['action'],
+						$this->viewVars['frameId'],
+						$this->viewVars['blockId']
+					)
+				),
+				'role_permissions' => array(
+					'url' => array(
+						'plugin' => $this->params['plugin'],
+						'controller' => 'block_role_permissions',
+						'action' => 'edit',
+						$this->viewVars['frameId'],
+						$this->viewVars['blockId']
+					)
+				),
+			),
+			'active' => $blockActiveTab
+		);
+		$this->set('blockSettingTabs', $blockSettingTabs);
+	}
 }
