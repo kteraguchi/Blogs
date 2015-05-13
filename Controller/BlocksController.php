@@ -137,7 +137,7 @@ class BlocksController extends BlogsAppController {
 				'id' => null,
 				'key' => null,
 				'block_id' => null,
-				'name' => __d('blogs', 'New FAQ %s', date('YmdHis')),
+				'name' => __d('blogs', 'New Blog %s', date('YmdHis')),
 			)
 		);
 		$block = $this->Block->create(
@@ -233,12 +233,12 @@ class BlocksController extends BlogsAppController {
  */
 	private function __parseRequestData() {
 		$data = $this->data;
-		if ($data['Block']['public_type'] === Block::TYPE_LIMITED) {
-			//$data['Block']['from'] = implode('-', $data['Block']['from']);
-			//$data['Block']['to'] = implode('-', $data['Block']['to']);
-		} else {
-			unset($data['Block']['from'], $data['Block']['to']);
-		}
+		//if ($data['Block']['public_type'] === Block::TYPE_LIMITED) {
+		//	//$data['Block']['from'] = implode('-', $data['Block']['from']);
+		//	//$data['Block']['to'] = implode('-', $data['Block']['to']);
+		//} else {
+		//	unset($data['Block']['from'], $data['Block']['to']);
+		//}
 
 		return $data;
 	}

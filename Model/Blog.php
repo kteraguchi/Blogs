@@ -256,8 +256,8 @@ class Blog extends BlogsAppModel {
 		$this->loadModels([
 			'Blog' => 'Blogs.Blog',
 			'BlogSetting' => 'Blogs.BlogSetting',
-			'BlogQuestion' => 'Blogs.BlogQuestion',
-			'BlogQuestionOrder' => 'Blogs.BlogQuestionOrder',
+			//'BlogQuestion' => 'Blogs.BlogQuestion',
+			//'BlogQuestionOrder' => 'Blogs.BlogQuestionOrder',
 			'Block' => 'Blocks.Block',
 			'Category' => 'Categories.Category',
 		]);

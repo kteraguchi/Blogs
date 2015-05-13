@@ -51,7 +51,7 @@
 		<?php echo $this->Form->input(
 				'Blog.name', array(
 					'type' => 'text',
-					'label' => __d('blogs', 'FAQ Name') . $this->element('NetCommons.required'),
+					'label' => __d('blogs', 'Blog Name') . $this->element('NetCommons.required'),
 					'error' => false,
 					'class' => 'form-control',
 					'autofocus' => true,
@@ -70,8 +70,10 @@
 	</div>
 </div>
 
-<?php echo $this->element('Blocks.public_type'); ?>
 
-<?php echo $this->element('Categories.edit_form', array(
+<?php
+if ($blockId) {
+	echo $this->element('Categories.edit_form', array(
 		'categories' => isset($categories) ? $categories : null
 	));
+}
