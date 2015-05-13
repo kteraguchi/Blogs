@@ -21,7 +21,6 @@ class BlogCategoryTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.blogs.blog_category',
-		'plugin.blogs.block',
 		'plugin.blogs.blog_entry'
 	);
 
@@ -44,6 +43,12 @@ class BlogCategoryTest extends CakeTestCase {
 		unset($this->BlogCategory);
 
 		parent::tearDown();
+	}
+
+/**
+ * Dummy test
+ */
+	public function testTest() {
 	}
 
 }

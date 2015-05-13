@@ -63,7 +63,7 @@ class BlogsAppController extends AppController {
  * @return void
  */
 	protected function _setupBlogTitle() {
-		$this->loadModel('NetCommonsBlock.Block');
+		$this->loadModel('Blocks.Block');
 		$block = $this->Block->findById($this->viewVars['blockId']);
 		$this->_blogTitle = $block['Block']['name'];
 	}

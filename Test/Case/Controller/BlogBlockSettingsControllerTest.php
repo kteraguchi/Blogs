@@ -21,47 +21,13 @@ class BlogBlockSettingsControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.blogs.blog_block_setting',
-		'plugin.blogs.site_setting'
 	);
 
 /**
- * testAdminIndex method
+ * testIndex
  *
  * @return void
  */
-	public function testAdminIndex() {
+	public function testIndex() {
 	}
-
-/**
- * testAdminView method
- *
- * @return void
- */
-	public function testAdminView() {
-	}
-
-/**
- * testAdminAdd method
- *
- * @return void
- */
-	public function testAdminAdd() {
-	}
-
-/**
- * testAdminEdit method
- *
- * @return void
- */
-	public function testAdminEdit() {
-	}
-
-/**
- * testAdminDelete method
- *
- * @return void
- */
-	public function testAdminDelete() {
-	}
-
 }

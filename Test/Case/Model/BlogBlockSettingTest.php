@@ -25,6 +25,17 @@ class BlogBlockSettingTest extends CakeTestCase {
 	);
 
 /**
+ * Trackableビヘイビアで必用な関連モデルが増えすぎるので除去する
+ *
+ * @param Model $Model Trackableを引きはがすモデル
+ * @return void
+ */
+	protected function _unloadTrackable(Model $Model) {
+		$Model->Behaviors->unload('NetCommons.Trackable');
+		$Model->unbindModel(array('belongsTo' => array('TrackableCreator', 'TrackableUpdater')), false);
+	}
+
+/**
  * setUp method
  *
  * @return void
@@ -32,6 +43,7 @@ class BlogBlockSettingTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->BlogBlockSetting = ClassRegistry::init('Blogs.BlogBlockSetting');
+		$this->_unloadTrackable($this->BlogBlockSetting);
 	}
 
 /**
@@ -53,8 +65,7 @@ class BlogBlockSettingTest extends CakeTestCase {
 	public function testGetSettingByBlockKey() {
 		$blockKey = 'block1';
 		$setting = $this->BlogBlockSetting->getSettingByBlockKey($blockKey);
-
-		$this->assertEqual($setting['BlogBlockSetting']['block_key'], $blockKey);
+		$this->assertEqual($setting['block_key'], $blockKey);
 
 		$blockKey = '存在しないキー';
 		$setting = $this->BlogBlockSetting->getSettingByBlockKey($blockKey);
@@ -62,6 +73,6 @@ class BlogBlockSettingTest extends CakeTestCase {
 		$this->assertEqual($setting['block_key'], $blockKey);
 
 		$findResult = $this->BlogBlockSetting->findByBlockKey($blockKey);
-		$this->assertEqual($findResult, $setting);
+		$this->assertEqual($findResult['BlogBlockSetting'], $setting);
 	}
 }

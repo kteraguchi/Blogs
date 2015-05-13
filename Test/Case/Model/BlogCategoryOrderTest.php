@@ -44,4 +44,9 @@ class BlogCategoryOrderTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
+/**
+ * Dummy test
+ */
+	public function testTest() {
+	}
 }

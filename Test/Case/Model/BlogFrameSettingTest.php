@@ -44,4 +44,10 @@ class BlogFrameSettingTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
+/**
+ * Dummy test
+ */
+	public function testTest() {
+	}
+
 }

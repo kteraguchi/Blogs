@@ -21,47 +21,14 @@ class BlogFrameSettingsControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.blogs.blog_frame_setting',
-		'plugin.blogs.site_setting'
 	);
 
 /**
- * testAdminIndex method
+ * testIndex
  *
  * @return void
  */
-	public function testAdminIndex() {
-	}
-
-/**
- * testAdminView method
- *
- * @return void
- */
-	public function testAdminView() {
-	}
-
-/**
- * testAdminAdd method
- *
- * @return void
- */
-	public function testAdminAdd() {
-	}
-
-/**
- * testAdminEdit method
- *
- * @return void
- */
-	public function testAdminEdit() {
-	}
-
-/**
- * testAdminDelete method
- *
- * @return void
- */
-	public function testAdminDelete() {
+	public function testIndex() {
 	}
 
 }
