@@ -10,7 +10,7 @@
 		<?php if ($contentCreatable): ?>
 			<div style="text-align: right">
 
-				<a href="/blogs/blog_entries/add/<?php echo $frameId ?>">
+				<a href="/blogs/blog_entries_edit/add/<?php echo $frameId ?>">
 					<button class="btn btn-success"
 							tooltip="<?php echo __d('blogs', 'Add entry'); ?>">
 						<span class="glyphicon glyphicon-plus"></span>

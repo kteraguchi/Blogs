@@ -3,7 +3,7 @@
  * BlogBlockSetting Model
  *
  *
- * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @author   Ryuji AMANO <ryuji@ryus.co.jp>
  * @link     http://www.netcommons.org NetCommons Project
  * @license  http://www.netcommons.org/license.txt NetCommons License
  */
@@ -93,21 +93,27 @@ class BlogBlockSetting extends BlogsAppModel {
 		),
 	);
 
-//	/**
-//	 * belongsTo associations
-//	 *
-//	 * @var array
-//	 */
-//	public $belongsTo = array(
-//		'Block' => array(
-//			'className' => 'Blocks.Block',
-//			'foreignKey' => false,
-//			'conditions' => array('BlogBlockSetting.block_key = Block.key'),
-//			'fields' => '',
-//			'order' => ''
-//		)
-//	);
+	//	/**
+	//	 * belongsTo associations
+	//	 *
+	//	 * @var array
+	//	 */
+	//	public $belongsTo = array(
+	//		'Block' => array(
+	//			'className' => 'Blocks.Block',
+	//			'foreignKey' => false,
+	//			'conditions' => array('BlogBlockSetting.block_key = Block.key'),
+	//			'fields' => '',
+	//			'order' => ''
+	//		)
+	//	);
 
+/**
+ * blockKeyを元にブロック設定を返す
+ *
+ * @param string $blockKey blockKey
+ * @return mixed
+ */
 	public function getSettingByBlockKey($blockKey) {
 		$setting = $this->findByBlockKey($blockKey);
 		if ($setting) {

@@ -23,7 +23,7 @@
 
 			<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Edit'); ?>">
 		<a href="<?php echo $this->Html->url(
-			array('action' => 'edit', $frameId, 'origin_id' => $blogEntry['BlogEntry']['origin_id'])
+			array('controller' => 'blog_entries_edit', 'action' => 'edit', $frameId, 'origin_id' => $blogEntry['BlogEntry']['origin_id'])
 		) ?>" class="btn btn-primary">
 			<span class="glyphicon glyphicon-edit"> </span>
 		</a>

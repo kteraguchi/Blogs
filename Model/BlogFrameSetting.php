@@ -43,6 +43,12 @@ class BlogFrameSetting extends BlogsAppModel {
 		),
 	);
 
+/**
+ * フレームキーからフレーム設定を返す
+ *
+ * @param string $frameKey フレームキー
+ * @return mixed
+ */
 	public function getSettingByFrameKey($frameKey) {
 		$setting = $this->findByFrameKey($frameKey);
 		if ($setting) {
@@ -59,6 +65,5 @@ class BlogFrameSetting extends BlogsAppModel {
 			$setting = $this->findByFrameKey($frameKey);
 			return $setting['BlogFrameSetting'];
 		}
-
 	}
 }

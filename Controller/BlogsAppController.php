@@ -39,7 +39,6 @@ class BlogsAppController extends AppController {
 		parent::beforeFilter();
 	}
 
-
 /**
  * 現在時刻を返す。テストしやすくするためにメソッドに切り出した。
  *
@@ -74,7 +73,7 @@ class BlogsAppController extends AppController {
  *
  * @return void
  */
-	protected function loadBlockSetting() {
+	protected function _loadBlockSetting() {
 		$this->_blockSetting = $this->BlogBlockSetting->getSettingByBLockKey($this->viewVars['blockKey']);
 		$this->set('blockSetting', $this->_blockSetting);
 	}
@@ -84,16 +83,29 @@ class BlogsAppController extends AppController {
  *
  * @return void
  */
-	protected function loadFrameSetting() {
+	protected function _loadFrameSetting() {
 		$this->_frameSetting = $this->BlogFrameSetting->getSettingByFrameKey($this->viewVars['frameKey']);
 	}
 
 /**
- * デフォルト値 named
+ * 設定等の呼び出し
  *
+ * @return void
+ */
+	protected function _prepare() {
+		$this->_setupBlogTitle();
+		$this->_loadBlockSetting();
+		$this->_loadFrameSetting();
+	}
+
+/**
+ * namedパラメータ取得
+ * 
+ * @param string $name namedパラメータ名
+ * @param null $default パラメータが存在しなかったときのデフォルト値
  * @return int|string
  */
-	protected function getNamed($name, $default = null) {
+	protected function _getNamed($name, $default = null) {
 		$value = isset($this->request->params['named'][$name]) ? $this->request->params['named'][$name] : $default;
 		return $value;
 	}

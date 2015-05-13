@@ -54,6 +54,11 @@ class BlogEntryTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
+/**
+ * 記事削除テスト
+ *
+ * @return void
+ */
 	public function testDeleteEntryByOriginId() {
 		$count2 = $this->BlogEntry->find('count', array('conditions' => array('origin_id' => 1)));
 

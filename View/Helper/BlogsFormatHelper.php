@@ -7,10 +7,15 @@
  */
 App::uses('AppHelper', 'View/Helper');
 
+/**
+ * Class BlogsFormatHelper
+ */
 class BlogsFormatHelper extends AppHelper {
 
 /**
- * @param $datetime
+ * published_datetimeのフォーマット
+ *
+ * @param string $datetime datetime
  * @return bool|string
  */
 	public function publishedDatetime($datetime) {

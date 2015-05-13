@@ -44,27 +44,6 @@ class BlogEntry extends BlogsAppModel {
 		)
 	);
 
-	// TODO
-	//public $hasAndBelongsToMany = array(
-	//	'Tag' => array(
-	//		'className' => 'Tags.Tag',
-	//		'joinTable' => 'blog_entry_tag_links',
-	//		'foreignKey' => 'blog_entry_id',
-	//		'associationForeignKey' => 'blog_tag_id',
-	//		'unique' => false,
-	//		'dependent' => false,
-	//		'with' => 'Blogs.BlogEntryTagLink',
-	//		'conditions' => '',
-	//		'fields' => '',
-	//		'order' => '',
-	//		'limit' => '',
-	//		'offset' => '',
-	//		'exclusive' => '',
-	//		'finderQuery' => '',
-	//		'counterQuery' => ''
-	//	)
-	//);
-
 /**
  * バリデーションルールを返す
  *
@@ -127,8 +106,8 @@ class BlogEntry extends BlogsAppModel {
 	}
 
 /**
- * TODO 考え方が違った。editable以上なら下書きも見られる
- * TODO 同一key 複数idへの対応
+ * ε(　　　　 v ﾟωﾟ)　＜ 考え方が違った。editable以上なら下書きも見られる
+ * ε(　　　　 v ﾟωﾟ)　＜ 同一key 複数idへの対応
  * UserIdと権限から参照可能なEntryを取得するCondition配列を返す
  *
  * @param int $blockId ブロックID
@@ -282,7 +261,7 @@ class BlogEntry extends BlogsAppModel {
 			$this->data[$this->name]['is_active'] = 1;
 			if ($this->data[$this->name]['origin_id'] > 0) {
 				// 今のis_activeを外す（同じorigin_id, 同じlanguage_id）
-				$currentIsActiveConditions = array(
+				$isActiveConditions = array(
 					$this->name . '.origin_id' => $this->data[$this->name]['origin_id'],
 					$this->name . '.language_id' => $this->data[$this->name]['language_id'],
 					$this->name . '.is_active' => 1,
@@ -291,13 +270,13 @@ class BlogEntry extends BlogsAppModel {
 					array(
 						$this->name . '.is_active' => 0
 					),
-					$currentIsActiveConditions
+					$isActiveConditions
 				);
 			}
 		}
 		if ($this->data[$this->name]['origin_id'] > 0) {
 			//  今のis_latestを外す
-			$currentIsLatestConditions = array(
+			$isLatestConditions = array(
 				$this->name . '.origin_id' => $this->data[$this->name]['origin_id'],
 				$this->name . '.language_id' => $this->data[$this->name]['language_id'],
 				$this->name . '.is_latest' => 1,
@@ -306,7 +285,7 @@ class BlogEntry extends BlogsAppModel {
 				array(
 					$this->name . '.is_latest' => 0
 				),
-				$currentIsLatestConditions
+				$isLatestConditions
 			);
 		}
 		// 新規レコードを登録するときは必ずis_latest =1

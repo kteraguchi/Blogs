@@ -136,7 +136,8 @@ class BlogEntryFixture extends CakeTestFixture {
 /**
  * Records
  *
- * @var array
+ * @return void
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
 	public function init() {
 		$this->records = array(

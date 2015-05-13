@@ -24,12 +24,12 @@ NetCommonsApp.controller('Blogs',
             }
           }
         }
-      }
+      };
 
       $scope.blogEntry = {
         body1: '',
         body2: ''
-      }
+      };
     });
 
 NetCommonsApp.controller('Blogs.Entries',
@@ -41,29 +41,32 @@ NetCommonsApp.controller('Blogs.Entries',
 
       $scope.init = function(frameId) {
         $scope.frameId = frameId;
-      }
+      };
 
 
       $scope.filterStatus = function() {
         // requestUrlにstatus:1 って感じにselectStatus付けてフィルタリングする
         // リダイレクト
-        url = '/blogs/blog_entries/index/' + $scope.frameId + '/status:' + $scope.selectStatus;
+        var url = '/blogs/blog_entries/index/' +
+            $scope.frameId + '/status:' + $scope.selectStatus;
         location.href = url;
-      }
+      };
 
       $scope.filterCategory = function() {
-        url = '/blogs/blog_entries/category/' + $scope.frameId + '/id:' + $scope.selectCategory;
+        var url = '/blogs/blog_entries/category/' +
+            $scope.frameId + '/id:' + $scope.selectCategory;
         location.href = url;
 
-      }
+      };
 
       $scope.moveYearMonth = function() {
-        url = '/blogs/blog_entries/year_month/' + $scope.frameId + '/year_month:' + $scope.selectYearMonth;
+        var url = '/blogs/blog_entries/year_month/' +
+            $scope.frameId + '/year_month:' + $scope.selectYearMonth;
         location.href = url;
 
-      }
+      };
     }
-)
+);
 
 NetCommonsApp.controller('Blogs.Entries.Entry',
     function($scope) {
@@ -71,10 +74,10 @@ NetCommonsApp.controller('Blogs.Entries.Entry',
 
       $scope.showBody2 = function() {
         $scope.isShowBody2 = true;
-      }
+      };
       $scope.hideBody2 = function() {
         $scope.isShowBody2 = false;
 
-      }
+      };
     }
-)
+);

@@ -15,7 +15,6 @@ App::uses('BlogBlockSetting', 'Blogs.Model');
  */
 class BlogBlockSettingTest extends CakeTestCase {
 
-
 /**
  * Fixtures
  *
@@ -46,7 +45,11 @@ class BlogBlockSettingTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
-
+/**
+ * block設定読みだしテスト
+ *
+ * @return void
+ */
 	public function testGetSettingByBlockKey() {
 		$blockKey = 'block1';
 		$setting = $this->BlogBlockSetting->getSettingByBlockKey($blockKey);
@@ -60,7 +63,5 @@ class BlogBlockSettingTest extends CakeTestCase {
 
 		$findResult = $this->BlogBlockSetting->findByBlockKey($blockKey);
 		$this->assertEqual($findResult, $setting);
-
-
 	}
 }
