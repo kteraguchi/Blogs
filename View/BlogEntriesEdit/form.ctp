@@ -3,6 +3,17 @@
 <?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
 <?php echo $this->Html->script('/tags/js/tags.js', false); ?>
 
+<?php
+// datetimepicker
+echo $this->Html->script('/net_commons/moment/min/moment.min.js');
+echo $this->Html->script('/net_commons/moment/min/moment-with-locales.min.js');
+echo $this->Html->script('/net_commons/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
+
+echo $this->Html->css('/net_commons/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css');
+
+echo $this->Html->script('/net_commons/angular-bootstrap-datetimepicker-directive/angular-bootstrap-datetimepicker-directive.js');
+?>
+
 
 <?php $dataJson = json_encode($this->request->data) ?>
 <div class="blogEntries form" ng-controller="Blogs" ng-init="init(<?php echo h($dataJson) ?>)">

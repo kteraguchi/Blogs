@@ -22,6 +22,11 @@ class BlogsController extends BlogsAppController {
  * @return void
  */
 	public function index() {
+		if (! $this->viewVars['blockId']) {
+			$this->autoRender = false;
+			return;
+		}
+
 		$frameId = $this->viewVars['frameId'];
 		$html = $this->requestAction(
 			array('controller' => 'blog_entries', 'action' => 'index', $frameId),
