@@ -38,10 +38,17 @@ class BlogEntry extends BlogsAppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'BlogCategory' => array(
-			'className' => 'Blogs.BlogCategory',
-			'foreignKey' => 'blog_category_id',
+		'Category' => array(
+			'className' => 'Categories.Category',
+			'foreignKey' => 'category_id',
 			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'CategoryOrder' => array(
+			'className' => 'Categories.CategoryOrder',
+			'foreignKey' => false,
+			'conditions' => 'CategoryOrder.category_key=Category.key',
 			'fields' => '',
 			'order' => ''
 		)
@@ -64,7 +71,7 @@ class BlogEntry extends BlogsAppModel {
 					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				],
 			),
-			'blog_category_id' => array(
+			'category_id' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
 					//'message' => 'Your custom message here',
@@ -113,7 +120,7 @@ class BlogEntry extends BlogsAppModel {
  * ε(　　　　 v ﾟωﾟ)　＜ 同一key 複数idへの対応
  * UserIdと権限から参照可能なEntryを取得するCondition配列を返す
  *
- * @param int $blockId ブロックID
+ * @param int $blockKey ブロックKey
  * @param int $userId アクセスユーザID
  * @param array $permissions 権限
  * @param datetime $currentDateTime 現在日時
@@ -122,7 +129,7 @@ class BlogEntry extends BlogsAppModel {
 	public function getConditions($blockId, $userId, $permissions, $currentDateTime) {
 		// デフォルト絞り込み条件
 		$conditions = array(
-			'BlogCategory.block_id' => $blockId
+			'BlogEntry.block_id' => $blockId
 		);
 
 		if ($permissions['contentEditable']) {
@@ -227,20 +234,11 @@ class BlogEntry extends BlogsAppModel {
 		if (($returnData = $this->save($data)) === false) {
 			return false;
 		}
-
-		//if (isset($data['BlogTag'])) {
-		//	if (!$this->BlogTag->saveEntryTags($blockId, $this->id, $data['BlogTag'])) {
-		//		return false;
-		//	}
-		//}
-		if (!$this->Comment->validateByStatus($data, array('caller' => $this->name))) {
-			$this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
-			return false;
-		} else {
-			if ($this->Comment->data) {
-				if (!$this->Comment->save(null, true)) {
-					return false;
-				}
+		//Comment登録
+		if (isset($data['Comment']) && $this->Comment->data) {
+			$this->Comment->data[$this->Comment->name]['content_key'] = $data[$this->name]['origin_id'];
+			if (! $this->Comment->save(null, false)) {
+				return false;
 			}
 		}
 		return $returnData;

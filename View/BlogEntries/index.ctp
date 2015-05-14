@@ -29,16 +29,17 @@
 		</div>
 
 		<div class="col-xs-4">
+			<?php $categories = Hash::combine($categories, '{n}.category.id', '{n}.category.name'); ?>
 			<?php echo $this->Form->select(
 				'category',
-				$categoryOptions,
+				$categories,
 				array(
-					'empty' => false,
+					'empty' => array(0 => __d('blogs', 'All categories')),
 					'class' => 'form-control',
 					'value' => $currentCategoryId,
 					'ng-change' => 'filterCategory()',
 					'ng-model' => 'selectCategory',
-					'ng-init' => 'selectCategory=' . $currentCategoryId
+					'ng-init' => 'selectCategory=' . $currentCategoryId,
 				)
 			); ?>
 		</div>

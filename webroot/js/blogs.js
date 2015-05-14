@@ -53,8 +53,8 @@ NetCommonsApp.controller('Blogs.Entries',
       };
 
       $scope.filterCategory = function() {
-        var url = '/blogs/blog_entries/category/' +
-            $scope.frameId + '/id:' + $scope.selectCategory;
+        var url = '/blogs/blog_entries/index/' +
+            $scope.frameId + '/category_id:' + $scope.selectCategory;
         location.href = url;
 
       };

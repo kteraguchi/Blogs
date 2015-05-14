@@ -121,10 +121,18 @@
 								'datetimepicker',
 								'label' => __d('blogs', 'Published datetime')));
 
-
-						echo $this->Form->input('blog_category_id', array('label' => __d('blogs', 'Category')));
-
 						?>
+						<?php $categories = Hash::combine($categories, '{n}.category.id', '{n}.category.name'); ?>
+						<?php echo $this->Form->input('category_id',
+							array(
+								'label' => __d('categories', 'Category'),
+								'type' => 'select',
+								'error' => false,
+								'class' => 'form-control',
+								'empty' => array(0 => __d('categories', 'Select Category')),
+								'options' => $categories,
+								'value' => (isset($blogEntry['category_id']) ? $blogEntry['category_id'] : '0')
+							)); ?>
 
 
 						<?php echo $this->element(

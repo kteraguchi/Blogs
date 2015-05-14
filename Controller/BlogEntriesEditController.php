@@ -16,14 +16,14 @@ App::uses('BlogsAppController', 'Blogs.Controller');
  * @property BlogEntry $BlogEntry
  * @property BlogCategory $BlogCategory
  */
-class BlogEntriesController extends BlogsAppController {
+class BlogEntriesEditController extends BlogsAppController {
 
 /**
  * @var array use models
  */
 	public $uses = array(
 		'Blogs.BlogEntry',
-		'Blogs.BlogBlockSetting',
+		'Categories.Category',
 		'Blogs.BlogCategory',
 		'Comments.Comment',
 	);
@@ -41,8 +41,19 @@ class BlogEntriesController extends BlogsAppController {
 				'contentEditable' => array('edit', 'add'),
 				'contentCreatable' => array('edit', 'add'),
 			),
-		)
+		),
+		'Categories.Categories',
 	);
+
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Categories->initCategories();
+	}
 
 /**
  * add method
@@ -72,7 +83,7 @@ class BlogEntriesController extends BlogsAppController {
 
 				$this->Session->setFlash(__('The blog entry has been saved.'));
 				return $this->redirect(
-					array('action' => 'view', $this->viewVars['frameId'], 'origin_id' => $this->BlogEntry->originId)
+					array('controller' => 'blog_entries', 'action' => 'view', $this->viewVars['frameId'], 'origin_id' => $this->BlogEntry->originId)
 				);
 
 			} catch (Exception $e) {
@@ -132,8 +143,6 @@ class BlogEntriesController extends BlogsAppController {
 			$this->request->data['BlogEntry']['language_id'] = $this->viewVars['languageId'];
 
 			try {
-				//  ここでマージしちゃうとTag配列を減らせなくなるので取りやめ
-				//$data = Hash::merge($blogEntry, $this->request->data);
 				$data = $this->request->data;
 
 				unset($data['BlogEntry']['id']); // 常に新規保存
@@ -145,7 +154,7 @@ class BlogEntriesController extends BlogsAppController {
 
 				$this->Session->setFlash(__('The blog entry has been saved.'));
 				return $this->redirect(
-					array('action' => 'view', $this->viewVars['frameId'], 'origin_id' => $data['BlogEntry']['origin_id'])
+					array('controller' => 'blog_entries', 'action' => 'view', $this->viewVars['frameId'], 'origin_id' => $data['BlogEntry']['origin_id'])
 				);
 
 			} catch (Exception $e) {
@@ -159,9 +168,6 @@ class BlogEntriesController extends BlogsAppController {
 			// ε(　　　　 v ﾟωﾟ)　＜ 編集できる記事か？
 
 		}
-		//  このブロックのカテゴリだけに絞り込む
-		$blogCategories = $this->BlogCategory->getCategoriesList($this->viewVars['blockId']);
-		$this->set(compact('blogCategories'));
 
 		$this->set('blogEntry', $blogEntry);
 
@@ -193,7 +199,7 @@ class BlogEntriesController extends BlogsAppController {
 		} else {
 			$this->Session->setFlash(__('The blog entry could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array('controller' => 'blog_entries', 'action' => 'index'));
 	}
 
 }

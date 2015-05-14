@@ -12,12 +12,12 @@
 		<!--	TODO　投稿者名 リンク-->
 		<?php echo $this->Html->link($blogEntry['TrackableCreator']['username'], array()); ?>&nbsp;
 		カテゴリ:<?php echo $this->Html->link(
-			$blogEntry['BlogCategory']['name'],
+			$blogEntry['Category']['name'],
 			array(
 				'controller' => 'blog_entries',
-				'action' => 'category',
+				'action' => 'index',
 				$frameId,
-				'id' => $blogEntry['BlogCategory']['id']
+				'category_id' => $blogEntry['BlogEntry']['category_id']
 			)
 		); ?>
 	</div>

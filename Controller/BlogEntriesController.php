@@ -25,6 +25,7 @@ class BlogEntriesController extends BlogsAppController {
 		'Blogs.BlogEntry',
 		'Blogs.BlogCategory',
 		'Comments.Comment',
+		'Categories.Category',
 	);
 
 /**
@@ -35,6 +36,7 @@ class BlogEntriesController extends BlogsAppController {
 	public function beforeFilter() {
 		// ゲストアクセスOKのアクションを設定
 		$this->Auth->allow('index', 'view', 'category', 'tag', 'year_month');
+		$this->Categories->initCategories();
 		parent::beforeFilter();
 	}
 
@@ -52,7 +54,8 @@ class BlogEntriesController extends BlogsAppController {
 				'contentEditable' => array('edit', 'add'),
 				'contentCreatable' => array('edit', 'add'),
 			),
-		)
+		),
+		'Categories.Categories',
 	);
 
 /**
@@ -73,7 +76,15 @@ class BlogEntriesController extends BlogsAppController {
 		$this->_prepare();
 		$this->set('listTitle', $this->_blogTitle);
 
-		$this->_list();
+		$conditions = array();
+		$this->_filter['categoryId'] = $this->_getNamed('category_id', 0);
+		if ($this->_filter['categoryId']) {
+			$conditions['BlogEntry.category_id'] = $this->_filter['categoryId'];
+			$category = $this->Category->findById($this->_filter['categoryId']);
+			$this->set('listTitle', __d('blogs', 'Category') . ':' . $category['Category']['name']);
+		}
+
+		$this->_list($conditions);
 	}
 
 /**
@@ -84,15 +95,7 @@ class BlogEntriesController extends BlogsAppController {
 	public function category() {
 		$this->_prepare();
 		// indexとの違いはcategoryIdでの絞り込みをするだけ
-		$this->_filter['categoryId'] = $this->_getNamed('id', 0);
 
-		// カテゴリ名をタイトルに
-		$category = $this->BlogCategory->findById($this->_filter['categoryId']);
-		$this->set('listTitle', __d('blogs', 'Category') . ':' . $category['BlogCategory']['name']);
-
-		$conditions = array(
-			'BlogEntry.blog_category_id' => $this->_filter['categoryId']
-		);
 		$this->_list($conditions);
 	}
 
