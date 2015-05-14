@@ -21,7 +21,6 @@ class BlogEntriesControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.blogs.blog_entry',
-		'plugin.blogs.blog_category',
 	);
 
 /**

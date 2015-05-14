@@ -120,7 +120,7 @@ class BlogEntry extends BlogsAppModel {
  * ε(　　　　 v ﾟωﾟ)　＜ 同一key 複数idへの対応
  * UserIdと権限から参照可能なEntryを取得するCondition配列を返す
  *
- * @param int $blockKey ブロックKey
+ * @param int $blockId ブロックId
  * @param int $userId アクセスユーザID
  * @param array $permissions 権限
  * @param datetime $currentDateTime 現在日時

@@ -88,18 +88,6 @@ class BlogEntriesController extends BlogsAppController {
 	}
 
 /**
- * カテゴリ別一覧
- *
- * @return void
- */
-	public function category() {
-		$this->_prepare();
-		// indexとの違いはcategoryIdでの絞り込みをするだけ
-
-		$this->_list($conditions);
-	}
-
-/**
  * tag別一覧
  *
  * @return void
