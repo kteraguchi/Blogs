@@ -95,8 +95,6 @@ class BlogEntriesEditController extends BlogsAppController {
 			$this->request->data['Tag'] = array();
 		}
 		//  このブロックのカテゴリだけに絞り込む
-		$blogCategories = $this->BlogCategory->getCategoriesList($this->viewVars['blockId']);
-		$this->set(compact('blogCategories'));
 
 		$blogEntry = $this->BlogEntry->getNew();
 		$this->set('blogEntry', $blogEntry);

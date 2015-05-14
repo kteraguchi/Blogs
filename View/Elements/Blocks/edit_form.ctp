@@ -128,8 +128,6 @@
 
 
 <?php
-if ($blockId) {
-	echo $this->element('Categories.edit_form', array(
-		'categories' => isset($categories) ? $categories : null
-	));
-}
+echo $this->element('Categories.edit_form', array(
+	'categories' => isset($categories) ? $categories : null
+));
