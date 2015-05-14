@@ -17,9 +17,9 @@ App::uses('BlogsAppModel', 'Blogs.Model');
  */
 class BlogEntry extends BlogsAppModel {
 
-	/**
-	 * @var int recursiveはデフォルトアソシエーションなしに
-	 */
+/**
+ * @var int recursiveはデフォルトアソシエーションなしに
+ */
 	public $recursive = -1;
 
 /**

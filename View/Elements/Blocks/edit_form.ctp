@@ -114,7 +114,7 @@
 		<div class="col-xs-11 col-xs-offset-1">
 			<?php echo $this->Form->checkbox('BlogSetting.use_unlike', array(
 					'div' => false,
-					'checked' => isset($blogSetting['useUnlike']) ? (int)$blogSetting['useUnlike'] :null ,
+					'checked' => isset($blogSetting['useUnlike']) ? (int)$blogSetting['useUnlike'] :null,
 					'disabled' => ! (isset($blogSetting['useLike']) ? (int)$blogSetting['useLike'] : null)
 				)
 			); ?>

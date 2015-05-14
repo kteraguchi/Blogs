@@ -180,7 +180,7 @@ class BlogEntriesController extends BlogsAppController {
 				$this->Paginator->settings,
 				array(
 					'conditions' => $conditions,
-					'limit' => $this->_frameSetting['display_number'],
+					'limit' => $this->_frameSetting['posts_per_page'],
 					'order' => 'published_datetime DESC',
 					//
 				)
