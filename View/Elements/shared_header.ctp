@@ -9,9 +9,5 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
-	<a class="btn btn-default " title="setting" href="/blogs/blocks/index/<?php echo $frameId?>">
-		<span class="glyphicon glyphicon-cog"> </span>
-		<span class="sr-only">Show flame setting</span>
-	</a>
 <?php endif;
 
