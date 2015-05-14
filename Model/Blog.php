@@ -288,7 +288,6 @@ class Blog extends BlogsAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-
 			//Categoryデータ削除
 			$this->Category->deleteByBlockKey($data['Block']['key']);
 
