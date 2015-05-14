@@ -165,7 +165,6 @@ class BlogEntriesController extends BlogsAppController {
 
 		$this->set('currentYearMonth', $this->_filter['yearMonth']);
 
-		$this->_setCategoryOptions();
 		$this->_setYearMonthOptions();
 
 		if ($this->viewVars['contentReadable']) {
@@ -235,22 +234,6 @@ class BlogEntriesController extends BlogsAppController {
 			// 表示できない記事へのアクセスなら403
 			throw new NotFoundException(__('Invalid blog entry'));
 		}
-	}
-
-/**
- * カテゴリ選択肢をViewへセット
- *
- * @return void
- */
-	protected function _setCategoryOptions() {
-		$categories = $this->BlogCategory->getCategories($this->viewVars['blockId']);
-		$options = array(
-			0 => __d('blogs', 'All categories'),
-		);
-		foreach ($categories as $category) {
-			$options[$category['BlogCategory']['id']] = $category['BlogCategory']['name'];
-		}
-		$this->set('categoryOptions', $options);
 	}
 
 /**
