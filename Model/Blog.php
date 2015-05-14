@@ -256,8 +256,7 @@ class Blog extends BlogsAppModel {
 		$this->loadModels([
 			'Blog' => 'Blogs.Blog',
 			'BlogSetting' => 'Blogs.BlogSetting',
-			//'BlogQuestion' => 'Blogs.BlogQuestion',
-			//'BlogQuestionOrder' => 'Blogs.BlogQuestionOrder',
+			'BlogEntry' => 'Blogs.BlogEntry',
 			'Block' => 'Blocks.Block',
 			'Category' => 'Categories.Category',
 		]);
@@ -285,13 +284,10 @@ class Blog extends BlogsAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			if (! $this->BlogQuestion->deleteAll(array($this->BlogQuestion->alias . '.blog_id' => $blogs), false)) {
+			if (! $this->BlogEntry->deleteAll(array($this->BlogEntry->alias . '.blog_key' => $data['Blog']['key']), false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			if (! $this->BlogQuestionOrder->deleteAll(array($this->BlogQuestionOrder->alias . '.blog_key' => $data['Blog']['key']), false)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
 
 			//Categoryデータ削除
 			$this->Category->deleteByBlockKey($data['Block']['key']);
