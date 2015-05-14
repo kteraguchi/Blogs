@@ -1,5 +1,5 @@
 <div class="blogs_entry_reaction row">
-	<?php if ($blockSetting['use_sns']) : ?>
+	<?php if ($blogSetting['useSns']) : ?>
 		<!--Facebook-->
 		<div class="fb-like col-xs-3" expr:data-href="data:post.url" data-layout="button_count" data-action="like"
 			 data-show-faces="false" data-share="false"></div>

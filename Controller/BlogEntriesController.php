@@ -23,7 +23,6 @@ class BlogEntriesController extends BlogsAppController {
  */
 	public $uses = array(
 		'Blogs.BlogEntry',
-		'Blogs.BlogBlockSetting',
 		'Blogs.BlogCategory',
 		'Comments.Comment',
 	);
@@ -202,8 +201,7 @@ class BlogEntriesController extends BlogsAppController {
  * @return void
  */
 	public function view() {
-		$this->_loadBlockSetting();
-		$this->_loadFrameSetting();
+		$this->_prepare();
 
 		$originId = $this->request->params['named']['origin_id'];
 		if ($this->viewVars['contentReadable']) {

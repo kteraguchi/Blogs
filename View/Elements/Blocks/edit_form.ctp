@@ -70,6 +70,62 @@
 	</div>
 </div>
 
+	<div class="row form-group">
+		<div class="col-xs-12">
+			<?php echo $this->Form->checkbox('BlogSetting.use_sns', array(
+					'div' => false,
+					//'hiddenField' => false,
+					'checked' => isset($blogSetting['useSns']) ? (int)$blogSetting['useSns'] : null
+				)
+			); ?>
+			<?php echo $this->Form->label('BlogSetting.use_sns', __d('blogs', 'Use sns')); ?>
+		</div>
+	</div>
+
+
+
+	<div class="row form-group">
+		<div class="col-xs-12">
+			<?php echo $this->Form->checkbox('BlogSetting.use_comment', array(
+					'div' => false,
+					//'hiddenField' => false,
+					'checked' => isset($blogSetting['useComment']) ? (int)$blogSetting['useComment'] : null
+				)
+			); ?>
+			<?php echo $this->Form->label('BlogSetting.use_comment', __d('blogs', 'Use comment')); ?>
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-xs-12">
+			<?php echo $this->Form->checkbox('BlogSetting.use_like', array(
+					'div' => false,
+					'checked' => isset($blogSetting['useLike']) ? (int)$blogSetting['useLike'] :null,
+					'ng-click' => 'useLike()'
+				)
+			); ?>
+
+			<?php echo $this->Form->label('BlogSetting.use_like',
+				'<span class="glyphicon glyphicon-thumbs-up"> </span> ' .
+				__d('likes', 'Use like button')
+			); ?>
+		</div>
+
+		<div class="col-xs-11 col-xs-offset-1">
+			<?php echo $this->Form->checkbox('BlogSetting.use_unlike', array(
+					'div' => false,
+					'checked' => isset($blogSetting['useUnlike']) ? (int)$blogSetting['useUnlike'] :null ,
+					'disabled' => ! (isset($blogSetting['useLike']) ? (int)$blogSetting['useLike'] : null)
+				)
+			); ?>
+
+			<?php echo $this->Form->label('BlogSetting.use_unlike',
+				'<span class="glyphicon glyphicon-thumbs-down"> </span> ' .
+				__d('likes', 'Use unlike button')
+			); ?>
+		</div>
+	</div>
+
 
 <?php
 if ($blockId) {

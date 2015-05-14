@@ -46,7 +46,8 @@ class BlogsAppController extends AppController {
  * @var array use model
  */
 	public $uses = array(
-		'Blogs.BlogBlockSetting',
+		'Blogs.Blog',
+		'Blogs.BlogSetting',
 		'Blogs.BlogFrameSetting'
 	);
 
@@ -114,7 +115,7 @@ class BlogsAppController extends AppController {
  */
 	protected function _prepare() {
 		$this->_setupBlogTitle();
-		$this->_loadBlockSetting();
+		$this->initBlog(['blogSetting']);
 		$this->_loadFrameSetting();
 	}
 
@@ -149,6 +150,14 @@ class BlogsAppController extends AppController {
 						$this->viewVars['frameId'],
 					)
 				),
+				'frame_settings' => array(
+					'url' => array(
+						'plugin' => $this->params['plugin'],
+						'controller' => 'blog_frame_settings',
+						'action' => 'edit',
+						$this->viewVars['frameId'],
+					),
+				),
 			),
 			'active' => $mainActiveTab
 		);
@@ -179,4 +188,34 @@ class BlogsAppController extends AppController {
 		);
 		$this->set('blockSettingTabs', $blockSettingTabs);
 	}
+
+/**
+ * initBlog
+ *
+ * @param array $contains Optional result sets
+ * @return bool True on success, False on failure
+ */
+	public function initBlog($contains = []) {
+		if (! $blog = $this->Blog->getBlog($this->viewVars['blockId'], $this->viewVars['roomId'])) {
+			$this->throwBadRequest();
+			return false;
+		}
+		$blog = $this->camelizeKeyRecursive($blog);
+		$this->set($blog);
+
+		if (in_array('blogSetting', $contains, true)) {
+			if (! $blogSetting = $this->BlogSetting->getBlogSetting($blog['blog']['key'])) {
+				$blogSetting = $this->BlogSetting->create(
+					array('id' => null)
+				);
+			}
+			$blogSetting = $this->camelizeKeyRecursive($blogSetting);
+			$this->set($blogSetting);
+		}
+
+		$this->set('userId', (int)$this->Auth->user('id'));
+
+		return true;
+	}
+
 }

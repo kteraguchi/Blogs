@@ -29,7 +29,7 @@ class BlogCategoryOrderFixture extends CakeTestFixture {
 			'type' => 'string',
 			'null' => false,
 			'collate' => 'utf8_general_ci',
-			'comment' => 'category key | カテゴリーKey | faq_categories.key | ',
+			'comment' => 'category key | カテゴリーKey | blog_categories.key | ',
 			'charset' => 'utf8'
 		),
 		'block_key' => array(
