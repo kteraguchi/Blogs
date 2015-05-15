@@ -75,22 +75,22 @@ class BlogEntry extends BlogsAppModel {
 				'numeric' => array(
 					'rule' => array('numeric'),
 					//'message' => 'Your custom message here',
-					//'allowEmpty' => false,
+					'allowEmpty' => true,
 					//'required' => false,
 					//'last' => false, // Stop validation after this rule
 					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
-			'key' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
-					//'message' => 'Your custom message here',
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
-				),
-			),
+			//'key' => array(
+			//	'notEmpty' => array(
+			//		'rule' => array('notEmpty'),
+			//		//'message' => 'Your custom message here',
+			//		//'allowEmpty' => false,
+			//		//'required' => false,
+			//		//'last' => false, // Stop validation after this rule
+			//		//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			//	),
+			//),
 			'status' => array(
 				'numeric' => array(
 					'rule' => array('numeric'),
@@ -115,6 +115,11 @@ class BlogEntry extends BlogsAppModel {
 		return $validate;
 	}
 
+	public function getNew() {
+		$new = parent::getNew();
+		$new['BlogEntry']['published_datetime'] = date('Y-m-d H:i:s');
+		return $new;
+	}
 /**
  * ε(　　　　 v ﾟωﾟ)　＜ 考え方が違った。editable以上なら下書きも見られる
  * ε(　　　　 v ﾟωﾟ)　＜ 同一key 複数idへの対応

@@ -28,6 +28,7 @@ class BlogsAppModel extends AppModel {
 					$newRecord[$this->name][$fieldName] = $fieldDetail['default'];
 				}
 			}
+			$this->_newRecord = $newRecord;
 		}
 		return $this->_newRecord;
 	}

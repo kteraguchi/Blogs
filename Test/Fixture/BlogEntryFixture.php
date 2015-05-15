@@ -27,9 +27,9 @@ class BlogEntryFixture extends CakeTestFixture {
 		),
 		'category_id' => array(
 			'type' => 'integer',
-			'null' => false,
+			'null' => true,
 			'default' => null,
-			'comment' => 'category id | カテゴリーID | blog_categories.id | '
+			'comment' => 'category id | カテゴリーID | categories.id | '
 		),
 		'key' => array(
 			'type' => 'string',

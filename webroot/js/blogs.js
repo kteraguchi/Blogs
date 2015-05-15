@@ -42,7 +42,8 @@ NetCommonsApp.controller('Blogs',
 
       $scope.blogEntry = {
         body1: '',
-        body2: ''
+        body2: '',
+        published_datetime: '',
       };
     });
 

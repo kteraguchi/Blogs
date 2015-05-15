@@ -72,6 +72,20 @@ class BlogEntryTest extends CakeTestCase {
 		$this->assertEqual($count0, 0);
 	}
 
+	public function testSaveNoCategory() {
+		$data = $this->BlogEntry->getNew();
+		$data['BlogEntry']['category_id'] = null; // category_idがnullでも保存できることを確認
+		$data['BlogEntry']['title'] = 'title';
+		$data['BlogEntry']['body1'] = 'body1';
+		$data['BlogEntry']['key'] = '';
+		$data['BlogEntry']['status'] = 1;
+		$data['BlogEntry']['origin_id'] = 0;
+		$data['BlogEntry']['language_id'] = 1;
+		$data['BlogEntry']['published_datetime'] = '2015-01-01 00:00:00';
+
+		$result = $this->BlogEntry->save($data);
+		$this->assertTrue($result);
+	}
 	//public function testGetCondition() {
 	//	$userId = 1;
 	//	$blockId = 2;

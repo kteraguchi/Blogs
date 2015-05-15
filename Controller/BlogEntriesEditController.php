@@ -92,12 +92,12 @@ class BlogEntriesEditController extends BlogsAppController {
 
 			}
 		} else {
+			$blogEntry = $this->BlogEntry->getNew();
+			$this->request->data = $blogEntry;
+			$this->set('blogEntry', $blogEntry);
 			$this->request->data['Tag'] = array();
 		}
-		//  このブロックのカテゴリだけに絞り込む
 
-		$blogEntry = $this->BlogEntry->getNew();
-		$this->set('blogEntry', $blogEntry);
 
 		$comments = $this->Comment->getComments(
 			array(

@@ -15,7 +15,13 @@ echo $this->Html->script('/net_commons/angular-bootstrap-datetimepicker-directiv
 ?>
 
 
-<?php $dataJson = json_encode($this->request->data) ?>
+<?php
+if ($this->request->data) {
+	$dataJson = json_encode($this->request->data);
+} else {
+	$dataJson = json_encode($blogEntry);
+}
+?>
 <div class="blogEntries form" ng-controller="Blogs" ng-init="init(<?php echo h($dataJson) ?>)">
 	<div class="modal-header">BLOG</div>
 	<div class="modal-body">
@@ -128,7 +134,7 @@ echo $this->Html->script('/net_commons/angular-bootstrap-datetimepicker-directiv
 
 						echo $this->Form->input('published_datetime',
 							array('type' => 'text',
-								'ng-model' => 'publiched_datetime',
+								'ng-model' => 'blogEntry.published_datetime',
 								'datetimepicker',
 								'label' => __d('blogs', 'Published datetime')));
 
