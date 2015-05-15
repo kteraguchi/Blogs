@@ -25,7 +25,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			'key' => 'primary',
 			'comment' => 'ID |  |  | '
 		),
-		'blog_category_id' => array(
+		'category_id' => array(
 			'type' => 'integer',
 			'null' => false,
 			'default' => null,
@@ -143,7 +143,7 @@ class BlogEntryFixture extends CakeTestFixture {
 		$this->records = array(
 			array(
 				'id' => 1,
-				'blog_category_id' => 2,
+				'category_id' => 2,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 1,
 				'status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
@@ -162,7 +162,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 2,
-				'blog_category_id' => 2,
+				'category_id' => 2,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 1,
 				'status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
@@ -181,7 +181,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 3,
-				'blog_category_id' => 2,
+				'category_id' => 2,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 3,
 				'status' => NetCommonsBlockComponent::STATUS_IN_DRAFT,
@@ -200,7 +200,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 4,
-				'blog_category_id' => 2,
+				'category_id' => 2,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'status' => NetCommonsBlockComponent::STATUS_IN_DRAFT,
 				'origin_id' => 4,
@@ -219,7 +219,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 5,
-				'blog_category_id' => 2,
+				'category_id' => 2,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 5,
 				'status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
@@ -238,7 +238,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 6,
-				'blog_category_id' => 6,
+				'category_id' => 6,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 6,
 				'status' => 6,
@@ -257,7 +257,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 7,
-				'blog_category_id' => 7,
+				'category_id' => 7,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 7,
 				'status' => 7,
@@ -276,7 +276,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 8,
-				'blog_category_id' => 8,
+				'category_id' => 8,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 8,
 				'status' => 8,
@@ -295,7 +295,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 9,
-				'blog_category_id' => 9,
+				'category_id' => 9,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 9,
 				'status' => 9,
@@ -314,7 +314,7 @@ class BlogEntryFixture extends CakeTestFixture {
 			),
 			array(
 				'id' => 10,
-				'blog_category_id' => 10,
+				'category_id' => 10,
 				'key' => 'Lorem ipsum dolor sit amet',
 				'origin_id' => 10,
 				'status' => 10,

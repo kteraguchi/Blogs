@@ -24,6 +24,8 @@ class BlogEntryTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.blogs.blog_entry',
+		'plugin.categories.category',
+		'plugin.categories.category_order',
 		//'plugin.tags.tag',
 		//'plugin.tags.tags_content',
 		'plugin.users.user', // Trackableビヘイビアでテーブルが必用
