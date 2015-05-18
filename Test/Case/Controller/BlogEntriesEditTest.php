@@ -17,11 +17,11 @@ App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
  */
 class BlogsEntriesEditControllerTest extends BlogsAppControllerTest {
 
-	/**
-	 * setUp method
-	 *
-	 * @return void
-	 */
+/**
+ * setUp method
+ *
+ * @return void
+ */
 	public function setUp() {
 		parent::setUp();
 		Configure::write('Config.language', 'ja');
@@ -37,18 +37,22 @@ class BlogsEntriesEditControllerTest extends BlogsAppControllerTest {
 		);
 	}
 
-	/**
-	 * tearDown method
-	 *
-	 * @return void
-	 */
+/**
+ * tearDown method
+ *
+ * @return void
+ */
 	public function tearDown() {
 		Configure::write('Config.language', null);
 		CakeSession::write('Auth.User', null);
 		parent::tearDown();
 	}
 
-
+/**
+ * コンテンツ新規登録フォームではゴミ箱アイコン非表示をテスト
+ *
+ * @return void
+ */
 	public function testAddFormNoDeleteButton() {
 		RolesControllerTest::login($this);
 
@@ -64,6 +68,11 @@ class BlogsEntriesEditControllerTest extends BlogsAppControllerTest {
 		AuthGeneralControllerTest::logout($this);
 	}
 
+/**
+ * コンテンツ編集フォームではゴミ箱アイコンが表示されるテスト
+ *
+ * @return void
+ */
 	public function testEditFormWithDeleteButton() {
 		RolesControllerTest::login($this);
 
