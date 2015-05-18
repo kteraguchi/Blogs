@@ -155,7 +155,7 @@ if ($this->request->data) {
 						<?php echo $this->element(
 								'Tags.tag_form',
 								array(
-									'tagData' => $this->request->data['Tag'],
+									'tagData' => isset($this->request->data['Tag']) ? $this->request->data['Tag'] : array(),
 									'modelName' => 'BlogEntry',
 									)
 							); ?>

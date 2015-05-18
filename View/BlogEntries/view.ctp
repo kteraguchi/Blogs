@@ -43,6 +43,7 @@
 	<?php echo $this->element('entry_footer'); ?>
 
 	<!-- Tags -->
+	<?php if (isset($blogEntry['Tag'])) : ?>
 	<div>
 		<?php echo __d('blogs', 'tag'); ?>
 		<?php foreach ($blogEntry['Tag'] as $blogTag): ?>
@@ -51,8 +52,8 @@
 				array('controller' => 'blog_entries', 'action' => 'tag', $frameId, 'id' => $blogTag['id'])
 			); ?>&nbsp;
 		<?php endforeach; ?>
-
 	</div>
+	<?php endif ?>
 
 	<div>
 		<!-- ε(　　　　 v ﾟωﾟ)　＜ Coreで開発されたらコメント機能を組み込む-->

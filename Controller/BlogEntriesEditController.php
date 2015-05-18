@@ -62,6 +62,9 @@ class BlogEntriesEditController extends BlogsAppController {
  * @return void
  */
 	public function add() {
+		$blogEntry = $this->BlogEntry->getNew();
+		$this->set('blogEntry', $blogEntry);
+
 		if ($this->request->is('post')) {
 			$this->BlogEntry->begin();
 			$this->BlogEntry->create();
@@ -92,9 +95,7 @@ class BlogEntriesEditController extends BlogsAppController {
 
 			}
 		} else {
-			$blogEntry = $this->BlogEntry->getNew();
 			$this->request->data = $blogEntry;
-			$this->set('blogEntry', $blogEntry);
 			$this->request->data['Tag'] = array();
 		}
 
