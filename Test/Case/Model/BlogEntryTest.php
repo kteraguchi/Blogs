@@ -72,6 +72,11 @@ class BlogEntryTest extends CakeTestCase {
 		$this->assertEqual($count0, 0);
 	}
 
+/**
+ * カテゴリ無しで保存するテスト
+ *
+ * @return void
+ */
 	public function testSaveNoCategory() {
 		$data = $this->BlogEntry->getNew();
 		$data['BlogEntry']['category_id'] = null; // category_idがnullでも保存できることを確認
@@ -86,6 +91,7 @@ class BlogEntryTest extends CakeTestCase {
 		$result = $this->BlogEntry->save($data);
 		$this->assertTrue($result);
 	}
+
 	//public function testGetCondition() {
 	//	$userId = 1;
 	//	$blockId = 2;

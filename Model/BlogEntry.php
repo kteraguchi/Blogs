@@ -115,6 +115,11 @@ class BlogEntry extends BlogsAppModel {
 		return $validate;
 	}
 
+/**
+ * 空の新規データを返す
+ *
+ * @return array
+ */
 	public function getNew() {
 		$new = parent::getNew();
 		$new['BlogEntry']['published_datetime'] = date('Y-m-d H:i:s');

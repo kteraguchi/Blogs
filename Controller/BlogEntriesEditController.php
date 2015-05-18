@@ -99,7 +99,6 @@ class BlogEntriesEditController extends BlogsAppController {
 			$this->request->data['Tag'] = array();
 		}
 
-
 		$comments = $this->Comment->getComments(
 			array(
 				'plugin_key' => 'blogs',
