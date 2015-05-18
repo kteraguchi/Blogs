@@ -23,7 +23,6 @@ class BlogEntriesController extends BlogsAppController {
  */
 	public $uses = array(
 		'Blogs.BlogEntry',
-		'Blogs.BlogCategory',
 		'Comments.Comment',
 		'Categories.Category',
 	);

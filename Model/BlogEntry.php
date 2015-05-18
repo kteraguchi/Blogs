@@ -213,7 +213,11 @@ class BlogEntry extends BlogsAppModel {
 			)
 		);
 		// 一番古い記事の年月から現在までを先にゼロ埋め
-		$currentYearMonthDay = date('Y-m-01', strtotime($oldestEntry['BlogEntry']['published_datetime']));
+		if (isset($oldestEntry['BlogEntry'])) {
+			$currentYearMonthDay = date('Y-m-01', strtotime($oldestEntry['BlogEntry']['published_datetime']));
+		} else {
+			$currentYearMonthDay = date('Y-m-01');
+		}
 		while ($currentYearMonthDay <= $currentDateTime) {
 			$ret[substr($currentYearMonthDay, 0, 7)] = 0;
 			$currentYearMonthDay = date('Y-m-01', strtotime($currentYearMonthDay . ' +1 month'));

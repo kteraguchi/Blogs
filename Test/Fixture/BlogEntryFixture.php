@@ -130,6 +130,22 @@ class BlogEntryFixture extends CakeTestFixture {
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),
+		'block_id' => array(
+			'type' => 'integer',
+			'null' => false,
+			'default' => null,
+			'comment' => 'block_id '
+		),
+		'is_latest' => array(
+			'type' => 'boolean',
+			'null' => false,
+			'default' => '0',
+		),
+		'is_active' => array(
+			'type' => 'boolean',
+			'null' => false,
+			'default' => '0',
+		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 

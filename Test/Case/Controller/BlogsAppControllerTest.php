@@ -20,7 +20,7 @@ App::uses('AuthGeneralControllerTest', 'AuthGeneral.Test/Case/Controller');
  * Summary for BlogsController Test Case
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class BlogsControllerTest extends ControllerTestCase {
+class BlogsAppControllerTest extends ControllerTestCase {
 
 /**
  * Fixtures
@@ -28,7 +28,6 @@ class BlogsControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		//		'plugin.blogs.blog',
 		'plugin.net_commons.site_setting',
 		'plugin.blocks.block',
 		'plugin.blocks.block_role_permission',
@@ -49,7 +48,14 @@ class BlogsControllerTest extends ControllerTestCase {
 		'plugin.rooms.room_role_permission',
 		'plugin.users.user',
 		'plugin.users.user_attributes_user',
-		);
+		'plugin.blogs.plugin',
+		'plugin.categories.category',
+		'plugin.categories.category_order',
+		'plugin.blogs.blog_entry',
+		'plugin.blogs.blog',
+		'plugin.blogs.blog_setting',
+		'plugin.blogs.blog_frame_setting',
+	);
 
 /**
  * testIndex
