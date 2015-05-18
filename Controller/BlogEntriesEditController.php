@@ -24,7 +24,6 @@ class BlogEntriesEditController extends BlogsAppController {
 	public $uses = array(
 		'Blogs.BlogEntry',
 		'Categories.Category',
-		'Blogs.BlogCategory',
 		'Comments.Comment',
 	);
 
@@ -62,6 +61,8 @@ class BlogEntriesEditController extends BlogsAppController {
  * @return void
  */
 	public function add() {
+		$this->set('isEdit', false);
+
 		$blogEntry = $this->BlogEntry->getNew();
 		$this->set('blogEntry', $blogEntry);
 
@@ -118,11 +119,11 @@ class BlogEntriesEditController extends BlogsAppController {
  * @return void
  */
 	public function edit() {
+		$this->set('isEdit', true);
 		$originId = $this->request->params['named']['origin_id'];
 
 		//  origin_idのis_latstを元に編集を開始
 		$blogEntry = $this->BlogEntry->findByOriginIdAndIsLatest($originId, 1);
-
 		if (empty($blogEntry)) {
 			//  404 NotFound
 			throw new NotFoundException();

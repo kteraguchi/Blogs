@@ -55,6 +55,8 @@ class BlogsAppControllerTest extends ControllerTestCase {
 		'plugin.blogs.blog',
 		'plugin.blogs.blog_setting',
 		'plugin.blogs.blog_frame_setting',
+		'plugin.tags.tag',
+		'plugin.tags.tags_content',
 	);
 
 /**

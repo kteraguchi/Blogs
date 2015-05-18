@@ -6,7 +6,7 @@
  * Time: 9:56
  */
 
-App::uses('BlogsController', 'Blogs.Controller');
+App::uses('BlogEntriesEditController', 'Blogs.Controller');
 App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
 
 /**
@@ -26,7 +26,7 @@ class BlogsEntriesEditControllerTest extends BlogsAppControllerTest {
 		parent::setUp();
 		Configure::write('Config.language', 'ja');
 		$this->generate(
-			'Blogs.Blogs',
+			'Blogs.BlogEntriesEdit',
 			[
 				'components' => [
 					'Auth' => ['user'],
@@ -53,14 +53,28 @@ class BlogsEntriesEditControllerTest extends BlogsAppControllerTest {
 		RolesControllerTest::login($this);
 
 		$view = $this->testAction(
-			'/blogs/blogs/index/1',
+			'/blogs/blog_entries_edit/add/1',
 			array(
 				'method' => 'get',
 				'return' => 'view',
 			)
 		);
-debug($view);
-		//$this->assertTextContains('nc-announcements-1', $view, print_r($view, true));
+		$this->assertTextNotContains('glyphicon-trash', $view, print_r($view, true));
+
+		AuthGeneralControllerTest::logout($this);
+	}
+
+	public function testEditFormWithDeleteButton() {
+		RolesControllerTest::login($this);
+
+		$view = $this->testAction(
+			'/blogs/blog_entries_edit/edit/1/origin_id:3',
+			array(
+				'method' => 'get',
+				'return' => 'view',
+			)
+		);
+		$this->assertTextContains('glyphicon-trash', $view, print_r($view, true));
 
 		AuthGeneralControllerTest::logout($this);
 	}

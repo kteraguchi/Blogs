@@ -179,6 +179,7 @@ if ($this->request->data) {
 						array('contentStatus' => $blogEntry['BlogEntry']['status'])
 					); ?>
 
+					<?php if ($isEdit) : ?>
 					<div style="text-align: right;">
 					<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Delete'); ?>">
 							<a href="<?php echo $this->Html->url(
@@ -188,8 +189,8 @@ if ($this->request->data) {
 							</a>
 
 					</span>
-
 					</div>
+					<?php endif ?>
 					<!--	編集時のみ表示	-->
 				</div>
 

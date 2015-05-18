@@ -87,6 +87,7 @@ class BlogEntryTest extends CakeTestCase {
 		$data['BlogEntry']['origin_id'] = 0;
 		$data['BlogEntry']['language_id'] = 1;
 		$data['BlogEntry']['published_datetime'] = '2015-01-01 00:00:00';
+		$data['BlogEntry']['block_id'] = 5;
 
 		$result = $this->BlogEntry->save($data);
 		$this->assertTrue($result);
