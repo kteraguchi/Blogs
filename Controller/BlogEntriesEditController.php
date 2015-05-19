@@ -79,7 +79,7 @@ class BlogEntriesEditController extends BlogsAppController {
 			$this->request->data['BlogEntry']['language_id'] = $this->viewVars['languageId'];
 
 			try {
-				if (($this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) === false) {
+				if (($result = $this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) === false) {
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
 
@@ -87,7 +87,7 @@ class BlogEntriesEditController extends BlogsAppController {
 
 				$this->Session->setFlash(__('The blog entry has been saved.'));
 				return $this->redirect(
-					array('controller' => 'blog_entries', 'action' => 'view', $this->viewVars['frameId'], 'origin_id' => $this->BlogEntry->originId)
+					array('controller' => 'blog_entries', 'action' => 'view', $this->viewVars['frameId'], 'origin_id' => $result['BlogEntry']['origin_id'])
 				);
 
 			} catch (Exception $e) {
