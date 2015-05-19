@@ -29,7 +29,7 @@
 				'controller' => 'Blocks',
 				'action' => 'edit' . '/' . $frameId,
 				'callback' => 'Blogs.BlogFrameSettings/edit_form',
-				'cancel' => $this->Html->url(isset($current['page']) ? '/' . $current['page']['permalink'] : null)
+				'cancelUrl' => $this->Html->url(isset($current['page']) ? '/' . $current['page']['permalink'] : null)
 			)); ?>
 	</div>
 </div>
