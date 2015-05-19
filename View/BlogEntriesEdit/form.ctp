@@ -46,7 +46,8 @@ if ($this->request->data) {
 							'div' => 'form-group',
 							'class' => 'form-control'
 						),
-						'div' => 'form-control'
+						'div' => 'form-control',
+						'novalidate' => true
 					)
 				);
 				$this->Form->unlockField('Tag');
@@ -65,12 +66,12 @@ if ($this->request->data) {
 						echo $this->Form->input(
 							'title',
 							array(
-								'label' => __d('blogs', 'Title')
+								'label' => __d('blogs', 'Title'),
+								'required' => 'required',
+								'between' => '<strong class="text-danger h4">*</strong>',
 							)
 						);
 						?>
-
-
 
 						<div class="form-group">
 							<label class="control-label">
@@ -137,6 +138,9 @@ if ($this->request->data) {
 							array('type' => 'text',
 								'ng-model' => 'blogEntry.published_datetime',
 								'datetimepicker',
+								'required' => 'required',
+								'between' => '<strong class="text-danger h4">*</strong>',
+
 								'label' => __d('blogs', 'Published datetime')));
 
 						?>
