@@ -13,14 +13,18 @@ App::uses('AppHelper', 'View/Helper');
 class BlogsFormatHelper extends AppHelper {
 
 /**
+ * @var array helpers
+ */
+	public $helpers = array('NetCommons.Date');
+
+/**
  * published_datetimeのフォーマット
  *
  * @param string $datetime datetime
  * @return bool|string
  */
 	public function publishedDatetime($datetime) {
-		// ε(　　　　 v ﾟωﾟ)　＜NetCommons.Dateを使うように差し替え
-		return date('Y-m-d H:i', strtotime($datetime));
+		return $this->Date->dateFormat($datetime);
 	}
 
 }
