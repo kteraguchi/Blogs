@@ -52,6 +52,7 @@ if ($this->request->data) {
 				$this->Form->unlockField('Tag');
 				?>
 				<?php echo $this->Form->input('origin_id', array('type' => 'hidden')); ?>
+				<?php echo $this->Form->input('key', array('type' => 'hidden')); ?>
 				<!--		--><?php //echo $this->Form->hidden('Frame.id', array(
 				//			'value' => $frameId,
 				//		)); ?>
@@ -167,10 +168,7 @@ if ($this->request->data) {
 
 				<hr/>
 
-				<?php echo $this->element(
-					'Comments.form',
-					array('contentStatus' => $blogEntry['BlogEntry']['status'])
-				); ?>
+				<?php echo $this->element('Comments.form', array('contentStatus' => $blogEntry['BlogEntry']['status'])); ?>
 
 				<div class="panel-footer" style="text-align: center">
 

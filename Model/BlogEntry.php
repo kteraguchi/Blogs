@@ -30,6 +30,7 @@ class BlogEntry extends BlogsAppModel {
 	public $actsAs = array(
 		'NetCommons.Trackable',
 		'Tags.Tag',
+		'NetCommons.OriginalKey',
 	);
 
 /**
@@ -245,17 +246,30 @@ class BlogEntry extends BlogsAppModel {
 
 		$this->loadModels(array('Comment' => 'Comments.Comment'));
 		$this->create(); // 常に新規登録
-		if (($returnData = $this->save($data)) === false) {
+		if (($savedData = $this->save($data)) === false) {
 			return false;
 		}
-		//Comment登録
-		if (isset($data['Comment']) && $this->Comment->data) {
-			$this->Comment->data[$this->Comment->name]['content_key'] = $data[$this->name]['origin_id'];
+		// validate comment
+		if (!$this->Comment->validateByStatus($savedData, array('caller' => $this->name))) {
+			$this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
+			return false;
+		}
+
+		//コメントの登録
+		if ($this->Comment->data) {
 			if (! $this->Comment->save(null, false)) {
-				return false;
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
-		return $returnData;
+
+		//Comment登録
+		//if (isset($data['Comment']) && $this->Comment->data) {
+		//	$this->Comment->data[$this->Comment->name]['content_key'] = $data[$this->name]['origin_id'];
+		//	if (! $this->Comment->save(null, false)) {
+		//		return false;
+		//	}
+		//}
+		return $savedData;
 	}
 
 /**
@@ -308,26 +322,6 @@ class BlogEntry extends BlogsAppModel {
 			$this->data[$this->name]['is_latest'] = 1;
 		}
 		return true;
-	}
-
-/**
- * origin_idがセットされてなかったらorigin_id=idとしてアップデート
- *
- * @param bool $created created
- * @param array $options options
- * @return void
- */
-	public function afterSave($created, $options = array()) {
-		if ($created) {
-			if (empty($this->data[$this->name]['origin_id'])) {
-				// origin_id がセットされてなかったらkey=idでupdate
-				$this->originId = $this->data[$this->name]['id'];
-				$this->saveField('origin_id', $this->data[$this->name]['id'], array('callbacks' => false)); // ここで$this->dataがリセットされる
-				//$this->data[$this->name]['origin_id'] = $this->data[$this->name]['id'];
-				//$this->save($this->data, array('callbacks' => false));
-				//$this->updateAll(array('origin_id' => $this->data[$this->name]['id']), array('id' => $this->data[$this->name]['id']));
-			}
-		}
 	}
 
 /**

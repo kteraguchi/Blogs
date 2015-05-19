@@ -177,6 +177,7 @@ class BlogEntriesEditController extends BlogsAppController {
 				'content_key' => isset($blogEntry['BlogEntry']['key']) ? $blogEntry['BlogEntry']['key'] : null,
 			)
 		);
+		$comments = $this->camelizeKeyRecursive($comments);
 		$this->set('comments', $comments);
 
 		$this->render('form');
