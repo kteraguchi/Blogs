@@ -1,7 +1,7 @@
 <div class="blogs_entry_reaction row">
 	<?php if ($blogSetting['useSns']) : ?>
 		<!--Facebook-->
-		<div class="fb-like col-xs-3" expr:data-href="data:post.url" data-layout="button_count" data-action="like"
+		<div class="fb-like col-xs-3" data-href="<?php echo FULL_BASE_URL ?>/blogs/blog_entries/view/<?php echo $frameId ?>/origin_id:<?php echo $blogEntry['BlogEntry']['origin_id'] ?>" data-layout="button_count" data-action="like"
 			 data-show-faces="false" data-share="false"></div>
 		<!--Twitter-->
 		<div class="col-xs-3">
