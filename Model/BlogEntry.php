@@ -240,6 +240,7 @@ class BlogEntry extends BlogsAppModel {
  * @param int $blockId ブロックID
  * @param array $data 登録データ
  * @return bool
+ * @throws InternalErrorException
  */
 	public function saveEntry($blockId, $data) {
 		$this->recursive = -1;
@@ -262,13 +263,6 @@ class BlogEntry extends BlogsAppModel {
 			}
 		}
 
-		//Comment登録
-		//if (isset($data['Comment']) && $this->Comment->data) {
-		//	$this->Comment->data[$this->Comment->name]['content_key'] = $data[$this->name]['origin_id'];
-		//	if (! $this->Comment->save(null, false)) {
-		//		return false;
-		//	}
-		//}
 		return $savedData;
 	}
 
