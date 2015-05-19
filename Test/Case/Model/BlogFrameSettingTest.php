@@ -46,6 +46,8 @@ class BlogFrameSettingTest extends CakeTestCase {
 
 /**
  * Dummy test
+ *
+ * @return void
  */
 	public function testTest() {
 	}

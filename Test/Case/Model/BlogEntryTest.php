@@ -89,8 +89,8 @@ class BlogEntryTest extends CakeTestCase {
 		$data['BlogEntry']['published_datetime'] = '2015-01-01 00:00:00';
 		$data['BlogEntry']['block_id'] = 5;
 
-		$result = $this->BlogEntry->save($data);
-		$this->assertTrue($result);
+		$savedData = $this->BlogEntry->save($data);
+		$this->assertTrue(isset($savedData['BlogEntry']['id']));
 	}
 
 	//public function testGetCondition() {

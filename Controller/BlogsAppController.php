@@ -17,7 +17,7 @@ class BlogsAppController extends AppController {
 /**
  * @var array ブログ設定
  */
-	protected $_blockSetting;
+	protected $_blogSetting;
 
 /**
  * @var array フレーム設定
@@ -87,16 +87,6 @@ class BlogsAppController extends AppController {
 		$this->loadModel('Blocks.Block');
 		$block = $this->Block->findById($this->viewVars['blockId']);
 		$this->_blogTitle = $block['Block']['name'];
-	}
-
-/**
- * ブロック設定を読みこむ
- *
- * @return void
- */
-	protected function _loadBlockSetting() {
-		$this->_blockSetting = $this->BlogBlockSetting->getSettingByBLockKey($this->viewVars['blockKey']);
-		$this->set('blockSetting', $this->_blockSetting);
 	}
 
 /**
@@ -209,6 +199,7 @@ class BlogsAppController extends AppController {
 					array('id' => null)
 				);
 			}
+			$this->_blogSetting = $blogSetting;
 			$blogSetting = $this->camelizeKeyRecursive($blogSetting);
 			$this->set($blogSetting);
 		}

@@ -56,8 +56,27 @@
 	<?php endif ?>
 
 	<div>
-		<!-- ε(　　　　 v ﾟωﾟ)　＜ Coreで開発されたらコメント機能を組み込む-->
-		<?php //echo $this->element('Comments.index'); ?>
+		<?php /* コンテンツコメント */ ?>
+		<div class="col-xs-12">
+			<?php /* コメントを利用しない or (コメント0件 and コメント投稿できない) */ ?>
+
+			<?php if (!$blogSetting['useComment']) : ?>
+				<?php /* 表示しない */ ?>
+			<?php else : ?>
+				<div class="panel panel-default">
+					<?php if ($contentCommentCreatable) : ?>
+					<?php echo $this->element('ContentComments.form', array(
+						'formName' => 'Blog',
+					)); ?>
+					<?php endif ?>
+					<?php if (count($contentComments) > 0) : ?>
+					<?php echo $this->element('ContentComments.index', array(
+						'formName' => 'Blog',
+					)); ?>
+					<?php endif ?>
+				</div>
+			<?php endif; ?>
+		</div>
 
 	</div>
 </article>

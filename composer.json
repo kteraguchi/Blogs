@@ -34,7 +34,8 @@
         "netcommons/pages":             "dev-master",
         "netcommons/users":             "dev-master",
         "netcommons/categories":        "dev-master",
-        "netcommons/tags":              "dev-master"
+        "netcommons/tags":              "dev-master",
+        "netcommons/content-comments":  "dev-master"
     },
     "license": "NetCommons License",
     "authors": [

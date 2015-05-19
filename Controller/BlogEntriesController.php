@@ -25,6 +25,7 @@ class BlogEntriesController extends BlogsAppController {
 		'Blogs.BlogEntry',
 		'Comments.Comment',
 		'Categories.Category',
+		'ContentComments.ContentComment',	// コンテンツコメント
 	);
 
 /**
@@ -55,6 +56,7 @@ class BlogEntriesController extends BlogsAppController {
 			),
 		),
 		'Categories.Categories',
+		'ContentComments.ContentComments',
 	);
 
 /**
@@ -215,7 +217,25 @@ class BlogEntriesController extends BlogsAppController {
 			//$blogTags = $this->BlogTag->getTagsByEntryId($blogEntry['BlogEntry']['id']);
 			//$this->set('blogTags', $blogTags);
 
-			// ε(　　　　 v ﾟωﾟ)　＜ コメント取得
+			// コメントを利用する
+			if ($this->_blogSetting['BlogSetting']['use_comment']) {
+				if ($this->request->isPost()) {
+					// コメントする
+					if (!$this->ContentComments->comment('blogs', $blogEntry['BlogEntry']['key'], $this->_blogSetting['BlogSetting']['is_comment_auto_approval'])) {
+						$this->throwBadRequest();
+						return;
+					}
+				}
+
+				// コンテンツコメントの取得
+				$contentComments = $this->ContentComment->getContentComments(array(
+					'block_key' => $this->viewVars['blockKey'],
+					'plugin_key' => 'blogs',
+					'content_key' => $blogEntry['BlogEntry']['key'],
+				));
+				$contentComments = $this->camelizeKeyRecursive($contentComments);
+				$this->set('contentComments', $contentComments);
+			}
 
 		} else {
 			// 表示できない記事へのアクセスなら403
