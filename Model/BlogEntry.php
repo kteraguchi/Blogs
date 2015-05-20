@@ -31,6 +31,7 @@ class BlogEntry extends BlogsAppModel {
 		'NetCommons.Trackable',
 		'Tags.Tag',
 		'NetCommons.OriginalKey',
+		'Likes.Like'
 	);
 
 /**

@@ -29,6 +29,13 @@ class BlogEntriesController extends BlogsAppController {
 	);
 
 /**
+ * @var array helpers
+ */
+	public $helpers = array(
+		'NetCommons.Token',
+	);
+
+/**
  * beforeFilter
  *
  * @return void

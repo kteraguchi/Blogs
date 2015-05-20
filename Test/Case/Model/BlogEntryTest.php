@@ -42,6 +42,7 @@ class BlogEntryTest extends CakeTestCase {
 		// モデルからビヘイビアをはずす:
 		$this->BlogEntry->Behaviors->unload('Tag');
 		$this->BlogEntry->Behaviors->unload('Trackable');
+		$this->BlogEntry->Behaviors->unload('Like');
 	}
 
 /**

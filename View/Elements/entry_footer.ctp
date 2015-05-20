@@ -19,14 +19,45 @@
 	<?php else : ?>
 		<div class="col-xs-6"></div>
 	<?php endif ?>
-	<div class="col-xs-2">
-		<!--		TODO　いいね-->
 
-	</div>
-	<div class="col-xs-2">
-		<!--		TODO　やだね-->
+	<!--view only-->
+	<?php if (isset($index) && ($index === true)) : ?>
+		<?php if ($blogSetting['useLike']) : ?>
+			<div class="inline-block text-muted">
+				<span class="glyphicon glyphicon-thumbs-up"></span>
+				<?php echo isset($blogEntry['BlogEntry']['like_counts']) ? (int)$blogEntry['BlogEntry']['like_counts'] : 0; ?>
+			</div>
+		<?php endif; ?>
 
-	</div>
+		<?php if ($blogSetting['useUnlike']) : ?>
+			<div class="inline-block text-muted">
+				<span class="glyphicon glyphicon-thumbs-down"></span>
+				<?php echo isset($blogEntry['BlogEntry']['unlike_counts']) ? (int)$blogEntry['BlogEntry']['unlike_counts'] : 0; ?>
+			</div>
+		<?php endif; ?>
+	<?php else : ?>
+		<!--post like-->
+		<div class="col-xs-4">
+			<div <?php echo $this->element('Likes.like_init_attributes', array(
+				'contentKey' => $blogEntry['BlogEntry']['key'],
+				'disabled' => !(! isset($blogEntry['Like']) && $blogEntry['BlogEntry']['status'] === NetCommonsBlockComponent::STATUS_PUBLISHED),
+				'likeCounts' => (int)$blogEntry['BlogEntry']['like_counts'],
+				'unlikeCounts' => (int)$blogEntry['BlogEntry']['unlike_counts'],
+			)); ?>>
+			<?php if ($blogSetting['useLike']) : ?>
+				<div class="inline-block">
+					<?php echo $this->element('Likes.like_button', array('isLiked' => Like::IS_LIKE)); ?>
+				</div>
+			<?php endif; ?>
+
+			<?php if ($blogSetting['useUnlike']) : ?>
+				<div class="inline-block">
+					<?php echo $this->element('Likes.like_button', array('isLiked' => Like::IS_UNLIKE)); ?>
+				</div>
+			<?php endif; ?>
+			</div>
+		</div>
+	<?php endif ?>
 	<div class="col-xs-2">
 		<!--		TODO　コメントリンク　コメント数-->
 	</div>

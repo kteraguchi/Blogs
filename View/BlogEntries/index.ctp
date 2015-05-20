@@ -2,6 +2,9 @@
 <?php echo $this->Html->css('/blogs/css/blogs.css'); ?>
 <?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
 
+<?php echo $this->Html->script('/likes/js/likes.js', false); ?>
+<?php echo $this->Html->css('/likes/css/style.css', false); ?>
+
 
 <div class="blogEntries index" ng-controller="Blogs.Entries" ng-init="init(<?php echo $frameId ?>)">
 	<h1 class="blogs_blogTitle"><?php echo $listTitle ?></h1>
@@ -103,7 +106,7 @@
 							<a ng-click="hideBody2()">閉じる</a>
 						</div>
 					<?php endif ?>
-					<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry)); ?>
+					<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry, 'index' => true)); ?>
 				</article>
 
 			</div>

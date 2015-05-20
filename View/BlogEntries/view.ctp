@@ -1,6 +1,9 @@
 <?php echo $this->element('shared_header'); ?>
 <?php echo $this->Html->css('/blogs/css/blogs.css'); ?>
 
+<?php echo $this->Html->script('/likes/js/likes.js', false); ?>
+<?php echo $this->Html->css('/likes/css/style.css', false); ?>
+
 <?php echo $this->Html->link(
 	__d('blogs', 'Move list'),
 	array('controller' => 'blog_entries', 'action' => 'index', $frameId)
