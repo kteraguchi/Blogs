@@ -35,8 +35,8 @@
         "netcommons/users":             "dev-master",
         "netcommons/categories":        "dev-master",
         "netcommons/tags":              "dev-master",
-        "netcommons/content-comments":  "dev-master"
-        "netcommons/likes":  "dev-master"
+        "netcommons/content-comments":  "dev-master",
+        "netcommons/likes":             "dev-master"
     },
     "license": "NetCommons License",
     "authors": [
