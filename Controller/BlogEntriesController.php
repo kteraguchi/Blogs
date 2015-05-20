@@ -139,8 +139,8 @@ class BlogEntriesController extends BlogsAppController {
 		// indexとの違いはyear_monthでの絞り込み
 		$this->_filter['yearMonth'] = $this->_getNamed('year_month', 0);
 
-		// ε(　　　　 v ﾟωﾟ)　＜ 年月をタイトルに
-		$this->set('listTitle', $this->_filter['yearMonth']);
+		list($year, $month) = explode('-', $this->_filter['yearMonth']);
+		$this->set('listTitle', __d('blogs', '%d-%d Blog Entry List', $year, $month));
 
 		$first = $this->_filter['yearMonth'] . '-1';
 		$last = date('Y-m-t', strtotime($first));

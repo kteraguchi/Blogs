@@ -39,3 +39,6 @@ msgstr "記事"
 
 msgid "Blog Name"
 msgstr "ブログ名"
+
+msgid "%d-%d Blog Entry List"
+msgstr "%d年%d月の記事一覧"
