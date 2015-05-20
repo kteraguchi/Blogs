@@ -33,6 +33,7 @@ class BlogEntriesController extends BlogsAppController {
  */
 	public $helpers = array(
 		'NetCommons.Token',
+		'NetCommons.BackToPage',
 	);
 
 /**

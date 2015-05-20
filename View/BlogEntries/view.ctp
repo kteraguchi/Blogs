@@ -4,18 +4,15 @@
 <?php echo $this->Html->script('/likes/js/likes.js', false); ?>
 <?php echo $this->Html->css('/likes/css/style.css', false); ?>
 
-<?php echo $this->Html->link(
-	__d('blogs', 'Move list'),
-	array('controller' => 'blog_entries', 'action' => 'index', $frameId)
-); ?>
+<?php echo $this->BackTopage->backToPageButton(__d('blogs', 'Move list')) ?>
 
 <div class="blogs_entry_status">
 	<?php echo $this->element(
 		'NetCommons.status_label',
 		array('status' => $blogEntry['BlogEntry']['status'])
 	); ?>
-
 </div>
+
 <article>
 	<h1><?php echo h($blogEntry['BlogEntry']['title']); ?></h1>
 
