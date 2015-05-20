@@ -13,7 +13,7 @@ echo $this->Html->css('/net_commons/eonasdan-bootstrap-datetimepicker/build/css/
 
 echo $this->Html->script('/net_commons/angular-bootstrap-datetimepicker-directive/angular-bootstrap-datetimepicker-directive.js');
 ?>
-
+<?php echo $this->Html->script('/blogs/js/blogs_entry_edit.js', false); ?>
 
 <?php
 if ($this->request->data) {
