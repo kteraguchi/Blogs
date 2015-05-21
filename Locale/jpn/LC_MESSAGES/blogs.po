@@ -42,3 +42,12 @@ msgstr "ブログ名"
 
 msgid "%d-%d Blog Entry List"
 msgstr "%d年%d月の記事一覧"
+
+msgid "Archive"
+msgstr "アーカイブ"
+
+msgid "All Entries"
+msgstr "全ての記事"
+
+msgid "%d-%d"
+msgstr "%d年%d月"

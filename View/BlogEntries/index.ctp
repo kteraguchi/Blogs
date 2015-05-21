@@ -31,35 +31,29 @@
 		<div class="col-xs-3">
 		</div>
 
-		<div class="col-xs-4">
+		<div class="col-xs-7">
 			<?php $categories = Hash::combine($categories, '{n}.category.id', '{n}.category.name'); ?>
-			<?php echo $this->Form->select(
-				'category',
-				$categories,
-				array(
-					'empty' => array(0 => __d('blogs', 'All categories')),
-					'class' => 'form-control',
-					'value' => $currentCategoryId,
-					'ng-change' => 'filterCategory()',
-					'ng-model' => 'selectCategory',
-					'ng-init' => 'selectCategory=' . $currentCategoryId,
-				)
-			); ?>
-		</div>
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+					<?php echo $filterDropDownLabel ?>
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/blogs/blog_entries/index/<?php echo $frameId?>"><?php echo __d('blogs', 'All Entries') ?></a></li>
+					<li role="presentation" class="dropdown-header"><?php echo __d('blogs', 'Category') ?></li>
+					<?php foreach($categories as $categoryId => $label): ?>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/blogs/blog_entries/index/<?php echo $frameId?>/category_id:<?php echo $categoryId?>"><?php echo $label ?></a></li>
+					<?php endforeach ?>
 
-		<div class="col-xs-3">
-			<?php echo $this->Form->select(
-				'year_month',
-				$yearMonthOptions,
-				array(
-					'empty' => false,
-					'class' => 'form-control',
-					'value' => $currentYearMonth,
-					'ng-change' => 'moveYearMonth()',
-					'ng-model' => 'selectYearMonth',
-					'ng-init' => 'selectYearMonth="' . $currentYearMonth . '"'
-				)
-			); ?>
+					<li role="presentation" class="divider"></li>
+
+					<li role="presentation" class="dropdown-header"><?php echo __d('blogs', 'Archive')?></li>
+					<?php foreach($yearMonthOptions as $yearMonth => $label): ?>
+
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="/blogs/blog_entries/year_month/<?php echo $frameId?>/year_month:<?php echo $yearMonth?>"><?php echo $label ?></a></li>
+					<?php endforeach ?>
+				</ul>
+			</div>
 		</div>
 
 	</div>

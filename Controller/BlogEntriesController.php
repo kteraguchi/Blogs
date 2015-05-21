@@ -84,6 +84,7 @@ class BlogEntriesController extends BlogsAppController {
 	public function index() {
 		$this->_prepare();
 		$this->set('listTitle', $this->_blogTitle);
+		$this->set('filterDropDownLabel', __d('blogs', 'All Entries'));
 
 		$conditions = array();
 		$this->_filter['categoryId'] = $this->_getNamed('category_id', 0);
@@ -91,6 +92,7 @@ class BlogEntriesController extends BlogsAppController {
 			$conditions['BlogEntry.category_id'] = $this->_filter['categoryId'];
 			$category = $this->Category->findById($this->_filter['categoryId']);
 			$this->set('listTitle', __d('blogs', 'Category') . ':' . $category['Category']['name']);
+			$this->set('filterDropDownLabel', $category['Category']['name']);
 		}
 
 		$this->_list($conditions);
@@ -109,6 +111,7 @@ class BlogEntriesController extends BlogsAppController {
 		// カテゴリ名をタイトルに
 		$tag = $this->BlogEntry->getTagByTagId($tagId);
 		$this->set('listTitle', __d('blogs', 'Tag') . ':' . $tag['Tag']['name']);
+		$this->set('filterDropDownLabel', '----');
 
 		//$conditions = array(
 		//	'BlogEntryTagLink.blog_tag_id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
@@ -141,6 +144,7 @@ class BlogEntriesController extends BlogsAppController {
 
 		list($year, $month) = explode('-', $this->_filter['yearMonth']);
 		$this->set('listTitle', __d('blogs', '%d-%d Blog Entry List', $year, $month));
+		$this->set('filterDropDownLabel', __d('blogs', '%d-%d', $year, $month));
 
 		$first = $this->_filter['yearMonth'] . '-1';
 		$last = date('Y-m-t', strtotime($first));
@@ -263,9 +267,6 @@ class BlogEntriesController extends BlogsAppController {
 			$this->Auth->user('id'),
 			$this->viewVars,
 			$this->_getCurrentDateTime()
-		);
-		$options = array(
-			0 => '----'
 		);
 		foreach ($yearMonthCount as $yearMonth => $count) {
 			list($year, $month) = explode('-', $yearMonth);

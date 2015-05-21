@@ -11,29 +11,6 @@ NetCommonsApp.controller('Blogs.Entries',
       $scope.init = function(frameId) {
         $scope.frameId = frameId;
       };
-
-
-      $scope.filterStatus = function() {
-        // requestUrlにstatus:1 って感じにselectStatus付けてフィルタリングする
-        // リダイレクト
-        var url = '/blogs/blog_entries/index/' +
-            $scope.frameId + '/status:' + $scope.selectStatus;
-        location.href = url;
-      };
-
-      $scope.filterCategory = function() {
-        var url = '/blogs/blog_entries/index/' +
-            $scope.frameId + '/category_id:' + $scope.selectCategory;
-        location.href = url;
-
-      };
-
-      $scope.moveYearMonth = function() {
-        var url = '/blogs/blog_entries/year_month/' +
-            $scope.frameId + '/year_month:' + $scope.selectYearMonth;
-        location.href = url;
-
-      };
     }
 );
 

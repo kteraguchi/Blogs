@@ -39,6 +39,7 @@ class BlogsAppModel extends AppModel {
  * @return void
  */
 	public function begin() {
+		$this->setDataSource('master');
 		$dataSource = $this->getDataSource();
 		$dataSource->begin();
 	}
