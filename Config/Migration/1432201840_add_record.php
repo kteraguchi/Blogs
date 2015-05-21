@@ -30,21 +30,21 @@ class AddRecord extends CakeMigration {
 			array(
 				'language_id' => 2,
 				'key' => 'faqs',
-				'namespace' => 'netcommons/faqs',
-				'name' => 'FAQ',
+				'namespace' => 'netcommons/blogs',
+				'name' => 'BLOG',
 				'type' => 1,
 			),
 		),
 		'PluginsRole' => array(
 			array(
 				'role_key' => 'room_administrator',
-				'plugin_key' => 'faqs'
+				'plugin_key' => 'blogs'
 			),
 		),
 		'PluginsRoom' => array(
 			array(
 				'room_id' => '1',
-				'plugin_key' => 'faqs'
+				'plugin_key' => 'blogs'
 			),
 		),
 	);
