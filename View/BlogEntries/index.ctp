@@ -6,7 +6,7 @@
 <?php echo $this->Html->css('/likes/css/style.css', false); ?>
 
 
-<div class="blogEntries index" ng-controller="Blogs.Entries" ng-init="init(<?php echo $frameId ?>)">
+<div class="blogEntries index nc-content-list" ng-controller="Blogs.Entries" ng-init="init(<?php echo $frameId ?>)">
 	<h1 class="blogs_blogTitle"><?php echo $listTitle ?></h1>
 
 	<div class="row blogs_navigation_header">
