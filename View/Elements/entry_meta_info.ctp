@@ -1,7 +1,6 @@
 <div class="blogs_entry_meta">
 	<div>
 
-		<!--	TODO 多言語化　日付フォーマット-->
 		<?php echo __d(
 			'blogs',
 			'posted : %s',
@@ -11,7 +10,7 @@
 		<!--	TODO 投稿者アバター-->
 		<!--	TODO　投稿者名 リンク-->
 		<?php echo $this->Html->link($blogEntry['TrackableCreator']['username'], array()); ?>&nbsp;
-		カテゴリ:<?php echo $this->Html->link(
+		<?php echo __d('blogs', 'Category') ?>:<?php echo $this->Html->link(
 			$blogEntry['Category']['name'],
 			array(
 				'controller' => 'blog_entries',
