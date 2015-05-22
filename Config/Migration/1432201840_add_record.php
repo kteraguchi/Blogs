@@ -29,7 +29,7 @@ class AddRecord extends CakeMigration {
 		'Plugin' => array(
 			array(
 				'language_id' => 2,
-				'key' => 'faqs',
+				'key' => 'blogs',
 				'namespace' => 'netcommons/blogs',
 				'name' => 'BLOG',
 				'type' => 1,
