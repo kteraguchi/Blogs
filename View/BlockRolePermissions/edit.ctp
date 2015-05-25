@@ -1,6 +1,6 @@
 <?php
 /**
- * BbsSettings edit template
+ * BlogSettings edit template
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -10,7 +10,7 @@
  */
 ?>
 
-<?php echo $this->Html->script('/bbses/js/bbses.js', false); ?>
+<?php echo $this->Html->script('/bloges/js/bloges.js', false); ?>
 
 <div class="modal-body">
 	<?php echo $this->element('NetCommons.setting_tabs', $settingTabs); ?>
@@ -21,9 +21,9 @@
 		<?php echo $this->element('Blocks.edit_form', array(
 				'controller' => 'BlockRolePermission',
 				'action' => 'edit' . '/' . $frameId . '/' . $blockId,
-				'callback' => 'Bbses.BlockRolePermissions/edit_form',
-				'cancelUrl' => '/bbses/blocks/index/' . $frameId,
-				'options' => array('ng-controller' => 'Bbses'),
+				'callback' => 'Blogs.BlockRolePermissions/edit_form',
+				'cancelUrl' => '/bloges/blocks/index/' . $frameId,
+				'options' => array('ng-controller' => 'Blogs'),
 			)); ?>
 	</div>
 </div>

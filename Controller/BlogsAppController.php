@@ -193,15 +193,23 @@ class BlogsAppController extends AppController {
 		$blog = $this->camelizeKeyRecursive($blog);
 		$this->set($blog);
 
-		if (in_array('blogSetting', $contains, true)) {
-			if (! $blogSetting = $this->BlogSetting->getBlogSetting($blog['blog']['key'])) {
-				$blogSetting = $this->BlogSetting->create(
-					array('id' => null)
-				);
+		if (! $blogSetting = $this->BlogSetting->getBlogSetting($blog['blog']['key'])) {
+			$blogSetting = $this->BlogSetting->create(
+				array('id' => null)
+			);
+		}
+		$this->_blogSetting = $blogSetting;
+		$blogSetting = $this->camelizeKeyRecursive($blogSetting);
+		$this->set($blogSetting);
+
+		if (in_array('blogFrameSetting', $contains, true)) {
+			if (! $blogFrameSetting = $this->BlogFrameSetting->getBlogFrameSetting($this->viewVars['frameKey'])) {
+				$blogFrameSetting = $this->BlogFrameSetting->create(array(
+					'frame_key' => $this->viewVars['frameKey']
+				));
 			}
-			$this->_blogSetting = $blogSetting;
-			$blogSetting = $this->camelizeKeyRecursive($blogSetting);
-			$this->set($blogSetting);
+			$blogFrameSetting = $this->camelizeKeyRecursive($blogFrameSetting);
+			$this->set($blogFrameSetting);
 		}
 
 		$this->set('userId', (int)$this->Auth->user('id'));

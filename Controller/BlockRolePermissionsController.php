@@ -9,15 +9,15 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('BbsesAppController', 'Bbses.Controller');
+App::uses('BlogsAppController', 'Blogs.Controller');
 
 /**
  * BlockRolePermissions Controller
  *
  * @author Kotaro Hokada <kotaro.hokada@gmail.com>
- * @package NetCommons\Bbses\Controller
+ * @package NetCommons\Blogs\Controller
  */
-class BlockRolePermissionsController extends BbsesAppController {
+class BlockRolePermissionsController extends BlogsAppController {
 
 /**
  * layout
@@ -34,8 +34,8 @@ class BlockRolePermissionsController extends BbsesAppController {
 	public $uses = array(
 		'Roles.Role',
 		'Roles.DefaultRolePermission',
-		'Bbses.Bbs',
-		'Bbses.BbsSetting',
+		'Blogs.Blog',
+		'Blogs.BlogSetting',
 		'Blocks.Block',
 		'Blocks.BlockRolePermission',
 		'Rooms.RolesRoom',
@@ -92,7 +92,7 @@ class BlockRolePermissionsController extends BbsesAppController {
 		}
 		$this->set('blockId', (int)$this->params['pass'][1]);
 
-		$this->initBbs();
+		$this->initBlog();
 
 		if (! $block = $this->Block->find('first', array(
 			'recursive' => -1,
@@ -113,10 +113,11 @@ class BlockRolePermissionsController extends BbsesAppController {
 
 		if ($this->request->isPost()) {
 			$data = $this->data;
-			$this->BbsSetting->saveBbsSetting($data);
-			if ($this->handleValidationError($this->BbsSetting->validationErrors)) {
+			$this->BlogSetting->saveBlogSetting($data);
+			if ($this->handleValidationError($this->BlogSetting->validationErrors)) {
+
 				if (! $this->request->is('ajax')) {
-					$this->redirect('/bbses/blocks/index/' . $this->viewVars['frameId']);
+					$this->redirect('/blogs/blocks/index/' . $this->viewVars['frameId']);
 				}
 				return;
 			}

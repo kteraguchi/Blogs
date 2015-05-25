@@ -1,6 +1,6 @@
 <?php
 /**
- * BbsSettings edit template
+ * BlogSettings edit template
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -14,17 +14,17 @@
 		'value' => $blockId,
 	)); ?>
 
-<?php echo $this->Form->hidden('BbsSetting.bbs_key', array(
-		'value' => isset($bbsSetting['bbsKey']) ? $bbsSetting['bbsKey'] : null,
+<?php echo $this->Form->hidden('BlogSetting.blog_key', array(
+		'value' => isset($blogSetting['blogKey']) ? $blogSetting['blogKey'] : null,
 	)); ?>
 
-<?php echo $this->Form->hidden('BbsSetting.id', array(
-		'value' => isset($bbsSetting['id']) ? (int)$bbsSetting['id'] : null,
+<?php echo $this->Form->hidden('BlogSetting.id', array(
+		'value' => isset($blogSetting['id']) ? (int)$blogSetting['id'] : null,
 	)); ?>
 
 <?php echo $this->element('Blocks.block_role_setting', array(
 		'roles' => $roles,
-		'model' => 'BbsSetting',
+		'model' => 'BlogSetting',
 		'useWorkflow' => 'use_workflow',
 		'useCommentApproval' => 'use_comment_approval',
 		'creatablePermissions' => array(
@@ -35,7 +35,7 @@
 			'contentCommentPublishable' => __d('blocks', 'Content comment publishable roles'),
 		),
 		'options' => array(
-			Block::NEED_APPROVAL => __d('blocks', 'Need approval in both %s and comments ', __d('bbses', 'articles')),
+			Block::NEED_APPROVAL => __d('blocks', 'Need approval in both %s and comments ', __d('bloges', 'articles')),
 			Block::NEED_COMMENT_APPROVAL => __d('blocks', 'Need only comments approval'),
 			Block::NOT_NEED_APPROVAL => __d('blocks', 'Not need approval'),
 		),
