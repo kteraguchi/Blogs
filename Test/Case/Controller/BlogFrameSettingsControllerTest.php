@@ -8,20 +8,12 @@
  */
 
 App::uses('BlogFrameSettingsController', 'Blogs.Controller');
+App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
 
 /**
  * Summary for BlogFrameSettingsController Test Case
  */
-class BlogFrameSettingsControllerTest extends ControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.blogs.blog_frame_setting',
-	);
+class BlogFrameSettingsControllerTest extends BlogsAppControllerTest {
 
 /**
  * testIndex

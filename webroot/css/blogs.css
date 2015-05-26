@@ -27,6 +27,7 @@
 
 .blogs_entry_status {
     text-align: right;
+    float:right;
 }
 
 .blogs_entry_body1 {
@@ -37,4 +38,8 @@
     margin-top: 20px;
     font-size: small;
     margin-bottom: 20px;
+}
+
+.blogs_entry_reaction div.pull-left{
+    margin-right: 10px;
 }

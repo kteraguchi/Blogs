@@ -9,29 +9,8 @@
 <div class="blogEntries index nc-content-list" ng-controller="Blogs.Entries" ng-init="init(<?php echo $frameId ?>)">
 	<h1 class="blogs_blogTitle"><?php echo $listTitle ?></h1>
 
-	<div class="row blogs_navigation_header">
-		<?php if ($contentCreatable): ?>
-			<div style="text-align: right">
-
-				<a href="/blogs/blog_entries_edit/add/<?php echo $frameId ?>">
-					<button class="btn btn-success"
-							tooltip="<?php echo __d('blogs', 'Add entry'); ?>">
-						<span class="glyphicon glyphicon-plus"></span>
-					</button>
-				<span class="hidden">
-					<?php echo __d('blogs', 'Add entry'); ?>
-				</span></a>
-			</div>
-
-		<?php endif; ?>
-
-		<div class="col-xs-2">
-		</div>
-
-		<div class="col-xs-3">
-		</div>
-
-		<div class="col-xs-7">
+	<div class="clearfix blogs_navigation_header">
+		<div class="pull-left">
 			<?php $categories = Hash::combine($categories, '{n}.category.id', '{n}.category.name'); ?>
 			<div class="dropdown">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -50,14 +29,27 @@
 					<li role="presentation" class="dropdown-header"><?php echo __d('blogs', 'Archive')?></li>
 					<?php foreach($yearMonthOptions as $yearMonth => $label): ?>
 
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="/blogs/blog_entries/year_month/<?php echo $frameId?>/year_month:<?php echo $yearMonth?>"><?php echo $label ?></a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/blogs/blog_entries/year_month/<?php echo $frameId?>/year_month:<?php echo $yearMonth?>"><?php echo $label ?></a></li>
 					<?php endforeach ?>
 				</ul>
 			</div>
 		</div>
 
-	</div>
+		<?php if ($contentCreatable): ?>
+			<div class="pull-right"">
 
+				<a href="/blogs/blog_entries_edit/add/<?php echo $frameId ?>">
+					<button class="btn btn-success"
+							tooltip="<?php echo __d('blogs', 'Add entry'); ?>">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+				<span class="hidden">
+					<?php echo __d('blogs', 'Add entry'); ?>
+				</span></a>
+			</div>
+		<?php endif; ?>
+
+	</div>
 
 	<div>
 		<!--記事一覧-->

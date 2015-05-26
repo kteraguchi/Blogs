@@ -8,20 +8,43 @@
  */
 
 App::uses('BlogEntriesController', 'Blogs.Controller');
+App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
 
 /**
  * Summary for BlogEntriesController Test Case
  */
-class BlogEntriesControllerTest extends ControllerTestCase {
+class BlogEntriesControllerTest extends BlogsAppControllerTest {
 
 /**
- * Fixtures
+ * setUp method
  *
- * @var array
+ * @return void
  */
-	public $fixtures = array(
-		'plugin.blogs.blog_entry',
-	);
+	public function setUp() {
+		parent::setUp();
+		//Configure::write('Config.language', 'ja');
+		//$this->generate(
+		//	'Blogs.BlogEntries',
+		//	[
+		//		'components' => [
+		//			'Auth' => ['user'],
+		//			'Session',
+		//			'Security',
+		//		]
+		//	]
+		//);
+	}
+
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		//Configure::write('Config.language', null);
+		//CakeSession::write('Auth.User', null);
+		parent::tearDown();
+	}
 
 /**
  * testIndex
@@ -29,6 +52,14 @@ class BlogEntriesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testIndex() {
+		$this->testAction(
+			'/blogs/blog_entries/index/1',
+			array(
+				'method' => 'get',
+				//'return' => 'view',
+			)
+		);
+		$this->assertInternalType('array', $this->vars['blogEntries']);
 	}
 
 }
