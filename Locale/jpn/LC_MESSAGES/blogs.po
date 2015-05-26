@@ -51,3 +51,9 @@ msgstr "全ての記事"
 
 msgid "%d-%d"
 msgstr "%d年%d月"
+
+msgid "Read more"
+msgstr "続きを読む"
+
+msgid "Close"
+msgstr "閉じる"

@@ -91,13 +91,13 @@
 					</div>
 					<?php if ($blogEntry['BlogEntry']['body2']) : ?>
 						<div ng-hide="isShowBody2">
-							<a ng-click="showBody2()">続きを読む</a>
+							<a ng-click="showBody2()"><?php echo __d('blogs', 'Read more'); ?></a>
 						</div>
 						<div ng-show="isShowBody2">
 							<?php echo $blogEntry['BlogEntry']['body2'] ?>
 						</div>
 						<div ng-show="isShowBody2">
-							<a ng-click="hideBody2()">閉じる</a>
+							<a ng-click="hideBody2()"><?php echo __d('blogs', 'Close'); ?></a>
 						</div>
 					<?php endif ?>
 					<?php echo $this->element('entry_footer', array('blogEntry' => $blogEntry, 'index' => true)); ?>
