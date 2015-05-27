@@ -18,11 +18,11 @@ App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
  */
 class BlogFrameSettingsControllerTest extends BlogsAppControllerTest {
 
-	/**
-	 * setUp method
-	 *
-	 * @return void
-	 */
+/**
+ * setUp method
+ *
+ * @return void
+ */
 	public function setUp() {
 		parent::setUp();
 		Configure::write('Config.language', 'ja');
@@ -38,22 +38,22 @@ class BlogFrameSettingsControllerTest extends BlogsAppControllerTest {
 		);
 	}
 
-	/**
-	 * tearDown method
-	 *
-	 * @return void
-	 */
+/**
+ * tearDown method
+ *
+ * @return void
+ */
 	public function tearDown() {
 		Configure::write('Config.language', null);
 		CakeSession::write('Auth.User', null);
 		parent::tearDown();
 	}
 
-	/**
-	 * testIndex
-	 *
-	 * @return void
-	 */
+/**
+ * testIndex
+ *
+ * @return void
+ */
 	public function testIndex() {
 		RolesControllerTest::login($this);
 
