@@ -10,7 +10,15 @@
  */
 ?>
 
-<?php echo $this->Html->script('/bloges/js/bloges.js', false); ?>
+<?php
+echo $this->Html->script('/bloges/js/bloges.js',
+	array(
+		'plugin' => false,
+		'once' => true,
+		'inline' => false
+	)
+);
+?>
 
 <div class="modal-body">
 	<?php echo $this->element('NetCommons.setting_tabs', $settingTabs); ?>

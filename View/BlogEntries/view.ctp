@@ -1,11 +1,34 @@
 <?php echo $this->element('shared_header'); ?>
-<?php echo $this->Html->css('/blogs/css/blogs.css'); ?>
 
-<?php echo $this->Html->script('/likes/js/likes.js', false); ?>
-<?php echo $this->Html->css('/likes/css/style.css', false); ?>
-
+<?php
+echo $this->Html->css(
+	'/blogs/css/blogs.css',
+	array(
+		'plugin' => false,
+		'once' => true,
+		'inline' => false
+	)
+); ?>
+<?php
+// Like
+echo $this->Html->script(
+	'/likes/js/likes.js',
+	array(
+		'plugin' => false,
+		'once' => true,
+		'inline' => false
+	)
+);
+echo $this->Html->css(
+	'/likes/css/style.css',
+	array(
+		'plugin' => false,
+		'once' => true,
+		'inline' => false
+	)
+);
+?>
 <?php echo $this->BackTopage->backToPageButton(__d('blogs', 'Move list')) ?>
-
 <div class="blogs_entry_status">
 	<?php echo $this->element(
 		'NetCommons.status_label',

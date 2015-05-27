@@ -1,20 +1,51 @@
-<?php //echo $this->Html->script('/net_commons/base/js/workflow.js', false); ?>
-<?php echo $this->Html->script('/net_commons/js/wysiwyg.js', false); ?>
-<?php echo $this->Html->script('/blogs/js/blogs.js', false); ?>
-<?php echo $this->Html->script('/tags/js/tags.js', false); ?>
+<?php echo $this->Html->script(
+	'/blogs/js/blogs.js',
+	array(
+		'plugin' => false,
+		'once' => true,
+		'inline' => false
+	)
+); ?>
 
 <?php
 // datetimepicker
-echo $this->Html->script('/net_commons/moment/min/moment.min.js');
-echo $this->Html->script('/net_commons/moment/min/moment-with-locales.min.js');
-echo $this->Html->script('/net_commons/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
-
-echo $this->Html->css('/net_commons/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css');
-
-echo $this->Html->script('/net_commons/angular-bootstrap-datetimepicker-directive/angular-bootstrap-datetimepicker-directive.js');
+echo $this->Html->script(
+	array(
+		'/net_commons/moment/min/moment.min.js',
+		'/net_commons/moment/min/moment-with-locales.min.js',
+		'/net_commons/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+		'/net_commons/angular-bootstrap-datetimepicker-directive/angular-bootstrap-datetimepicker-directive.js',
+	),
+	array(
+		'plugin' => false,
+		'once' => true,
+		'inline' => false
+	)
+);
+echo $this->Html->css(
+	'/net_commons/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+	array(
+		'plugin' => false,
+		'once' => true,
+		'inline' => false
+	)
+);
 ?>
-<?php echo $this->Html->script('/blogs/js/blogs_entry_edit.js', false); ?>
-
+<?php
+// 編集用
+echo $this->Html->script(
+	array(
+		'/tags/js/tags.js',
+		'/blogs/js/blogs_entry_edit.js',
+		'/net_commons/js/wysiwyg.js',
+	),
+	array(
+		'plugin' => false,
+		'once' => true,
+		'inline' => false
+	)
+);
+?>
 <?php
 if ($this->request->data) {
 	$dataJson = json_encode($this->request->data);
