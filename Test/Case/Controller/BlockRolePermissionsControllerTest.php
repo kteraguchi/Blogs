@@ -1,13 +1,12 @@
 <?php
 /**
- * BlogFrameSettingsController Test Case
- *
- * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
- * @link     http://www.netcommons.org NetCommons Project
- * @license  http://www.netcommons.org/license.txt NetCommons License
+ * Created by PhpStorm.
+ * User: ryuji
+ * Date: 15/05/18
+ * Time: 9:56
  */
 
-App::uses('BlocksController', 'Blogs.Controller');
+App::uses('BlockRolePermissionsController', 'Blogs.Controller');
 App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
 
 /**
@@ -16,18 +15,18 @@ App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
  * @author   Ryuji AMANO <ryuji@ryus.co.jp>
  * @package NetCommons\Blogs\Test\Case\Controller
  */
-class BlogFrameSettingsControllerTest extends BlogsAppControllerTest {
+class BlockRolePermissionsControllerTest extends BlogsAppControllerTest {
 
-	/**
-	 * setUp method
-	 *
-	 * @return void
-	 */
+/**
+ * setUp method
+ *
+ * @return void
+ */
 	public function setUp() {
 		parent::setUp();
 		Configure::write('Config.language', 'ja');
 		$this->generate(
-			'Blogs.BlogFrameSettings',
+			'Blogs.BlockRolePermissions',
 			[
 				'components' => [
 					'Auth' => ['user'],
@@ -38,22 +37,22 @@ class BlogFrameSettingsControllerTest extends BlogsAppControllerTest {
 		);
 	}
 
-	/**
-	 * tearDown method
-	 *
-	 * @return void
-	 */
+/**
+ * tearDown method
+ *
+ * @return void
+ */
 	public function tearDown() {
 		Configure::write('Config.language', null);
 		CakeSession::write('Auth.User', null);
 		parent::tearDown();
 	}
 
-	/**
-	 * testIndex
-	 *
-	 * @return void
-	 */
+/**
+ * testIndex
+ *
+ * @return void
+ */
 	public function testIndex() {
 		RolesControllerTest::login($this);
 
@@ -61,3 +60,4 @@ class BlogFrameSettingsControllerTest extends BlogsAppControllerTest {
 	}
 
 }
+
