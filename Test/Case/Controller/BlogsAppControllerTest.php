@@ -28,6 +28,12 @@ class BlogsAppControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
+		'plugin.blogs.blog_entry',
+		'plugin.blogs.blog',
+		'plugin.blogs.blog_setting',
+		'plugin.blogs.blog_frame_setting',
+		'plugin.blogs.tag',
+		'plugin.blogs.tags_content',
 		'plugin.net_commons.site_setting',
 		'plugin.blocks.block',
 		'plugin.blocks.block_role_permission',
@@ -51,12 +57,6 @@ class BlogsAppControllerTest extends ControllerTestCase {
 		'plugin.blogs.plugin',
 		'plugin.categories.category',
 		'plugin.categories.category_order',
-		'plugin.blogs.blog_entry',
-		'plugin.blogs.blog',
-		'plugin.blogs.blog_setting',
-		'plugin.blogs.blog_frame_setting',
-		'plugin.tags.tag',
-		'plugin.tags.tags_content',
 		'plugin.likes.like',
 		'plugin.content_comments.content_comment',
 	);

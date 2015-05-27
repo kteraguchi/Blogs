@@ -113,21 +113,9 @@ class BlogEntriesController extends BlogsAppController {
 		$this->set('listTitle', __d('blogs', 'Tag') . ':' . $tag['Tag']['name']);
 		$this->set('filterDropDownLabel', '----');
 
-		//$conditions = array(
-		//	'BlogEntryTagLink.blog_tag_id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
-		//);
 		$conditions = array(
 			'Tag.id' => $tagId // これを有効にするにはentry_tag_linkもJOINして検索か。
 		);
-
-		// ε(　　　　 v ﾟωﾟ)　＜ここでPaginator条件セットするのはどうかなぁ。
-		//$this->Paginator->settings['joins'][] =
-		//	array(
-		//		'type' => 'LEFT',
-		//		'table' => 'blog_entry_tag_links',
-		//		'alias' => 'BlogEntryTagLink',
-		//		'conditions' => '`BlogEntry`.`id`=`BlogEntryTagLink`.`blog_entry_id`',
-		//	);
 
 		$this->_list($conditions);
 	}

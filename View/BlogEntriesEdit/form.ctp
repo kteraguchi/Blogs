@@ -212,23 +212,26 @@ if ($this->request->data) {
 						array('contentStatus' => $blogEntry['BlogEntry']['status'])
 					); ?>
 
-					<?php if ($isEdit) : ?>
-					<div style="text-align: right;">
-					<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Delete'); ?>">
-							<a href="<?php echo $this->Html->url(
-								array('action' => 'delete', $frameId, 'origin_id' => $blogEntry['BlogEntry']['origin_id'])
-							) ?>" class="btn btn-danger" onClick="return confirm('<?php echo __d('net_commons', 'Deleting the %s. Are you sure to proceed?', __d('blogs', 'BlogEntry')) ?>')">
-								<span class="glyphicon glyphicon-trash"> </span>
-							</a>
-
-					</span>
-					</div>
-					<?php endif ?>
-					<!--	編集時のみ表示	-->
 				</div>
 
 				<?php echo $this->Form->end() ?>
+				<?php if ($isEdit) : ?>
+					<div  class="panel-footer" style="text-align: right;">
+						<?php echo $this->Form->create('BlogEntry',
+							array(
+								'type' => 'delete',
+								'url' => array('controller' => 'blog_entries_edit', 'action' => 'delete', $frameId))
+						) ?>
+						<?php echo $this->Form->input('origin_id', array('type' => 'hidden')); ?>
 
+					<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Delete'); ?>">
+						<button class="btn btn-danger" onClick="return confirm('<?php echo __d('net_commons', 'Deleting the %s. Are you sure to proceed?', __d('blogs', 'BlogEntry')) ?>')"><span class="glyphicon glyphicon-trash"> </span></button>
+
+
+					</span>
+						<?php echo $this->Form->end() ?>
+					</div>
+				<?php endif ?>
 
 			</div>
 

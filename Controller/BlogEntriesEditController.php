@@ -37,8 +37,8 @@ class BlogEntriesEditController extends BlogsAppController {
 		'NetCommons.NetCommonsRoomRole' => array(
 			//コンテンツの権限設定
 			'allowedActions' => array(
-				'contentEditable' => array('edit', 'add'),
-				'contentCreatable' => array('edit', 'add'),
+				'contentEditable' => array('edit', 'add', 'delete'),
+				'contentCreatable' => array('edit', 'add', 'delete'),
 			),
 		),
 		'Categories.Categories',
@@ -199,7 +199,8 @@ class BlogEntriesEditController extends BlogsAppController {
 		} else {
 			$this->Session->setFlash(__('The blog entry could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array('controller' => 'blog_entries', 'action' => 'index'));
+		//return $this->redirect($this->viewVars['cancelUrl']);
+		return $this->redirect(array('controller' => 'blog_entries', 'action' => 'index', $this->viewVars['frameId']));
 	}
 
 }

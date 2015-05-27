@@ -22,7 +22,7 @@ class BlogEntriesControllerTest extends BlogsAppControllerTest {
  */
 	public function setUp() {
 		parent::setUp();
-		//Configure::write('Config.language', 'ja');
+		Configure::write('Config.language', 'ja');
 		//$this->generate(
 		//	'Blogs.BlogEntries',
 		//	[
@@ -60,6 +60,54 @@ class BlogEntriesControllerTest extends BlogsAppControllerTest {
 			)
 		);
 		$this->assertInternalType('array', $this->vars['blogEntries']);
+	}
+
+/**
+ * testTag
+ *
+ * @return void
+ */
+	public function testTag() {
+		$this->testAction(
+			'/blogs/blog_entries/tag/1/id:1',
+			array(
+				'method' => 'get',
+				//'return' => 'view',
+			)
+		);
+		$this->assertInternalType('array', $this->vars['blogEntries']);
+	}
+
+/**
+ * testYearMonth
+ *
+ * @return void
+ */
+	public function testYearMonth() {
+		$this->testAction(
+			'/blogs/blog_entries/year_month/1/year_month:2014-02',
+			array(
+				'method' => 'get',
+				//'return' => 'view',
+			)
+		);
+		$this->assertInternalType('array', $this->vars['blogEntries']);
+	}
+
+/**
+ * testView
+ *
+ * @return void
+ */
+	public function testView() {
+		$this->testAction(
+			'/blogs/blog_entries/view/1/origin_id:1',
+			array(
+				'method' => 'get',
+				//'return' => 'view',
+			)
+		);
+		$this->assertInternalType('array', $this->vars['blogEntry']);
 	}
 
 }

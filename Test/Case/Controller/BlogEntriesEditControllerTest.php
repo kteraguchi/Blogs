@@ -87,5 +87,26 @@ class BlogsEntriesEditControllerTest extends BlogsAppControllerTest {
 
 		AuthGeneralControllerTest::logout($this);
 	}
+
+/**
+ * testDelete
+ *
+ * @return void
+ */
+	public function testDelete() {
+		RolesControllerTest::login($this);
+
+		$this->testAction(
+			'/blogs/blog_entries_edit/delete/1/origin_id:3',
+			array(
+				'method' => 'post',
+				'return' => 'view',
+			)
+		);
+		$this->assertRegExp('#/blogs/blog_entries/index#', $this->headers['Location']);
+
+		AuthGeneralControllerTest::logout($this);
+	}
+
 }
 
