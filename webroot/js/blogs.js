@@ -28,22 +28,3 @@ NetCommonsApp.controller('Blogs.Entries.Entry',
     }
 );
 
-// ε(　　　　 v ﾟωﾟ)　＜ 設定画面用？
-//NetCommonsApp.controller('Blogs.Entry', function($scope) {
-//
-//  /**
-//   * Use like button
-//   *
-//   * @return {void}
-//   */
-//  $scope.useLike = function() {
-//    var likeElement = $('#BbsSettingUseLike');
-//    var unlikeElement = $('#BbsSettingUseUnlike');
-//
-//    if (likeElement[0].checked) {
-//      unlikeElement[0].disabled = false;
-//    } else {
-//      unlikeElement[0].disabled = true;
-//    }
-//  };
-//});

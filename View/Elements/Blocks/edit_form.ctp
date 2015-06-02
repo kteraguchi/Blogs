@@ -9,7 +9,6 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 ?>
-
 <?php echo $this->Form->hidden('Frame.id', array(
 		'value' => $frameId,
 	)); ?>
