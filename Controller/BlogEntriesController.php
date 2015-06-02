@@ -82,6 +82,11 @@ class BlogEntriesController extends BlogsAppController {
  * @return void
  */
 	public function index() {
+		if (! $this->viewVars['blockId']) {
+			$this->autoRender = false;
+			return;
+		}
+
 		$this->_prepare();
 		$this->set('listTitle', $this->_blogTitle);
 		$this->set('filterDropDownLabel', __d('blogs', 'All Entries'));

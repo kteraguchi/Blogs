@@ -15,7 +15,7 @@
 
 	<div class="tab-content">
 		<div class="text-right">
-			<a class="btn btn-success" href="<?php echo $this->Html->url('/blogs/blocks/add/' . $frameId);?>">
+			<a class="btn btn-success" href="<?php echo $this->Html->url('/blogs/blog_blocks/add/' . $frameId);?>">
 				<span class="glyphicon glyphicon-plus"> </span>
 			</a>
 		</div>
@@ -62,7 +62,7 @@
 										)); ?>
 								</td>
 								<td>
-									<a href="<?php echo $this->Html->url('/blogs/blocks/edit/' . $frameId . '/' . (int)$blog['block']['id']); ?>">
+									<a href="<?php echo $this->Html->url('/blogs/blog_blocks/edit/' . $frameId . '/' . (int)$blog['block']['id']); ?>">
 										<?php echo h($blog['blog']['name']); ?>
 									</a>
 								</td>
@@ -87,7 +87,7 @@
 			<div class="text-center">
 				<?php echo $this->element('NetCommons.paginator', array(
 						'url' => Hash::merge(
-							array('controller' => 'blocks', 'action' => 'index', $frameId),
+							array('controller' => 'blog_blocks', 'action' => 'index', $frameId),
 							$this->Paginator->params['named']
 						)
 					)); ?>

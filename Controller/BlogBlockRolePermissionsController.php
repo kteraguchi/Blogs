@@ -17,7 +17,7 @@ App::uses('BlogsAppController', 'Blogs.Controller');
  * @author Kotaro Hokada <kotaro.hokada@gmail.com>
  * @package NetCommons\Blogs\Controller
  */
-class BlockRolePermissionsController extends BlogsAppController {
+class BlogBlockRolePermissionsController extends BlogsAppController {
 
 /**
  * layout
@@ -117,7 +117,7 @@ class BlockRolePermissionsController extends BlogsAppController {
 			if ($this->handleValidationError($this->BlogSetting->validationErrors)) {
 
 				if (! $this->request->is('ajax')) {
-					$this->redirect('/blogs/blocks/index/' . $this->viewVars['frameId']);
+					$this->redirect('/blogs/blog_blocks/index/' . $this->viewVars['frameId']);
 				}
 				return;
 			}

@@ -32,6 +32,7 @@ class BlogsAppController extends AppController {
 	public $components = array(
 		'NetCommons.NetCommonsBlock',
 		'NetCommons.NetCommonsFrame',
+		'Pages.PageLayout',
 		'Security',
 	);
 
@@ -135,7 +136,7 @@ class BlogsAppController extends AppController {
 				'block_index' => array(
 					'url' => array(
 						'plugin' => $this->params['plugin'],
-						'controller' => 'blocks',
+						'controller' => 'blog_blocks',
 						'action' => 'index',
 						$this->viewVars['frameId'],
 					)
@@ -158,7 +159,7 @@ class BlogsAppController extends AppController {
 				'block_settings' => array(
 					'url' => array(
 						'plugin' => $this->params['plugin'],
-						'controller' => 'blocks',
+						'controller' => 'blog_blocks',
 						'action' => $this->params['action'],
 						$this->viewVars['frameId'],
 						$this->viewVars['blockId']
@@ -167,7 +168,7 @@ class BlogsAppController extends AppController {
 				'role_permissions' => array(
 					'url' => array(
 						'plugin' => $this->params['plugin'],
-						'controller' => 'block_role_permissions',
+						'controller' => 'blog_block_role_permissions',
 						'action' => 'edit',
 						$this->viewVars['frameId'],
 						$this->viewVars['blockId']

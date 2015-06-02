@@ -16,11 +16,13 @@ App::uses('YAControllerTestCase', 'NetCommons.TestSuite');
 App::uses('RolesControllerTest', 'Roles.Test/Case/Controller');
 App::uses('AuthGeneralControllerTest', 'AuthGeneral.Test/Case/Controller');
 
+App::uses('YAControllerTestCase', 'NetCommons.TestSuite');
+
 /**
  * Summary for BlogsController Test Case
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class BlogsAppControllerTest extends ControllerTestCase {
+class BlogsAppControllerTest extends YAControllerTestCase {
 
 /**
  * Fixtures
@@ -52,6 +54,7 @@ class BlogsAppControllerTest extends ControllerTestCase {
 		'plugin.rooms.roles_room',
 		'plugin.rooms.room',
 		'plugin.rooms.room_role_permission',
+		'plugin.rooms.plugins_room',
 		'plugin.users.user',
 		'plugin.users.user_attributes_user',
 		'plugin.blogs.plugin',
@@ -60,6 +63,17 @@ class BlogsAppControllerTest extends ControllerTestCase {
 		'plugin.likes.like',
 		'plugin.content_comments.content_comment',
 	);
+
+/**
+ * setUp method
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
+		YACakeTestCase::loadTestPlugin($this, 'NetCommons', 'TestPlugin');
+		Configure::write('Config.language', 'ja');
+	}
 
 /**
  * testIndex

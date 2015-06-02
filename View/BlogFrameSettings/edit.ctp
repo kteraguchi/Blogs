@@ -13,7 +13,7 @@
 <div class="modal-body">
 	<?php echo $this->element('NetCommons.setting_tabs', array(
 			'tabs' => array(
-				'block_index' => array('url' => '/blogs/blocks/index/' . $frameId),
+				'block_index' => array('url' => '/blogs/blog_blocks/index/' . $frameId),
 				'frame_settings' => array('url' => '/blogs/blog_frame_settings/edit/' . $frameId),
 			),
 			'active' => 'frame_settings'

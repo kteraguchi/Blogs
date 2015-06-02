@@ -17,7 +17,7 @@ App::uses('BlogsAppController', 'Blogs.Controller');
  * @author   Ryuji AMANO <ryuji@ryus.co.jp>
  * @package NetCommons\Blogs\Controller
  */
-class BlocksController extends BlogsAppController {
+class BlogBlocksController extends BlogsAppController {
 
 /**
  * layout
@@ -102,7 +102,7 @@ class BlocksController extends BlogsAppController {
 			);
 			$blogs = $this->Paginator->paginate('Blog');
 			if (! $blogs) {
-				$this->view = 'Blocks/not_found';
+				$this->view = 'BlogBlocks/not_found';
 				return;
 			}
 
@@ -115,7 +115,7 @@ class BlocksController extends BlogsAppController {
 		} catch (Exception $ex) {
 			if ($this->params['named']) {
 				$this->params['named'] = array();
-				$this->redirect('/blogs/blocks/index/' . $this->viewVars['frameId']);
+				$this->redirect('/blogs/blog_blocks/index/' . $this->viewVars['frameId']);
 			} else {
 				CakeLog::error($ex);
 				throw $ex;
@@ -129,7 +129,7 @@ class BlocksController extends BlogsAppController {
  * @return void
  */
 	public function add() {
-		$this->view = 'Blocks/edit';
+		$this->view = 'BlogBlocks/edit';
 
 		$this->set('blockId', null);
 		$blog = $this->Blog->create(
@@ -152,7 +152,7 @@ class BlocksController extends BlogsAppController {
 			$this->Blog->saveBlog($data);
 			if ($this->handleValidationError($this->Blog->validationErrors)) {
 				if (! $this->request->is('ajax')) {
-					$this->redirect('/blogs/blocks/index/' . $this->viewVars['frameId']);
+					$this->redirect('/blogs/blog_blocks/index/' . $this->viewVars['frameId']);
 				}
 				return;
 			}
@@ -188,7 +188,7 @@ class BlocksController extends BlogsAppController {
 			$this->Blog->saveBlog($data);
 			if ($this->handleValidationError($this->Blog->validationErrors)) {
 				if (! $this->request->is('ajax')) {
-					$this->redirect('/blogs/blocks/index/' . $this->viewVars['frameId']);
+					$this->redirect('/blogs/blog_blocks/index/' . $this->viewVars['frameId']);
 				}
 				return;
 			}
@@ -217,7 +217,7 @@ class BlocksController extends BlogsAppController {
 		if ($this->request->isDelete()) {
 			if ($this->Blog->deleteBlog($this->data)) {
 				if (! $this->request->is('ajax')) {
-					$this->redirect('/blogs/blocks/index/' . $this->viewVars['frameId']);
+					$this->redirect('/blogs/blog_blocks/index/' . $this->viewVars['frameId']);
 				}
 				return;
 			}

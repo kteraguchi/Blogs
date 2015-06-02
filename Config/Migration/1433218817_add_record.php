@@ -33,6 +33,8 @@ class AddRecord extends CakeMigration {
 				'namespace' => 'netcommons/blogs',
 				'name' => 'BLOG',
 				'type' => 1,
+				'default_action' => 'blog_entries/index',
+				'default_setting_action' => 'blog_blocks/index',
 			),
 		),
 		'PluginsRole' => array(
