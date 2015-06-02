@@ -6,7 +6,7 @@
  * Time: 9:56
  */
 
-App::uses('BlockRolePermissionsController', 'Blogs.Controller');
+App::uses('BlogBlockRolePermissionsController', 'Blogs.Controller');
 App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
 
 /**
@@ -26,7 +26,7 @@ class BlockRolePermissionsControllerTest extends BlogsAppControllerTest {
 		parent::setUp();
 		Configure::write('Config.language', 'ja');
 		$this->generate(
-			'Blogs.BlockRolePermissions',
+			'Blogs.BlogBlockRolePermissions',
 			[
 				'components' => [
 					'Auth' => ['user'],

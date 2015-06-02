@@ -27,10 +27,10 @@ echo $this->Html->script('/bloges/js/bloges.js',
 		<?php echo $this->element('Blocks.setting_tabs', $blockSettingTabs); ?>
 
 		<?php echo $this->element('Blocks.edit_form', array(
-				'controller' => 'BlockRolePermission',
+				'controller' => 'BlogBlockRolePermission',
 				'action' => 'edit' . '/' . $frameId . '/' . $blockId,
 				'callback' => 'Blogs.BlockRolePermissions/edit_form',
-				'cancelUrl' => '/bloges/blocks/index/' . $frameId,
+				'cancelUrl' => '/blogs/blog_blocks/index/' . $frameId,
 				'options' => array('ng-controller' => 'Blogs'),
 			)); ?>
 	</div>

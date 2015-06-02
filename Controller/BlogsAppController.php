@@ -168,7 +168,7 @@ class BlogsAppController extends AppController {
 				'role_permissions' => array(
 					'url' => array(
 						'plugin' => $this->params['plugin'],
-						'controller' => 'block_role_permissions',
+						'controller' => 'blog_block_role_permissions',
 						'action' => 'edit',
 						$this->viewVars['frameId'],
 						$this->viewVars['blockId']
