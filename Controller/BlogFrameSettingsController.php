@@ -88,7 +88,7 @@ class BlogFrameSettingsController extends BlogsAppController {
 
 			if ($this->handleValidationError($this->BlogFrameSetting->validationErrors)) {
 				if (! $this->request->is('ajax')) {
-					$this->redirect('/blogs/blogs/index/' . $this->viewVars['frameId']);
+					$this->redirect('/blogs/blog_blocks/index/' . $this->viewVars['frameId']);
 				}
 				return;
 			}

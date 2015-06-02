@@ -26,7 +26,7 @@
 			)); ?>
 
 		<?php echo $this->element('Blocks.edit_form', array(
-				'controller' => 'Blocks',
+				'controller' => 'BlogFrameSettings',
 				'action' => 'edit' . '/' . $frameId,
 				'callback' => 'Blogs.BlogFrameSettings/edit_form',
 				'cancelUrl' => $this->Html->url(isset($current['page']) ? '/' . $current['page']['permalink'] : null)

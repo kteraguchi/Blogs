@@ -11,10 +11,10 @@
 // datetimepicker
 echo $this->Html->script(
 	array(
-		'/net_commons/moment/min/moment.min.js',
-		'/net_commons/moment/min/moment-with-locales.min.js',
-		'/net_commons/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-		'/net_commons/angular-bootstrap-datetimepicker-directive/angular-bootstrap-datetimepicker-directive.js',
+		'/components/moment/min/moment.min.js',
+		'/components/moment/min/moment-with-locales.min.js',
+		'/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+		'/components/angular-bootstrap-datetimepicker-directive/angular-bootstrap-datetimepicker-directive.js',
 	),
 	array(
 		'plugin' => false,
@@ -23,7 +23,7 @@ echo $this->Html->script(
 	)
 );
 echo $this->Html->css(
-	'/net_commons/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+	'/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
 	array(
 		'plugin' => false,
 		'once' => true,
