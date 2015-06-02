@@ -6,7 +6,7 @@
  * Time: 9:56
  */
 
-App::uses('BlocksController', 'Blogs.Controller');
+App::uses('BlogBlocksController', 'Blogs.Controller');
 App::uses('BlogsAppControllerTest', 'Blogs.Test/Case/Controller');
 
 /**
@@ -26,7 +26,7 @@ class BlocksControllerTest extends BlogsAppControllerTest {
 		parent::setUp();
 		Configure::write('Config.language', 'ja');
 		$this->generate(
-			'Blogs.Blocks',
+			'Blogs.BlogBlocks',
 			[
 				'components' => [
 					'Auth' => ['user'],

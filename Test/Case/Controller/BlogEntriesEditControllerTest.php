@@ -24,7 +24,6 @@ class BlogsEntriesEditControllerTest extends BlogsAppControllerTest {
  */
 	public function setUp() {
 		parent::setUp();
-		Configure::write('Config.language', 'ja');
 		$this->generate(
 			'Blogs.BlogEntriesEdit',
 			[
