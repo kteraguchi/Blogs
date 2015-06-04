@@ -85,7 +85,6 @@ class BlogEntriesEditController extends BlogsAppController {
 
 				$this->BlogEntry->commit();
 
-				$this->Session->setFlash(__('The blog entry has been saved.'));
 				return $this->redirect(
 					array('controller' => 'blog_entries', 'action' => 'view', $this->viewVars['frameId'], 'origin_id' => $result['BlogEntry']['origin_id'])
 				);
@@ -151,7 +150,6 @@ class BlogEntriesEditController extends BlogsAppController {
 
 				$this->BlogEntry->commit();
 
-				$this->Session->setFlash(__('The blog entry has been saved.'));
 				return $this->redirect(
 					array('controller' => 'blog_entries', 'action' => 'view', $this->viewVars['frameId'], 'origin_id' => $data['BlogEntry']['origin_id'])
 				);
