@@ -63,9 +63,12 @@
 		</div>
 	</div>
 
-
 	<div class="pull-right">
-		<!--		TODO　コメントリンク　コメント数-->
+		<?php if (isset($index) && ($index === true)) : ?>
+		<span style="padding-right: 15px;">
+			<span class="glyphicon glyphicon-comment" aria-hidden="true"></span> <?php echo (int)$blogEntry['ContentCommentCnt']['cnt']; ?>
+		</span>
+		<?php endif ?>
 	</div>
 
 </div>

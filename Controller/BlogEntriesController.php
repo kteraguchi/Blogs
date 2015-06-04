@@ -178,11 +178,13 @@ class BlogEntriesController extends BlogsAppController {
 					'conditions' => $conditions,
 					'limit' => $this->_frameSetting['posts_per_page'],
 					'order' => 'published_datetime DESC',
-					//
+					'fields' => '*, ContentCommentCnt.cnt',
 				)
 			);
 			$this->BlogEntry->recursive = 0;
+			$this->BlogEntry->Behaviors->load('ContentComments.ContentComment');
 			$this->set('blogEntries', $this->Paginator->paginate());
+			$this->BlogEntry->Behaviors->unload('ContentComments.ContentComment');
 
 		} else {
 			// 何も見せない
@@ -226,7 +228,7 @@ class BlogEntriesController extends BlogsAppController {
 			if ($this->_blogSetting['BlogSetting']['use_comment']) {
 				if ($this->request->isPost()) {
 					// コメントする
-					if (!$this->ContentComments->comment('blogs', $blogEntry['BlogEntry']['key'], $this->_blogSetting['BlogSetting']['is_comment_auto_approval'])) {
+					if (!$this->ContentComments->comment('blogs', $blogEntry['BlogEntry']['key'], $this->_blogSetting['BlogSetting']['use_comment_approval'])) {
 						$this->throwBadRequest();
 						return;
 					}
