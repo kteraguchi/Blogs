@@ -107,7 +107,7 @@ class Blog extends BlogsAppModel {
 			'name' => array(
 				'notEmpty' => array(
 					'rule' => array('notEmpty'),
-					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blogs', 'FAQ')),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blogs', 'Blog Name')),
 					'allowEmpty' => false,
 					'required' => true,
 				),
