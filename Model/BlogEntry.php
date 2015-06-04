@@ -264,27 +264,46 @@ class BlogEntry extends BlogsAppModel {
  * @throws InternalErrorException
  */
 	public function saveEntry($blockId, $data) {
-		$this->recursive = -1;
+		$this->begin();
+		try {
+			$this->recursive = -1;
 
-		$this->loadModels(array('Comment' => 'Comments.Comment'));
-		$this->create(); // 常に新規登録
-		if (($savedData = $this->save($data)) === false) {
-			return false;
-		}
-		// validate comment
-		if (!$this->Comment->validateByStatus($savedData, array('caller' => $this->name))) {
-			$this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
-			return false;
-		}
-
-		//コメントの登録
-		if ($this->Comment->data) {
-			if (! $this->Comment->save(null, false)) {
+			$this->loadModels(array('Comment' => 'Comments.Comment'));
+			$this->create(); // 常に新規登録
+			// 先にvalidate 失敗したらfalse返す
+			$this->set($data);
+			if (!$this->validates($data)) {
+				$this->rollback();
+				return false;
+			}
+			if (($savedData = $this->save($data, false)) === false) {
+				//このsaveで失敗するならvalidate以外なので例外なげる
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-		}
 
-		return $savedData;
+			// validate comment
+			if (!$this->Comment->validateByStatus($savedData, array('caller' => $this->name))) {
+				$this->validationErrors = Hash::merge($this->validationErrors, $this->Comment->validationErrors);
+				$this->rollback();
+				return false;
+			}
+
+			//コメントの登録
+			if ($this->Comment->data) {
+				if (! $this->Comment->save(null, false)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				}
+			}
+
+			$this->commit();
+			return $savedData;
+
+		} catch (Exception $e) {
+			$this->rollback();
+			//エラー出力
+			CakeLog::error($e);
+			throw $e;
+		}
 	}
 
 /**

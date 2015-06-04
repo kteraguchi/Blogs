@@ -57,7 +57,6 @@ class BlogEntriesEditController extends BlogsAppController {
 /**
  * add method
  *
- * @throws InternalErrorException
  * @return void
  */
 	public function add() {
@@ -67,7 +66,6 @@ class BlogEntriesEditController extends BlogsAppController {
 		$this->set('blogEntry', $blogEntry);
 
 		if ($this->request->is('post')) {
-			$this->BlogEntry->begin();
 			$this->BlogEntry->create();
 			// set status
 			$status = $this->NetCommonsWorkflow->parseStatus();
@@ -78,22 +76,14 @@ class BlogEntriesEditController extends BlogsAppController {
 			// set language_id
 			$this->request->data['BlogEntry']['language_id'] = $this->viewVars['languageId'];
 
-			try {
-				if (($result = $this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data)) === false) {
-					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				}
-
-				$this->BlogEntry->commit();
-
+			if (($result = $this->BlogEntry->saveEntry($this->viewVars['blockId'], $this->request->data))) {
 				return $this->redirect(
 					array('controller' => 'blog_entries', 'action' => 'view', $this->viewVars['frameId'], 'origin_id' => $result['BlogEntry']['origin_id'])
 				);
-
-			} catch (Exception $e) {
-				$this->BlogEntry->rollback();
-				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
-
 			}
+
+			$this->handleValidationError($this->BlogEntry->validationErrors);
+
 		} else {
 			$this->request->data = $blogEntry;
 			$this->request->data['Tag'] = array();
@@ -114,7 +104,6 @@ class BlogEntriesEditController extends BlogsAppController {
  * edit method
  *
  * @throws NotFoundException
- * @throws InternalErrorException
  * @return void
  */
 	public function edit() {
@@ -129,7 +118,6 @@ class BlogEntriesEditController extends BlogsAppController {
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
-			$this->BlogEntry->begin();
 			$this->BlogEntry->create();
 			// set status
 			$status = $this->NetCommonsWorkflow->parseStatus();
@@ -140,25 +128,18 @@ class BlogEntriesEditController extends BlogsAppController {
 			// set language_id
 			$this->request->data['BlogEntry']['language_id'] = $this->viewVars['languageId'];
 
-			try {
-				$data = $this->request->data;
+			$data = $this->request->data;
 
-				unset($data['BlogEntry']['id']); // 常に新規保存
-				if (!$this->BlogEntry->saveEntry($this->viewVars['blockId'], $data)) {
-					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				}
+			unset($data['BlogEntry']['id']); // 常に新規保存
 
-				$this->BlogEntry->commit();
-
+			if ($this->BlogEntry->saveEntry($this->viewVars['blockId'], $data)) {
 				return $this->redirect(
 					array('controller' => 'blog_entries', 'action' => 'view', $this->viewVars['frameId'], 'origin_id' => $data['BlogEntry']['origin_id'])
 				);
-
-			} catch (Exception $e) {
-				$this->BlogEntry->rollback();
-				$this->Session->setFlash(__('The blog entry could not be saved. Please, try again.'));
-
 			}
+
+			$this->handleValidationError($this->BlogEntry->validationErrors);
+
 		} else {
 
 			$this->request->data = $blogEntry;
