@@ -1,20 +1,6 @@
 /**
  * Blogs edit Javascript
  */
-NetCommonsApp.requires.push('datetimepicker');
-NetCommonsApp.config(
-    [
-      'datetimepickerProvider',
-      function(datetimepickerProvider) {
-        datetimepickerProvider.setOptions({
-          locale: moment.locale('ja'),  // ε(　　　　 v ﾟωﾟ)　＜ 多言語対応時は書き換えてね
-          format: 'YYYY-MM-DD HH:mm',
-          sideBySide: true,
-          stepping: 5
-        });
-      }
-    ]
-);
 NetCommonsApp.controller('Blogs',
     function($scope, NetCommonsWysiwyg, $filter) {
       /**
