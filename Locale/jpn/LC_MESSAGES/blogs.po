@@ -57,3 +57,15 @@ msgstr "続きを読む"
 
 msgid "Close"
 msgstr "閉じる"
+
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Body1"
+msgstr "本文"
+
+msgid "Body2"
+msgstr "続き"
+
+msgid "Published datetime"
+msgstr "公開日時"

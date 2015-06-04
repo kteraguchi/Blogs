@@ -66,7 +66,27 @@ class BlogEntry extends BlogsAppModel {
 			'title' => array(
 				'title' => [
 					'rule' => array('notEmpty'),
-					'message' => __d('blogs', 'require title'),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blogs', 'Title')),
+					//'allowEmpty' => false,
+					'required' => true,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				],
+			),
+			'body1' => array(
+				'body1' => [
+					'rule' => array('notEmpty'),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blogs', 'Body1')),
+					//'allowEmpty' => false,
+					'required' => true,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				],
+			),
+			'published_datetime' => array(
+				'published_datetime' => [
+					'rule' => array('notEmpty'),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('blogs', 'Published datetime')),
 					//'allowEmpty' => false,
 					'required' => true,
 					//'last' => false, // Stop validation after this rule

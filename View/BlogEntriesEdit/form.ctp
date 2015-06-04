@@ -51,7 +51,8 @@ if ($this->request->data) {
 					array(
 						'inputDefaults' => array(
 							'div' => 'form-group',
-							'class' => 'form-control'
+							'class' => 'form-control',
+							'error' => false,
 						),
 						'div' => 'form-control',
 						'novalidate' => true
@@ -79,10 +80,16 @@ if ($this->request->data) {
 							)
 						);
 						?>
+						<?php echo $this->element(
+							'NetCommons.errors', [
+							'errors' => $this->validationErrors,
+							'model' => 'BlogEntry',
+							'field' => 'title',
+						]); ?>
 
 						<div class="form-group">
 							<label class="control-label">
-								<?php echo __d('blogs', 'body1'); ?>
+								<?php echo __d('blogs', 'Body1'); ?>
 							</label>
 							<?php echo $this->element('NetCommons.required'); ?>
 
@@ -97,16 +104,14 @@ if ($this->request->data) {
 										'required' => 'required',
 									]
 								) ?>
-							</div>
-
-							<?php echo $this->element(
-								'NetCommons.errors',
-								[
+								<?php echo $this->element(
+									'NetCommons.errors', [
 									'errors' => $this->validationErrors,
 									'model' => 'BlogEntry',
 									'field' => 'body1',
-								]
-							) ?>
+								]); ?>
+							</div>
+
 						</div>
 
 						<label><input type="checkbox" ng-model="writeBody2"/><?php echo __d('blogs', 'Write body2') ?>
@@ -114,7 +119,7 @@ if ($this->request->data) {
 
 						<div class="form-group" ng-show="writeBody2">
 							<label class="control-label">
-								<?php echo __d('blogs', 'body2'); ?>
+								<?php echo __d('blogs', 'Body2'); ?>
 							</label>
 
 							<div class="nc-wysiwyg-alert">
@@ -129,18 +134,9 @@ if ($this->request->data) {
 								) ?>
 							</div>
 
-							<?php echo $this->element(
-								'NetCommons.errors',
-								[
-									'errors' => $this->validationErrors,
-									'model' => 'BlogEntry',
-									'field' => 'body2',
-								]
-							) ?>
 						</div>
 
 						<?php
-
 						echo $this->Form->input('published_datetime',
 							array('type' => 'text',
 								'ng-model' => 'blogEntry.published_datetime',
@@ -151,6 +147,13 @@ if ($this->request->data) {
 								'label' => __d('blogs', 'Published datetime')));
 
 						?>
+						<?php echo $this->element(
+							'NetCommons.errors', [
+							'errors' => $this->validationErrors,
+							'model' => 'BlogEntry',
+							'field' => 'published_datetime',
+						]); ?>
+
 						<?php $categories = Hash::combine($categories, '{n}.category.id', '{n}.category.name'); ?>
 						<?php echo $this->Form->input('category_id',
 							array(
