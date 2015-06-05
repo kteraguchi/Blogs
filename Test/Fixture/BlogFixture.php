@@ -43,7 +43,7 @@ class BlogFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'block_id' => 5,
-			'name' => 'Lorem ipsum dolor sit amet',
+			'name' => 'ブログ名',
 			'key' => 'blog1',
 			'is_auto_translated' => 1,
 			'translation_engine' => 'Lorem ipsum dolor sit amet',

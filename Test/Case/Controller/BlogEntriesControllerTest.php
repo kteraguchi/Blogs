@@ -62,6 +62,19 @@ class BlogEntriesControllerTest extends BlogsAppControllerTest {
 		$this->assertInternalType('array', $this->vars['blogEntries']);
 	}
 
+
+	public function testIndexTitle() {
+		$return = $this->testAction(
+			'/blogs/blog_entries/index/1',
+			array(
+				'method' => 'get',
+				'return' => 'view',
+			)
+		);
+		$this->assertRegExp('/<h1.*>ブログ名<\/h1>/', $return);
+
+	}
+
 /**
  * testTag
  *

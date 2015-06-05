@@ -192,6 +192,7 @@ class BlogsAppController extends AppController {
 			return false;
 		}
 		$blog = $this->camelizeKeyRecursive($blog);
+		$this->_blogTitle = $blog['blog']['name'];
 		$this->set($blog);
 
 		if (! $blogSetting = $this->BlogSetting->getBlogSetting($blog['blog']['key'])) {
