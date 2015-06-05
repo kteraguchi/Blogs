@@ -62,7 +62,11 @@ class BlogEntriesControllerTest extends BlogsAppControllerTest {
 		$this->assertInternalType('array', $this->vars['blogEntries']);
 	}
 
-
+/**
+ * ブログ名が一覧に表示されるか
+ *
+ * @return void
+ */
 	public function testIndexTitle() {
 		$return = $this->testAction(
 			'/blogs/blog_entries/index/1',
@@ -72,7 +76,6 @@ class BlogEntriesControllerTest extends BlogsAppControllerTest {
 			)
 		);
 		$this->assertRegExp('/<h1.*>ブログ名<\/h1>/', $return);
-
 	}
 
 /**
