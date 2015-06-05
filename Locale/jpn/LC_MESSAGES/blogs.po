@@ -69,3 +69,15 @@ msgstr "続き"
 
 msgid "Published datetime"
 msgstr "公開日時"
+
+msgid "Show articles per page"
+msgstr "１ページに表示する記事数"
+
+msgid "%s articles"
+msgstr "%s 件"
+
+msgid "Use content comment"
+msgstr "コメントを付けられる"
+
+msgid "Use sns"
+msgstr "SNSボタンを使う"

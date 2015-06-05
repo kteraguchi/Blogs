@@ -91,7 +91,7 @@
 					'checked' => isset($blogSetting['useComment']) ? (int)$blogSetting['useComment'] : null
 				)
 			); ?>
-			<?php echo $this->Form->label('BlogSetting.use_comment', __d('blogs', 'Use comment')); ?>
+			<?php echo $this->Form->label('BlogSetting.use_comment', __d('blogs', 'Use content comment')); ?>
 		</div>
 	</div>
 

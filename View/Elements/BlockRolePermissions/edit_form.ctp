@@ -35,7 +35,7 @@
 			'contentCommentPublishable' => __d('blocks', 'Content comment publishable roles'),
 		),
 		'options' => array(
-			Block::NEED_APPROVAL => __d('blocks', 'Need approval in both %s and comments ', __d('blogs', 'articles')),
+			Block::NEED_APPROVAL => __d('blocks', 'Need approval in both %s and comments ', __d('blogs', 'BlogEntry')),
 			Block::NEED_COMMENT_APPROVAL => __d('blocks', 'Need only comments approval'),
 			Block::NOT_NEED_APPROVAL => __d('blocks', 'Not need approval'),
 		),
