@@ -76,32 +76,10 @@ echo $this->Html->css(
 				<?php echo $this->element('ContentComments.index', array(
 					'formName' => 'Blog',
 					'useComment' => $blogSetting['useComment'],
+					'contentCommentCnt' => $blogEntry['ContentCommentCnt']['cnt'],
 				)); ?>
 			</div>
 		</div>
-
-		<?php ///* コンテンツコメント */ ?>
-		<!--<div class="col-xs-12">-->
-		<!--	--><?php ///* コメントを利用しない or (コメント0件 and コメント投稿できない) */ ?>
-		<!---->
-		<!--	--><?php //if (!$blogSetting['useComment']) : ?>
-		<!--		--><?php ///* 表示しない */ ?>
-		<!--	--><?php //else : ?>
-		<!--		<div class="panel panel-default">-->
-		<!--			--><?php //if ($contentCommentCreatable) : ?>
-		<!--			--><?php //echo $this->element('ContentComments.form', array(
-		//				'formName' => 'Blog',
-		//			)); ?>
-		<!--			--><?php //endif ?>
-		<!--			--><?php //if (count($contentComments) > 0) : ?>
-		<!--			--><?php //echo $this->element('ContentComments.index', array(
-		//				'formName' => 'Blog',
-		//			)); ?>
-		<!--			--><?php //endif ?>
-		<!--		</div>-->
-		<!--	--><?php //endif; ?>
-		<!--</div>-->
-
 	</div>
 </article>
 

@@ -216,8 +216,17 @@ class BlogEntriesController extends BlogsAppController {
 			// 何も見せない
 			throw new NotFoundException(__('Invalid blog entry'));
 		}
-		$options = array('conditions' => $conditions, 'recursive' => 0);
+		$options = array(
+			'conditions' => $conditions,
+			'recursive' => 0,
+			'fields' => array(
+				'*',
+				'ContentCommentCnt.cnt',
+			)
+		);
+		$this->BlogEntry->Behaviors->load('ContentComments.ContentComment');
 		$blogEntry = $this->BlogEntry->find('first', $options);
+		$this->BlogEntry->Behaviors->unload('ContentComments.ContentComment');
 		if ($blogEntry) {
 			$this->set('blogEntry', $blogEntry);
 			// tag取得
