@@ -68,7 +68,7 @@ echo $this->Html->css(
 		</div>
 
 		<?php if ($contentCreatable): ?>
-			<div class="pull-right"">
+			<div class="pull-right">
 
 				<a href="/blogs/blog_entries_edit/add/<?php echo $frameId ?>">
 					<button class="btn btn-success"
