@@ -96,13 +96,20 @@ class BlogsEntriesEditControllerTest extends BlogsAppControllerTest {
 		RolesControllerTest::login($this);
 
 		$this->testAction(
-			'/blogs/blog_entries_edit/delete/1/origin_id:3',
+			'/blogs/blog_entries_edit/delete/1',
 			array(
 				'method' => 'post',
 				'return' => 'view',
+				'data' => array(
+					'BlogEntry' => array('origin_id' => 3)
+				)
 			)
 		);
 		$this->assertRegExp('#/blogs/blog_entries/index#', $this->headers['Location']);
+
+		$BlogEntry = ClassRegistry::init('Blogs.BlogEntry');
+		$countZero = $BlogEntry->find('count', array('conditions' => array('origin_id' => 3)));
+		$this->assertEqual($countZero, 0);
 
 		AuthGeneralControllerTest::logout($this);
 	}

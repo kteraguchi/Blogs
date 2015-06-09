@@ -104,6 +104,7 @@ class BlogEntriesEditController extends BlogsAppController {
  * edit method
  *
  * @throws NotFoundException
+ * @throws ForbiddenException
  * @return void
  */
 	public function edit() {
@@ -143,7 +144,9 @@ class BlogEntriesEditController extends BlogsAppController {
 		} else {
 
 			$this->request->data = $blogEntry;
-			// ε(　　　　 v ﾟωﾟ)　＜ 編集できる記事か？
+			if ($this->_hasEditPermission($blogEntry) === false) {
+				throw new ForbiddenException(__d('net_commons', 'Permission denied'));
+			}
 
 		}
 
@@ -165,21 +168,47 @@ class BlogEntriesEditController extends BlogsAppController {
 /**
  * delete method
  *
- * @throws NotFoundException
+ * @throws ForbiddenException
+ * @throws InternalErrorException
  * @return void
  */
 	public function delete() {
-		$originId = $this->_getNamed('origin_id', 0);
+		$originId = $this->request->data['BlogEntry']['origin_id'];
 
 		$this->request->onlyAllow('post', 'delete');
 
-		if ($this->BlogEntry->deleteEntryByOriginId($originId)) {
-			$this->Session->setFlash(__('The blog entry has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The blog entry could not be deleted. Please, try again.'));
+		$blogEntry = $this->BlogEntry->findByOriginIdAndIsLatest($originId, 1);
+
+		// 権限チェック
+		if ($this->_hasEditPermission($blogEntry) === false) {
+			throw new ForbiddenException(__d('net_commons', 'Permission denied'));
 		}
-		//return $this->redirect($this->viewVars['cancelUrl']);
+
+		if ($this->BlogEntry->deleteEntryByOriginId($originId) === false) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
 		return $this->redirect(array('controller' => 'blog_entries', 'action' => 'index', $this->viewVars['frameId']));
+	}
+
+/**
+ * 編集・削除の権限チェック
+ *
+ * @param BlogEntry $blogEntry 権限チェック対象記事
+ * @return bool
+ */
+	protected function _hasEditPermission($blogEntry) {
+		if ($this->viewVars['contentEditable']) {
+			// 編集権限あり　＝＞OK
+		} elseif ($this->viewVars['contentCreatable']) {
+			// 作成権限あり→自分の記事ならOK
+			if ($blogEntry['BlogEntry']['created_user'] !== $this->Auth->user('id')) {
+				return false;
+			}
+		} else {
+			// 権限無し
+			return false;
+		}
+		return true;
 	}
 
 }

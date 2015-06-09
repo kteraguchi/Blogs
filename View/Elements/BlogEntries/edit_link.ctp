@@ -1,6 +1,6 @@
 <?php
 /**
- * Bbs post view template
+ * blog post view template
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -19,11 +19,11 @@
 			$status !== NetCommonsBlockComponent::STATUS_PUBLISHED) ||
 		($contentCreatable &&
 			$status !== NetCommonsBlockComponent::STATUS_PUBLISHED &&
-				$createdUser === $userId)): ?>
+				$blogEntry['BlogEntry']['created_user'] === $userId)): ?>
 
-	<div class="nc-bbs-edit-link">
-		<a href="<?php echo $this->Html->url('/bbses/bbs_articles/edit/' . $frameId . '/' . $bbsArticleKey); ?>"
-			class="btn btn-primary btn-xs" tooltip="<?php echo __d('bbses', 'Edit'); ?>">
+	<div class="nc-blog-edit-link">
+		<a href="<?php echo $this->Html->url('/blogs/blog_entries_edit/edit/' . $frameId . '/origin_id:' . $blogEntry['BlogEntry']['origin_id']); ?>"
+			class="btn btn-primary btn-xs" tooltip="<?php echo __d('blogs', 'Edit'); ?>">
 
 			<span class="glyphicon glyphicon-edit"> </span>
 		</a>

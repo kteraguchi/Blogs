@@ -42,17 +42,8 @@ echo $this->Html->css(
 	<?php echo $this->element('entry_meta_info'); ?>
 
 	<div>
-		<?php if ($contentCreatable): ?>
+		<?php echo $this->element('BlogEntries/edit_link'); ?>
 
-			<span class="nc-tooltip" tooltip="<?php echo __d('net_commons', 'Edit'); ?>">
-		<a href="<?php echo $this->Html->url(
-			array('controller' => 'blog_entries_edit', 'action' => 'edit', $frameId, 'origin_id' => $blogEntry['BlogEntry']['origin_id'])
-		) ?>" class="btn btn-primary">
-			<span class="glyphicon glyphicon-edit"> </span>
-		</a>
-	</span>
-
-		<?php endif ?>
 	</div>
 
 

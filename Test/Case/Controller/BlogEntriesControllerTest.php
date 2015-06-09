@@ -126,4 +126,27 @@ class BlogEntriesControllerTest extends BlogsAppControllerTest {
 		$this->assertInternalType('array', $this->vars['blogEntry']);
 	}
 
+/**
+ * フレームがあってブロックがないときのテスト
+ *
+ * @return void
+ */
+	public function testNoBlock() {
+	}
+
+/**
+ * カテゴリの記事一覧
+ *
+ * @return void
+ */
+	public function testCategory() {
+		$return = $this->testAction(
+			'/blogs/blog_entries/index/1/category_id:1',
+			array(
+				'method' => 'get',
+				'return' => 'view',
+			)
+		);
+		$this->assertRegExp('/<h1.*>カテゴリ:category_1<\/h1>/', $return);
+	}
 }
