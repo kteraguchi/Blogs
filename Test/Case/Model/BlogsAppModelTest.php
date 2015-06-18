@@ -25,7 +25,7 @@ class BlogFakeModel extends BlogsAppModel {
 /**
  * Summary for BlogAppModel Test Case
  */
-class BlogAppModelTest extends BlogsAppModelTestBase {
+class BlogsAppModelTest extends BlogsAppModelTestBase {
 
 /**
  * Fixtures
