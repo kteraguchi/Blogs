@@ -166,7 +166,7 @@ class BlogEntry extends BlogsAppModel {
 
 		if ($permissions['contentEditable']) {
 			// 編集権限
-			$conditions['is_latest'] = 1;
+			$conditions['BlogEntry.is_latest'] = 1;
 			return $conditions;
 		}
 
@@ -174,7 +174,7 @@ class BlogEntry extends BlogsAppModel {
 			// 作成権限
 			$conditions['OR'] = array(
 				$this->_getPublishedConditions($currentDateTime),
-				'created_user' => $userId, // 自分のコンテンツはステータス関係なく閲覧可能
+				'BlogEntry.created_user' => $userId, // 自分のコンテンツはステータス関係なく閲覧可能
 			);
 			return $conditions;
 		}
@@ -185,7 +185,6 @@ class BlogEntry extends BlogsAppModel {
 				$conditions,
 				$this->_getPublishedConditions($currentDateTime));
 			return $conditions;
-
 		}
 
 		// contentReadable falseなら何も見えない

@@ -108,92 +108,83 @@ class BlogEntryTest extends CakeTestCase {
 		$this->assertEquals($now, $conditions['BlogEntry.published_datetime <=']);
 	}
 
-	//public function testGetCondition() {
-	//	$userId = 1;
-	//	$blockId = 2;
-	//	$currentDateTime = '2015-01-01 00:00:00';
-	//	// contentReadable false
-	//	$permissions = array(
-	//		'contentReadable' => false,
-	//		'contentCreatable' => false,
-	//		'contentEditable' => false,
-	//	);
-	//	$conditions = $this->BlogEntry->getConditions(
-	//		$blockId,
-	//		$userId,
-	//		$permissions,
-	//		$currentDateTime
-	//	);
-	//	$this->assertSame(
-	//		$conditions,
-	//		array(
-	//			'BlogCategory.block_id' => $blockId,
-	//			'BlogEntry.id' => 0
-	//		)
-	//	);
-	//
-	//	// contentReadable のみ
-	//	$permissions = array(
-	//		'contentReadable' => true,
-	//		'contentCreatable' => false,
-	//		'contentEditable' => false,
-	//	);
-	//	$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
-	//	$this->assertSame(
-	//		$conditions,
-	//		array(
-	//			'BlogCategory.block_id' => $blockId,
-	//			'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
-	//			'BlogEntry.published_datetime <=' => $currentDateTime
-	//		)
-	//	);
-	//
-	//	// 作成権限あり
-	//	$permissions = array(
-	//		'contentReadable' => true,
-	//		'contentCreatable' => true,
-	//		'contentEditable' => false,
-	//	);
-	//	$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
-	//	$this->assertSame(
-	//		$conditions,
-	//		array(
-	//			'BlogCategory.block_id' => $blockId,
-	//			'OR' => array(
-	//				array(
-	//					'BlogEntry.status' => NetCommonsBlockComponent::STATUS_PUBLISHED,
-	//					'BlogEntry.published_datetime <=' => $currentDateTime
-	//				),
-	//				array(
-	//					'BlogEntry.created_user' => $userId
-	//				)
-	//			)
-	//		)
-	//	);
-	//
-	//
-	//	// 編集権限あり
-	//	$permissions = array(
-	//		'contentReadable' => true,
-	//		'contentCreatable' => true,
-	//		'contentEditable' => true,
-	//	);
-	//	$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
-	//	$this->assertSame(
-	//		$conditions,
-	//		array(
-	//			'BlogCategory.block_id' => $blockId,
-	//			'OR' => array(
-	//				array(
-	//					'BlogEntry.created_user' => $userId
-	//				),
-	//				array(
-	//					'BlogEntry.status !=' => NetCommonsBlockComponent::STATUS_IN_DRAFT
-	//				)
-	//			)
-	//		)
-	//	);
-	//}
+	public function testGetCondition() {
+		$userId = 1;
+		$blockId = 2;
+		$currentDateTime = '2015-01-01 00:00:00';
+		// contentReadable false
+		$permissions = array(
+			'contentReadable' => false,
+			'contentCreatable' => false,
+			'contentEditable' => false,
+		);
+		$conditions = $this->BlogEntry->getConditions(
+			$blockId,
+			$userId,
+			$permissions,
+			$currentDateTime
+		);
+		$this->assertSame(
+			$conditions,
+			array(
+				'BlogEntry.block_id' => $blockId,
+				'BlogEntry.id' => 0
+			)
+		);
+
+		// contentReadable のみ
+		$permissions = array(
+			'contentReadable' => true,
+			'contentCreatable' => false,
+			'contentEditable' => false,
+		);
+		$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
+		$this->assertSame(
+			$conditions,
+			array(
+				'BlogEntry.block_id' => $blockId,
+				'BlogEntry.is_active' => 1,
+				'BlogEntry.published_datetime <=' => $currentDateTime
+			)
+		);
+
+		// 作成権限あり
+		$permissions = array(
+			'contentReadable' => true,
+			'contentCreatable' => true,
+			'contentEditable' => false,
+		);
+		$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
+		$this->assertSame(
+			$conditions,
+			array(
+				'BlogEntry.block_id' => $blockId,
+				'OR' => array(
+					array(
+						'BlogEntry.is_active' => 1,
+						'BlogEntry.published_datetime <=' => $currentDateTime
+					),
+					'BlogEntry.created_user' => $userId
+				)
+			)
+		);
+
+		// 編集権限あり
+		$permissions = array(
+			'contentReadable' => true,
+			'contentCreatable' => true,
+			'contentEditable' => true,
+		);
+		$conditions = $this->BlogEntry->getConditions($blockId, $userId, $permissions, $currentDateTime);
+		$this->assertSame(
+			$conditions,
+			array(
+				'BlogEntry.block_id' => $blockId,
+				'BlogEntry.is_latest' => 1,
+			)
+		);
+	}
+
 	//
 	//
 	//public function testExecuteConditions() {
