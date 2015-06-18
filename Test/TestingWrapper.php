@@ -12,7 +12,7 @@
 class TestingWrapper {
 
 /**
- * @var ラップする元インスタンス
+ * @var Instance ラップする元インスタンス
  */
 	protected $_wrappedInstance;
 

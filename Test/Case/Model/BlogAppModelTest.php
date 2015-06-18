@@ -16,6 +16,9 @@ App::uses('TestingWrapper', 'Blogs.Test');
  */
 class BlogFakeModel extends BlogsAppModel {
 
+/**
+ * @var bool Fakeなのでテーブル使わない
+ */
 	public $useTable = false;
 }
 
@@ -64,12 +67,22 @@ class BlogAppModelTest extends BlogsAppModelTestBase {
 		parent::tearDown();
 	}
 
+/**
+ * test getNew
+ *
+ * @return void
+ */
 	public function testGetNew() {
 		$new = $this->BlogEntry->getnew();
 
 		$this->assertInternalType('array', $new);
 	}
 
+/**
+ * test tarnsaction method
+ *
+ * @return void
+ */
 	public function testTransaction() {
 		$this->BlogEntry->begin();
 
