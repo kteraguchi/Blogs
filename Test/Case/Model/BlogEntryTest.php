@@ -11,6 +11,7 @@ App::uses('BlogEntry', 'Blogs.Model');
 
 CakePlugin::load('NetCommons');
 App::uses('NetCommonsBlockComponent', 'NetCommons.Controller/Component');
+App::uses('TestingWrapper', 'Blogs.Test');
 
 /**
  * Summary for BlogEntry Test Case
@@ -92,6 +93,19 @@ class BlogEntryTest extends CakeTestCase {
 
 		$savedData = $this->BlogEntry->save($data);
 		$this->assertTrue(isset($savedData['BlogEntry']['id']));
+	}
+
+/**
+ * test _getPublishedConditions
+ *
+ * @return void
+ */
+	public function testGetPublishedConditions() {
+		$BlogEntryTesting = new TestingWrapper($this->BlogEntry);
+		$now = '2015-01-01 00:00:00';
+		$conditions = $BlogEntryTesting->_testing__getPublishedConditions($now);
+		$this->assertEquals(1, $conditions['BlogEntry.is_active']);
+		$this->assertEquals($now, $conditions['BlogEntry.published_datetime <=']);
 	}
 
 	//public function testGetCondition() {
