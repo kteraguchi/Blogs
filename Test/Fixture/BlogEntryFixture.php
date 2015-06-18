@@ -7,6 +7,9 @@
  * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
+CakePlugin::load('NetCommons');
+App::uses('NetCommonsBlockComponent', 'NetCommons.Controller/Component');
+
 /**
  * Summary for BlogEntryFixture
  */
@@ -135,6 +138,11 @@ class BlogEntryFixture extends CakeTestFixture {
 			'null' => false,
 			'default' => null,
 			'comment' => 'block_id '
+		),
+		'language_id' => array(
+			'type' => 'integer',
+			'null' => false,
+			'default' => 1,
 		),
 		'is_latest' => array(
 			'type' => 'boolean',
