@@ -108,6 +108,11 @@ class BlogEntryTest extends CakeTestCase {
 		$this->assertEquals($now, $conditions['BlogEntry.published_datetime <=']);
 	}
 
+/**
+ * test getCondition
+ *
+ * @return void
+ */
 	public function testGetCondition() {
 		$userId = 1;
 		$blockId = 2;
@@ -185,6 +190,11 @@ class BlogEntryTest extends CakeTestCase {
 		);
 	}
 
+/**
+ * test getYearMonth
+ *
+ * @return void
+ */
 	public function testGetYearMonthCount() {
 		$blockId = 5;
 		$userId = 1;
@@ -205,6 +215,11 @@ class BlogEntryTest extends CakeTestCase {
 		$this->assertEquals(0, $counts['2015-06']);
 	}
 
+/**
+ * test beforeSave with id
+ *
+ * @return void
+ */
 	public function testBeforeSaveWithId() {
 		$options = array();
 
@@ -218,6 +233,11 @@ class BlogEntryTest extends CakeTestCase {
 		$this->assertTrue($resultTrue);
 	}
 
+/**
+ * test beforeSave published
+ *
+ * @return void
+ */
 	public function testBeforeSave4Published() {
 		$options = array();
 
@@ -231,11 +251,14 @@ class BlogEntryTest extends CakeTestCase {
 		$id3Data = $this->BlogEntry->findById(3);
 		$this->assertEquals(0, $id3Data['BlogEntry']['is_latest']);
 		$this->assertEquals(0, $id3Data['BlogEntry']['is_active']);
-
 	}
 
+/**
+ * test saveEntry
+ *
+ * @return void
+ */
 	public function testSaveEntry() {
-		
 	}
 
 	//
