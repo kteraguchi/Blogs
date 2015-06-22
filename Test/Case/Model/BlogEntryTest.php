@@ -205,6 +205,39 @@ class BlogEntryTest extends CakeTestCase {
 		$this->assertEquals(0, $counts['2015-06']);
 	}
 
+	public function testBeforeSaveWithId() {
+		$options = array();
+
+		// IDがセットされてたらupdate なのでupdateAllされないはず
+		$model = $this->getMockForModel('Blogs.BlogEntry', array('updateAll'));
+		$model->expects($this->never())
+			->method('updateAll');
+			//->will($this->returnValue(true));
+		$this->BlogEntry->data['BlogEntry']['id'] = 1;
+		$resultTrue = $this->BlogEntry->beforeSave($options);
+		$this->assertTrue($resultTrue);
+	}
+
+	public function testBeforeSave4Published() {
+		$options = array();
+
+		$this->BlogEntry->data['BlogEntry']['status'] = NetCommonsBlockComponent::STATUS_PUBLISHED;
+		$this->BlogEntry->data['BlogEntry']['origin_id'] = 3;
+		$this->BlogEntry->data['BlogEntry']['language_id'] = 1;
+
+		$resultTrue = $this->BlogEntry->beforeSave($options);
+		$this->assertTrue($resultTrue);
+
+		$id3Data = $this->BlogEntry->findById(3);
+		$this->assertEquals(0, $id3Data['BlogEntry']['is_latest']);
+		$this->assertEquals(0, $id3Data['BlogEntry']['is_active']);
+
+	}
+
+	public function testSaveEntry() {
+		
+	}
+
 	//
 	//
 	//public function testExecuteConditions() {
