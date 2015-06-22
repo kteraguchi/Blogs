@@ -185,6 +185,26 @@ class BlogEntryTest extends CakeTestCase {
 		);
 	}
 
+	public function testGetYearMonthCount() {
+		$blockId = 5;
+		$userId = 1;
+		$permissions = array(
+			'contentCreatable' => true,
+			'contentEditable' => true,
+		);
+		$currentDateTime = '2015-06-30 00:00:00';
+		$counts = $this->BlogEntry->getYearMonthCount($blockId, $userId, $permissions, $currentDateTime);
+
+		$this->assertEquals(1, $counts['2014-02']);
+		$this->assertEquals(0, $counts['2014-03']);
+
+		// 記事がひとつもないケース
+		$blockId = 6;
+		$counts = $this->BlogEntry->getYearMonthCount($blockId, $userId, $permissions, $currentDateTime);
+		$this->assertEquals(1, count($counts));
+		$this->assertEquals(0, $counts['2015-06']);
+	}
+
 	//
 	//
 	//public function testExecuteConditions() {

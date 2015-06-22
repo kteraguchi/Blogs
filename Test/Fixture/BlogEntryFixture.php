@@ -206,7 +206,7 @@ class BlogEntryFixture extends CakeTestFixture {
 				'modified_user' => 2,
 				'modified' => '2015-02-23 05:58:13',
 				'block_id' => 5,
-				'is_latest' => 0,
+				'is_latest' => 1,
 				'is_active' => 1,
 			),
 			array(
